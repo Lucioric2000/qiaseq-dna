@@ -25,6 +25,6 @@ def run(readSet,paramFile):
    
    # convert some params to boolean
    cfg.deleteLocalFiles = cfg.deleteLocalFiles.lower() == "true"
-
+ 
    # return config object
    return cfg

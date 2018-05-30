@@ -31,7 +31,7 @@ import annotate.vcf_annotate
 def run(args):
    readSet, paramFile, vc = args
    # initialize logger
-   core.run_log.init(readSet)
+   #core.run_log.init(readSet)
 
    # read run configuration file to memory
    cfg = core.run_config.run(readSet,paramFile)
@@ -55,6 +55,7 @@ def run(args):
 
    # call putative unique input molecules using BOTH UMI seq AND genome alignment position on random fragmentation side
    bamFileIn  = readSet + ".align.bam"
+   print("bamfile",bamFileIn)
    core.umi_filter.run(cfg, bamFileIn)
    core.umi_mark.run(cfg)   
    metrics.umi_frags.run(cfg)   
@@ -152,7 +153,7 @@ if __name__ == "__main__":
    analysis = sys.argv[3]
    readSet   = " ".join(sys.argv[4:]) # 2 readSets in case of tumor-normal
 
-   if analysis.lower() == "tumor-normal":      
+   if analysis.lower() == "tumor-normal":     
       run_tumor_normal(readSet,paramFile,vc)
    else: # Single sample, might still need to run quandico
       run((readSet,paramFile,vc))

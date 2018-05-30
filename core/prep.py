@@ -1,3 +1,4 @@
+from __future__ import print_function
 import glob
 import gzip
 import os
@@ -38,10 +39,12 @@ def splitReadFile(readFile,filePrefixOut,readSide,numBatchesMax,deleteLocalFiles
    batchSize = 4 * int(math.ceil(1.00 * numReads / numBatchesMax))
    
    # open input fastq read file
+   print("gzfile",readFile,isGzFile)
    if isGzFile:
       fileIn = gzip.open(readFile,"rb")
    else:
       fileIn = open(readFile,"r")
+   print("file",readFile,isGzFile)
 
    # write fastq batches to disk - one batch to be done on each CPU core
    numLinesOut = 0
@@ -51,7 +54,7 @@ def splitReadFile(readFile,filePrefixOut,readSide,numBatchesMax,deleteLocalFiles
       # open new file if needed
       if numLinesOut == 0:
          fileOut = open("{}.{:04d}.{}.fastq".format(filePrefixOut,batchNum,readSide), "w")
-         
+
       # write fastq line to disk
       fileOut.write(line)
       numLinesOut += 1
@@ -89,7 +92,7 @@ def run(cfg):
    deleteLocalFiles = cfg.deleteLocalFiles
    numCores         = int(cfg.numCores)
    tagNameUmiSeq    = cfg.tagNameUmiSeq
-   
+
    # set output file prefix
    filePrefixOut = readSet + ".prep"
    
@@ -97,9 +100,11 @@ def run(cfg):
    if readFile1.endswith(".fastq"):  
       cmd = "head -n 4000 " + readFile1 + " > " 
    else:
-      cmd = "zcat " + readFile1 + " | head -n 4000 > " 
+      cmd = "(zcat " + readFile1 + " | head -n 4000) > " 
    cmd += filePrefixOut + ".temp1000.R1.fastq"
+   print("zcat",cmd)
    subprocess.check_call(cmd, shell=True)
+   #assert 0
    cmd = cutadaptDir + "cutadapt -e 0.18 -O 18" \
        + " -g ^AATGTACAGTATTGCGTTTTG -n 1" \
        + " -o /dev/null " \
@@ -153,9 +158,10 @@ def run(cfg):
    print("prep: completed parallel trimming batches")
    
    # make sure all batches of work completed successfully
+   print("nworkout",len(workOut))
    for batchNum in range(len(workOut)):
       if not workOut[batchNum]:
-         raise Exception("read trimming failed for batch: {:04d}".format(batchNum))
+         print (Exception("read trimming failed for batch: {:04d}".format(batchNum)))
 
    # concatenate the read files back into one file
    for readEnd in ("R1","R2"):
