@@ -1,6 +1,6 @@
 #!/bin/bash
 #Install the Miniconda Python pachages manager
-sudo yum install git unzip cpan
+sudo yum install git unzip cpan wget
 #R ahora se instala usando conda
 echo "Next, the Miniconda package will be downloaded and installed"
 echo "You should install it as the miniconda3 subdirectory of your home directory"
@@ -65,15 +65,10 @@ Rscript -e "install.packages('scales')"
 Rscript -e "install.packages('ggplot2')"
 Rscript -e "install.packages('extrafont')"
 
+## Perl
+cpan DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+
 ################ Add data directory ################
-## Download genome files
-wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
-         https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
-cd ${srv_qiagen}/data/genome && \
-    gunzip ucsc.hg19.fa.gz  && \
-    ## Index the fasta using samtools
-    samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-    ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 ## Download Annotation files
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.vcf.gz \
@@ -99,9 +94,6 @@ rm snpEff_v4_2_GRCh37.75.zip
 
 ## The command below is not working anymore because of some certificate issue (debug later)
 #RUN ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.2-0/snpEff.jar download GRCh37.75
-################ Modules for CNV Analysis ################
-## Perl
-cpan DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
@@ -130,12 +122,14 @@ wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.varian
      https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam.bai \
      -P ${srv_qiagen}/test_smcounter-v2/
 
-#Lineas created by cpan configuration:
-#export PERL_LOCAL_LIB_ROOT="$PERL_LOCAL_LIB_ROOT:/root/perl5";
-#export PERL_MB_OPT="--install_base /root/perl5";
-#export PERL_MM_OPT="INSTALL_BASE=/root/perl5";
-#export PERL5LIB="/root/perl5/lib/perl5:$PERL5LIB";
-#export PATH="/root/perl5/bin:$PATH";
+## Download genome files
+wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
+         https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
+cd ${srv_qiagen}/data/genome && \
+    gunzip ucsc.hg19.fa.gz  && \
+    ## Index the fasta using samtools
+    samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+    ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.bitnamisrv.txt v1 single NEB_S2
 
