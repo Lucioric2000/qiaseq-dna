@@ -9,7 +9,7 @@ chmod +x Miniconda2-latest-Linux-x86_64.sh
 sh Miniconda2-latest-Linux-x86_64.sh
 #rm Miniconda2-latest-Linux-x86_64.sh
 #Make the updated shell path available in this session
-#source ~/.bashrc
+source ~/.bashrc
 
 #Code for installing the qiagen-dna software and the example in BASH
 #Sets up a script with the environment variables needed
@@ -70,10 +70,7 @@ sudo wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
 cd ${srv_qiagen}/data/genome && \
     sudo gunzip ucsc.hg19.fa.gz  && \
     ## Index the fasta using samtools
-    #${srv_qiagen}/bin/samtools-1.5/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-    ##If the samtools is installed by conda, we needn't a full path for it
-    ## Run bwa to generate index files 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 ## Download Annotation files
@@ -96,7 +93,7 @@ rm -rf ${conda_home}/share/snpeff-4.2-0/data/
 cd ${conda_home}/share/snpeff-4.2-0/
 sudo unzip snpEff_v4_2_GRCh37.75.zip
 #Frees up some space
-rm snpEff_v4_2_GRCh37.75.zip
+sudo rm snpEff_v4_2_GRCh37.75.zip
 
 ## The command below is not working anymore because of some certificate issue (debug later)
 #RUN ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.2-0/snpEff.jar download GRCh37.75
