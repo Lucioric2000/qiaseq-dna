@@ -12,6 +12,7 @@ def run(readSet,paramFile):
    # copy all options to a config object - both general params, and params for this readSet
    cfg = lambda:0
    cfg.__dict__["readSet"] = readSet
+   #assert 0,(readSet,list(readSet))
    for section in ("general", readSet):
       for (paramName, paramVal) in parser.items(section):
          if paramName in cfg.__dict__:
