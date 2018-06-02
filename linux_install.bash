@@ -1,6 +1,6 @@
 #!/bin/bash
 #Install the Miniconda Python pachages manager
-sudo yum install git unzip cpan wget
+sudo yum install git unzip cpan wget gcc bunzip2
 #R ahora se instala usando conda
 echo "Next, the Miniconda package will be downloaded and installed"
 echo "You should install it as the miniconda3 subdirectory of your home directory"
@@ -17,7 +17,7 @@ srv_qiagen=/srv/qgen
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
 sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
-#Calls thiss script
+#Calls this script
 bash -c /etc/profile.d/qiagen.sh
 #Declare the location of the conda installaction
 conda_home=~/miniconda2
@@ -32,16 +32,16 @@ mkdir -p ${srv_qiagen}/code && \
 #sudo apt-get -y update
 
 ################ Install various version specific 3rd party tools ################
+################ Install python modules ################
+## Install some modules with conda
 #This includes R (rstudio) and biopython
-#Pysam in the dockerfile is said to be 0.9.0, but the version that colud be installed is 0.6
-conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python #Pysam 0.9.0 en vez del pysam actual (0.10)
+conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python
 #Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
 conda install -c cyclus java-jdk=8.45.14
-################ Install python modules ################
-## Install some modules with conda
 conda install openpyxl
+pip install --upgrade-pip
 pip install statistics
 
 wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
@@ -62,7 +62,6 @@ Rscript -e "install.packages('ggplot2')"
 Rscript -e "install.packages('gridExtra')"
 Rscript -e "install.packages('naturalsort')"
 Rscript -e "install.packages('scales')"
-Rscript -e "install.packages('ggplot2')"
 Rscript -e "install.packages('extrafont')"
 
 ## Perl
