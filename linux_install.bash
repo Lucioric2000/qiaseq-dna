@@ -14,20 +14,22 @@ source ~/.bashrc
 #Code for installing the qiagen-dna software and the example in BASH
 #Sets up a script with the environment variables needed
 srv_qiagen=/srv/qgen
+sudo mkdir ${srv_qiagen}
+sudo chmod 777 ${srv_qiagen}
 sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
 #Calls thiss script
 bash -c /etc/profile.d/qiagen.sh
 #Declare the location of the conda installaction
 conda_home=~/miniconda2
 #Make the directories if don't exist
-sudo mkdir -p ${srv_qiagen}/code && \
-    sudo mkdir -p ${srv_qiagen}/bin/downloads && \
-    sudo mkdir -p ${srv_qiagen}/data/genome && \
-    sudo mkdir -p ${srv_qiagen}/data/annotation && \
-    sudo mkdir -p ${srv_qiagen}/example/
+mkdir -p ${srv_qiagen}/code && \
+    mkdir -p ${srv_qiagen}/bin/downloads && \
+    mkdir -p ${srv_qiagen}/data/genome && \
+    mkdir -p ${srv_qiagen}/data/annotation && \
+    mkdir -p ${srv_qiagen}/example/
 
 #Update the updatable software in Debian repositories
-sudo apt-get -y update
+#sudo apt-get -y update
 
 ################ Install various version specific 3rd party tools ################
 #This includes R (rstudio) and biopython
@@ -42,14 +44,14 @@ conda install -c cyclus java-jdk=8.45.14
 conda install openpyxl
 pip install statistics
 
-sudo wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
-cd ${srv_qiagen}/bin/ && sudo tar -xvf ssw.tar.gz    
+wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
+cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz    
 
 ## Download and install 3rd party libraries
-sudo wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
-    cd ${srv_qiagen}/bin/downloads/ && sudo tar -xvf py-editdist-0.3.tar.gz && \
+wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
+    cd ${srv_qiagen}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
     cd py-editdist-0.3 && python setup.py install && \
-    cd ${srv_qiagen}/bin/downloads/ && sudo tar -xvf sendgrid-v2.2.1.tar.gz && \
+    cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
     cd sendgrid-python-2.2.1 && python setup.py install
 
 ################ R packages ################
@@ -65,16 +67,16 @@ Rscript -e "install.packages('extrafont')"
 
 ################ Add data directory ################
 ## Download genome files
-sudo wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
+wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
          https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
 cd ${srv_qiagen}/data/genome && \
-    sudo gunzip ucsc.hg19.fa.gz  && \
+    gunzip ucsc.hg19.fa.gz  && \
     ## Index the fasta using samtools
     samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 ## Download Annotation files
-sudo wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.vcf.gz \
+wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.vcf.gz \
          https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.vcf.gz.tbi \
          https://storage.googleapis.com/qiaseq-dna/data/annotation/common_all_20160601.vcf.gz \
          https://storage.googleapis.com/qiaseq-dna/data/annotation/common_all_20160601.vcf.gz.tbi \
@@ -99,41 +101,30 @@ rm snpEff_v4_2_GRCh37.75.zip
 #RUN ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.2-0/snpEff.jar download GRCh37.75
 ################ Modules for CNV Analysis ################
 ## Perl
-sudo cpan DateTime
-sudo cpan DBI
-sudo cpan DBD::SQLite
-sudo cpan Env::Path
-sudo cpan File::chdir
-sudo cpan Getopt::Long::Descriptive
-sudo cpan Sort:Naturally
-sudo cpan Config::IniFiles
-sudo cpan Data::Dump::Color
-sudo cpan Data::Table::Excel
-sudo cpan Hash::Merge
-sudo cpan File::Slurp
+cpan DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ## Annotation file
-sudo wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
+wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
          -P ${srv_qiagen}/data/annotation/
 
 ################ TVC binaries ################
-sudo mkdir -p ${srv_qiagen}/bin/TorrentSuite/
-sudo wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
+mkdir -p ${srv_qiagen}/bin/TorrentSuite/
+wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
          https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
      -P ${srv_qiagen}/bin/TorrentSuite/
-sudo chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
+chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
 
 
 ## Add example fastqs and files
-sudo wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
+wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
          https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
          -P ${srv_qiagen}/example/
 
 ## Add test files for smCounterv2
-sudo mkdir -p ${srv_qiagen}/test_smcounter-v2/
-sudo wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed \
+mkdir -p ${srv_qiagen}/test_smcounter-v2/
+wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed \
          https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam \
      https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.VariantList.long.txt \
      https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam.bai \
