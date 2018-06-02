@@ -9,8 +9,10 @@ sudo yum install git unzip cpan wget gcc bzip2
 #chmod +x Miniconda2-latest-Linux-x86_64.sh
 #sh Miniconda2-latest-Linux-x86_64.sh
 #rm Miniconda2-latest-Linux-x86_64.sh
-#Make the updated shell path available in this session
+#Make the updated shell path available in this session:
 #source ~/.bashrc
+#Allows the use of paths starting with /opt/conda present in some configuration files
+#sudo ln -s /home/ec2-user/miniconda2 /opt/conda
 
 #Code for installing the qiagen-dna software and the example in BASH
 #Sets up a script with the environment variables needed
