@@ -88,12 +88,12 @@ sudo wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_2016
       -P ${srv_qiagen}/data/annotation/
 
 ## Download annotation using SnpEff command
-sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_2/snpEff_v4_2_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.2-0/
+wget http://downloads.sourceforge.net/project/snpeff/databases/v4_2/snpEff_v4_2_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.2-0/
 rm -rf ${conda_home}/share/snpeff-4.2-0/data/
 cd ${conda_home}/share/snpeff-4.2-0/
-sudo unzip snpEff_v4_2_GRCh37.75.zip
+unzip snpEff_v4_2_GRCh37.75.zip
 #Frees up some space
-sudo rm snpEff_v4_2_GRCh37.75.zip
+rm snpEff_v4_2_GRCh37.75.zip
 
 ## The command below is not working anymore because of some certificate issue (debug later)
 #RUN ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.2-0/snpEff.jar download GRCh37.75
