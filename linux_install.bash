@@ -1,7 +1,7 @@
 #!/bin/bash
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc bunzip2
+sudo yum install git unzip cpan wget gcc bzip2
 #Install the Miniconda Python pachages manager
 #echo "Next, the Miniconda package will be downloaded and installed"
 #echo "You should install it as the miniconda3 subdirectory of your home directory"
@@ -37,7 +37,7 @@ mkdir -p ${srv_qiagen}/code && \
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
 conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python
-#Picard 1.97 was not found in the default conda ditribution
+# Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
 conda install -c cyclus java-jdk=8.45.14
@@ -66,7 +66,7 @@ Rscript -e "install.packages('scales')"
 Rscript -e "install.packages('extrafont')"
 
 ## Perl
-cpan DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+cpan Module::Runtime DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ################ Add data directory ################
 
