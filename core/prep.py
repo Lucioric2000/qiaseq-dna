@@ -39,12 +39,10 @@ def splitReadFile(readFile,filePrefixOut,readSide,numBatchesMax,deleteLocalFiles
    batchSize = 4 * int(math.ceil(1.00 * numReads / numBatchesMax))
    
    # open input fastq read file
-   print("gzfile",readFile,isGzFile)
    if isGzFile:
       fileIn = gzip.open(readFile,"rb")
    else:
       fileIn = open(readFile,"r")
-   print("file",readFile,isGzFile)
 
    # write fastq batches to disk - one batch to be done on each CPU core
    numLinesOut = 0
@@ -102,9 +100,7 @@ def run(cfg):
    else:
       cmd = "(zcat " + readFile1 + " | head -n 4000) > " 
    cmd += filePrefixOut + ".temp1000.R1.fastq"
-   print("zcat",cmd)
    subprocess.check_call(cmd, shell=True)
-   #assert 0
    cmd = cutadaptDir + "cutadapt -e 0.18 -O 18" \
        + " -g ^AATGTACAGTATTGCGTTTTG -n 1" \
        + " -o /dev/null " \
@@ -158,7 +154,6 @@ def run(cfg):
    print("prep: completed parallel trimming batches")
    
    # make sure all batches of work completed successfully
-   print("nworkout",len(workOut))
    for batchNum in range(len(workOut)):
       if not workOut[batchNum]:
          print (Exception("read trimming failed for batch: {:04d}".format(batchNum)))

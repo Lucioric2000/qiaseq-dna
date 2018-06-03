@@ -55,7 +55,6 @@ def run(args):
 
    # call putative unique input molecules using BOTH UMI seq AND genome alignment position on random fragmentation side
    bamFileIn  = readSet + ".align.bam"
-   print("bamfile",bamFileIn)
    core.umi_filter.run(cfg, bamFileIn)
    core.umi_mark.run(cfg)   
    metrics.umi_frags.run(cfg)   

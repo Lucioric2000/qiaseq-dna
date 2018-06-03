@@ -19,9 +19,13 @@ sudo yum install git unzip cpan wget gcc bzip2
 srv_qiagen=/srv/qgen
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
-sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
-#Calls this script
-bash -c /etc/profile.d/qiagen.sh
+#sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
+#Output the contents of ~/.bashrc plus the content enclosed in qoutes (which is in a string representation that handles newline characters) to the file ~/.bashrc.new.qiagen
+echo -e "\n#Shell environment for qiagen\nexport PYTHONPATH=\$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
+#Move the file ~/.bashrc.new.qiagen to ~/.bashrc (overwriting the existent ~/.bashrc withouk asking for confirmation)
+mv -f ~/.bashrc.new.qiagen ~/.bashrc
+##Calls this script
+#bash -c /etc/profile.d/qiagen.sh
 #Declare the location of the conda installaction
 conda_home=~/miniconda2
 #Make the directories if don't exist
@@ -48,7 +52,10 @@ pip install --upgrade-pip
 pip install statistics
 
 wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
-cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz    
+cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz
+sudo bash -c "echo '/srv/qgen/bin/ssw/src'>/etc/ld.so.conf.d/ssw.conf"
+#Import the configuration files into the system
+sudo ldconfig
 
 ## Download and install 3rd party libraries
 wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/

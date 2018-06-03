@@ -23,6 +23,7 @@ def run(cfg, readFile1, readFile2, bamFileOut):
    logFileSamtools = logFileBase.replace(".bam",".samtools.log")
 
    # align reads to reference genome using BWA-MEM, and convert to BAM format
+   #cmd = bwaDir + "bwa mem -t " +  numCores \
    cmd = bwaDir + "bwa mem -C -t " +  numCores \
    + " " + genomeFile   \
    + " " + readFile1    \
@@ -32,6 +33,7 @@ def run(cfg, readFile1, readFile2, bamFileOut):
    + " - " \
    + " 1> " + bamFileOut \
    + " 2> " + logFileSamtools
+   #print("bwacmd",cmd)
    subprocess.check_call(cmd, shell=True)
 
    # delete local fastq files if not needed anymore, to conserve local disk space
