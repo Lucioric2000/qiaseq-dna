@@ -216,7 +216,7 @@ def run(cfg,bamFileIn):
          
       # get UMI sequence from "mi" tag
       readId = read1.qname
-      print("read1:",read1)
+      print("read1:",str(read1))
       umiSeq = read1.get_tag(tagNameUmiSeq)
       
       # get some alignment info from the R1 read (the SPE primer side)

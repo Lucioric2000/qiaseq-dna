@@ -143,6 +143,7 @@ def run(cfg):
    for batchNum in range(numBatches):
       filePrefixBatch = "{}.{:04d}".format(filePrefixOut,batchNum)
       cmd = "python {0} {1} {2} {3} > {3}.log 2>&1 ".format(trimScript,cutadaptDir,tagNameUmiSeq,filePrefixBatch)
+      print("trimcmd:",cmd)
       workIn.append(cmd)
       
    # run cutadapt and UMI extraction in parallel sub-processes
@@ -156,7 +157,8 @@ def run(cfg):
    # make sure all batches of work completed successfully
    for batchNum in range(len(workOut)):
       if not workOut[batchNum]:
-         print (Exception("read trimming failed for batch: {:04d}".format(batchNum)))
+         print("wop",workOut[batchNum])
+         raise Exception("read trimming failed for batch: {:04d}".format(batchNum))
 
    # concatenate the read files back into one file
    for readEnd in ("R1","R2"):

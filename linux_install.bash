@@ -14,6 +14,8 @@ sudo yum install git unzip cpan wget gcc bzip2
 #Allows the use of paths starting with /opt/conda present in some configuration files
 #sudo ln -s /home/ec2-user/miniconda2 /opt/conda
 
+#conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14
+
 #Code for installing the qiagen-dna software and the example in BASH
 #Sets up a script with the environment variables needed
 srv_qiagen=/srv/qgen
@@ -42,7 +44,7 @@ mkdir -p ${srv_qiagen}/code && \
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python
+conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 picard=1.97 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
@@ -140,5 +142,6 @@ cd ${srv_qiagen}/data/genome && \
     samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
-#time python run_qiaseq_dna.py run_sm_counter_v1.params.bitnamisrv.txt v1 single NEB_S2
+#time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single NEB_S2
+#python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > runtn.log 2>&1 &
 

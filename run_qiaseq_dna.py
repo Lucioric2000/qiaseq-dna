@@ -129,6 +129,8 @@ def run_tumor_normal(readSet,paramFile,vc):
             elif paramName == 'sampleType' and paramVal.lower() == 'tumor':
                tumor = section
 
+   print("sections",parser.sections())
+
    assert tumor!=None and normal!=None, "Could not sync read set names supplied with config file !"
   
    run((normal,paramFile,vc))
