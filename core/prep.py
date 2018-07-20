@@ -180,6 +180,7 @@ def run(cfg):
    for logFileIn in glob.glob(filePrefixOut + ".0*.log"):
       for line in open(logFileIn,"r"):
         logFileOut.write(line)
+      print("removing log file",logFileIn)
       os.remove(logFileIn)
       
    # aggregate summary read count files - for some trim scripts these files contain important read count metrics
@@ -197,6 +198,7 @@ def run(cfg):
          iLine += 1
       firstFile = False
       os.remove(sumFileIn)
+      print("removing sum file",sumFileIn)
    sumFileOut = open(filePrefixOut + ".summary.txt","w")
    for row in output:
       sumFileOut.write("\t".join((str(x) for x in row)))

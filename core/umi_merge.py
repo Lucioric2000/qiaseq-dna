@@ -15,9 +15,11 @@ def run(cfg,bamFileIn):
    deleteLocalFiles = cfg.deleteLocalFiles
    numCores         = cfg.numCores
 
+   readSetPreffix=readSet
+
    # sort the original molecules text file by readId (column 15 hard-coded)
-   fileNameIn = readSet + ".umi_mark.alignments.txt"
-   cmd = "sort -k15,15 -t\| -T./ --parallel={1} {0} > {0}.tmp.txt 2> {2}.umi_merge.shell.log".format(fileNameIn, numCores,readSet)
+   fileNameIn = readSetPreffix + ".umi_mark.alignments.txt"
+   cmd = "sort -k15,15 -t\| -T./ --parallel={1} {0} > {0}.tmp.txt 2> {2}.umi_merge.shell.log".format(fileNameIn, numCores,readSetPreffix)
    subprocess.check_call(cmd, shell=True)
    os.rename(fileNameIn + ".tmp.txt", fileNameIn)
    print("umi_merge: done sorting molecule-marked alignments text file by read id")
@@ -25,16 +27,16 @@ def run(cfg,bamFileIn):
    # save BAM header into output file
    cmd = samtoolsDir + "samtools view -H " \
    + bamFileIn \
-   + " 1> " + readSet + ".umi_merge.temp2.sam" \
-   + " 2>>" + readSet + ".umi_merge.shell.log"
+   + " 1> " + readSetPreffix + ".umi_merge.temp2.sam" \
+   + " 2>>" + readSetPreffix + ".umi_merge.shell.log"
    subprocess.check_call(cmd, shell=True)
    
    # convert BAM to SAM, rather than use pipe, to enable more parallel Linux gnu sort on very large files (at the expense of more disk I/O)
    cmd = samtoolsDir + "samtools view " \
    + " -@ " + numCores  \
    + "    " + bamFileIn \
-   + " >  " + readSet + ".umi_merge.temp0.sam" \
-   + " 2>>" + readSet + ".umi_merge.shell.log"
+   + " >  " + readSetPreffix + ".umi_merge.temp0.sam" \
+   + " 2>>" + readSetPreffix + ".umi_merge.shell.log"
    subprocess.check_call(cmd, shell=True)
    print("umi_merge: done converting input BAM to SAM")
    
@@ -44,17 +46,17 @@ def run(cfg,bamFileIn):
       
    # sort original BAM file by readId, using Linux sort (NOT samtools sort -n !!!) (could use sambamba instead)
    cmd = "sort -k1,1 -T./ --parallel=" + numCores \
-   + " "     + readSet + ".umi_merge.temp0.sam" \
-   + " 1>> " + readSet + ".umi_merge.temp1.sam" \
-   + " 2>> " + readSet + ".umi_merge.shell.log"
+   + " "     + readSetPreffix + ".umi_merge.temp0.sam" \
+   + " 1>> " + readSetPreffix + ".umi_merge.temp1.sam" \
+   + " 2>> " + readSetPreffix + ".umi_merge.shell.log"
    subprocess.check_call(cmd, shell=True)
    print("umi_merge: done sorting SAM by read id")
-   os.remove(readSet + ".umi_merge.temp0.sam")
+   os.remove(readSetPreffix + ".umi_merge.temp0.sam")
    
    # open SAM files, init read counters
-   fileout = open(readSet + ".umi_merge.primers.txt","w")
-   samIn   = open(readSet + ".umi_merge.temp1.sam", "r")
-   samOut  = open(readSet + ".umi_merge.temp2.sam", "a")  # note this is an append, because header already written
+   fileout = open(readSetPreffix + ".umi_merge.primers.txt","w")
+   samIn   = open(readSetPreffix + ".umi_merge.temp1.sam", "r")
+   samOut  = open(readSetPreffix + ".umi_merge.temp2.sam", "a")  # note this is an append, because header already written
    numReadsUmiFile = 0
    numReadsSamFile = 0
 
@@ -108,7 +110,7 @@ def run(cfg,bamFileIn):
    samIn.close()
    samOut.close()
    print("umi_merge: done merging unique molecule tag to sam file")
-   os.remove(readSet + ".umi_merge.temp1.sam")
+   os.remove(readSetPreffix + ".umi_merge.temp1.sam")
       
    # debug check - make sure all reads found
    if numReadsSamFile != 2 * numReadsUmiFile:
@@ -117,9 +119,9 @@ def run(cfg,bamFileIn):
    # convert final file to BAM (not really necessary)
    cmd = samtoolsDir + "samtools view -1" \
    + " -@ " + numCores  \
-   + "    " + readSet + ".umi_merge.temp2.sam" \
-   + " 1> " + readSet + ".umi_merge.bam" \
-   + " 2>>" + readSet + ".umi_merge.shell.log" 
+   + "    " + readSetPreffix + ".umi_merge.temp2.sam" \
+   + " 1> " + readSetPreffix + ".umi_merge.bam" \
+   + " 2>>" + readSetPreffix + ".umi_merge.shell.log" 
    subprocess.check_call(cmd, shell=True)
    print("umi_merge: done converting SAM to BAM")
-   os.remove(readSet + ".umi_merge.temp2.sam")
+   os.remove(readSetPreffix + ".umi_merge.temp2.sam")

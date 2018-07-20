@@ -1,5 +1,5 @@
 import ConfigParser
-import sys
+import sys, os
 import multiprocessing
 # our modules
 import core.run_log
@@ -30,11 +30,13 @@ import annotate.vcf_annotate
 #--------------------------------------------------------------------------------------
 def run(args):
    readSet, paramFile, vc = args
-   # initialize logger
-   #core.run_log.init(readSet)
 
    # read run configuration file to memory
    cfg = core.run_config.run(readSet,paramFile)
+   fullReadSetPath=cfg.readSet
+
+   # initialize logger
+   core.run_log.init(fullReadSetPath)
 
    if cfg.platform.lower() == "illumina":
 
@@ -45,16 +47,16 @@ def run(args):
          core.prep.run(cfg)
    
       # align trimmed reads to genome using BWA MEM
-      readFileIn1 = readSet + ".prep.R1.fastq"
-      readFileIn2 = readSet + ".prep.R2.fastq"
-      bamFileOut  = readSet + ".align.bam"
+      readFileIn1 = fullReadSetPath + ".prep.R1.fastq"
+      readFileIn2 = fullReadSetPath + ".prep.R2.fastq"
+      bamFileOut  = fullReadSetPath + ".align.bam"
       core.align.run(cfg, readFileIn1, readFileIn2, bamFileOut)
    else:
       misc.process_ion.trimIon(cfg)
       misc.process_ion.alignToGenomeIon(cfg)
 
    # call putative unique input molecules using BOTH UMI seq AND genome alignment position on random fragmentation side
-   bamFileIn  = readSet + ".align.bam"
+   bamFileIn  = fullReadSetPath+ ".align.bam"
    core.umi_filter.run(cfg, bamFileIn)
    core.umi_mark.run(cfg)   
    metrics.umi_frags.run(cfg)   
@@ -62,8 +64,8 @@ def run(args):
    core.umi_merge.run(cfg, bamFileIn)
    
    # soft clip primer regions from read alignments
-   bamFileIn  = readSet + ".umi_merge.bam"
-   bamFileOut = readSet + ".primer_clip.bam"
+   bamFileIn  = fullReadSetPath + ".umi_merge.bam"
+   bamFileOut = fullReadSetPath + ".primer_clip.bam"
    core.primer_clip.run(cfg,bamFileIn,bamFileOut,False)
 
    # additional metrics to generate
@@ -72,8 +74,8 @@ def run(args):
    metrics.sum_uniformity_primer.run(cfg) # primer-level uniformity
 
    # sort the final BAM file, to prepare for downstream variant calling
-   bamFileIn  = readSet + ".primer_clip.bam"
-   bamFileOut = readSet + ".bam"
+   bamFileIn  = fullReadSetPath + ".primer_clip.bam"
+   bamFileOut = fullReadSetPath + ".bam"
    core.samtools.sort(cfg,bamFileIn,bamFileOut)   
   
    if cfg.duplex.lower() == "false": # do not run smCounter for duplex reads
@@ -90,14 +92,14 @@ def run(args):
       # create complex variants, and annotate using snpEff
       if numVariants > 0:
          # convert nearby primitive variants to complex variants
-         bamFileIn  = readSet + ".bam"
-         vcfFileIn  = readSet + ".smCounter.cut.vcf"
-         vcfFileOut = readSet + ".smCounter.cplx.vcf"
+         bamFileIn  = fullReadSetPath + ".bam"
+         vcfFileIn  = fullReadSetPath + ".smCounter.cut.vcf"
+         vcfFileOut = fullReadSetPath + ".smCounter.cplx.vcf"
          annotate.vcf_complex.run(cfg, bamFileIn, vcfFileIn, vcfFileOut, vc)
          
          # annotate variants in the VCF file
-         vcfFileIn  = readSet + ".smCounter.cplx.vcf"
-         vcfFileOut = readSet + ".smCounter.anno.vcf"
+         vcfFileIn  = fullReadSetPath + ".smCounter.cplx.vcf"
+         vcfFileOut = fullReadSetPath + ".smCounter.anno.vcf"
          annotate.vcf_annotate.run(cfg, vcfFileIn, vcfFileOut,vc)        
    
    # aggregate all summary metrics
@@ -129,7 +131,6 @@ def run_tumor_normal(readSet,paramFile,vc):
             elif paramName == 'sampleType' and paramVal.lower() == 'tumor':
                tumor = section
 
-   print("sections",parser.sections())
 
    assert tumor!=None and normal!=None, "Could not sync read set names supplied with config file !"
   
@@ -145,6 +146,9 @@ def run_tumor_normal(readSet,paramFile,vc):
 #-------------------------------------------------------------------------------------
 if __name__ == "__main__":
 
+   miscfileparts=os.path.split(misc.__file__)
+   miscparentparts=os.path.split(miscfileparts[0])#Gets the current path of this file
+   os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
    if len(sys.argv) > 6 :
       print "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
       sys.exit(-1)

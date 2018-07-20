@@ -1,35 +1,35 @@
 #!/bin/bash
-#Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
-#   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc bzip2
-#Install the Miniconda Python pachages manager
-#echo "Next, the Miniconda package will be downloaded and installed"
-#echo "You should install it as the miniconda3 subdirectory of your home directory"
-#wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-#chmod +x Miniconda2-latest-Linux-x86_64.sh
-#sh Miniconda2-latest-Linux-x86_64.sh
-#rm Miniconda2-latest-Linux-x86_64.sh
-#Make the updated shell path available in this session:
-#source ~/.bashrc
-#Allows the use of paths starting with /opt/conda present in some configuration files
-#sudo ln -s /home/ec2-user/miniconda2 /opt/conda
-
-#conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14
-
 #Code for installing the qiagen-dna software and the example in BASH
 #Sets up a script with the environment variables needed
 srv_qiagen=/srv/qgen
+#Declare the location of the conda installaction
+conda_home=/opt/conda
+#Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
+#   informative purposes: no hurt for re-trying to install it)
+sudo yum install git unzip cpan wget gcc bzip2 python-devel
+#Install the Miniconda Python pachages manager
+echo "Next, the Miniconda package will be downloaded and installed"
+echo "You should install it at the default location shown"
+wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+chmod +x Miniconda2-latest-Linux-x86_64.sh
+sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home
+rm Miniconda2-latest-Linux-x86_64.sh
+#Make the updated shell path available in this session:
+source ~/.bashrc
+
+#conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
+conda install -c bioconda bedtools htslib cutadapt picard snpeff bwa pysam samtools biopython rstudio samtools scipy MySQL-python
+
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
 #sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
 #Output the contents of ~/.bashrc plus the content enclosed in qoutes (which is in a string representation that handles newline characters) to the file ~/.bashrc.new.qiagen
-echo -e "\n#Shell environment for qiagen\nexport PYTHONPATH=\$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
+#echo -e "\n#Shell environment for qiagen\nexport PYTHONPATH=\$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
+echo -e "\n#Shell environment for qiagen\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
 #Move the file ~/.bashrc.new.qiagen to ~/.bashrc (overwriting the existent ~/.bashrc withouk asking for confirmation)
 mv -f ~/.bashrc.new.qiagen ~/.bashrc
 ##Calls this script
 #bash -c /etc/profile.d/qiagen.sh
-#Declare the location of the conda installaction
-conda_home=~/miniconda2
 #Make the directories if don't exist
 mkdir -p ${srv_qiagen}/code && \
     mkdir -p ${srv_qiagen}/bin/downloads && \
@@ -44,13 +44,13 @@ mkdir -p ${srv_qiagen}/code && \
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-conda install -c bioconda bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 snpeff=4.2 bwa=0.7.15 picard=1.97 rstudio biopython samtools=1.5 pysam=0.9 scipy MySQL-python
+conda install -c bioconda rstudio biopython samtools pysam scipy MySQL-python
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
 conda install -c cyclus java-jdk=8.45.14
 conda install openpyxl
-pip install --upgrade-pip
+pip install --upgrade pip
 pip install statistics
 
 wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
@@ -142,6 +142,7 @@ cd ${srv_qiagen}/data/genome && \
     samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
-#time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single NEB_S2
-#python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > runtn.log 2>&1 &
+#time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single NEB_S2 &> run_v1.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single NEB_S2 &> run_v2.log &
+#python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_v1_tn.log 2>&1 &
 

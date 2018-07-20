@@ -2,8 +2,9 @@
 # tools
 cutadaptDir = /opt/conda/bin/
 bwaDir      = /opt/conda/bin/
-samtoolsDir = /srv/qgen/bin/samtools-1.5/bin/
+samtoolsDir = /opt/conda/bin/
 javaExe     = /opt/conda/jre/bin/java
+outputPath  = outv2
 
 # ssw for fast Smith-Waterman
 sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
@@ -13,7 +14,8 @@ torrentBinDir = /srv/qgen/bin/TorrentSuite/
 vcflibDir = /srv/qgen/bin/vcflib/bin/
 
 # quandico
-quandicoDir = /srv/qgen/code/qiaseq-dna/quandico/
+#quandicoDir = /srv/qgen/code/qiaseq-dna/quandico/
+quandicoDir = quandico/
 
 # general params
 numCores = 0
@@ -22,7 +24,8 @@ samtoolsMem = 2500M
 outputDetail = True
 
 # prep module - read preparation (common region trimming) params
-trimScript = /srv/qgen/code/qiaseq-dna/core/prep_trim.py
+#trimScript = /srv/qgen/code/qiaseq-dna/core/prep_trim.py
+trimScript = core/prep_trim.py
 
 # geneome file
 genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa
@@ -40,8 +43,9 @@ tagNameResample = re
 vcfComplexGapMax = 3
 
 # variant annotation
-snpEffPath   = /opt/conda/share/snpeff-4.2-0/
-snpEffConfig = /opt/conda/share/snpeff-4.2-0/snpEff.config
+#snpeff-4.3.1t-1 now instead of snpeff-4.2-0
+snpEffPath   = /opt/conda/share/snpeff-4.3.1t-1/
+snpEffConfig = /opt/conda/share/snpeff-4.3.1t-1/snpEff.config
 dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
 cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
 clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
@@ -66,6 +70,6 @@ readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
 primerFile = /srv/qgen/example/DHS-101Z.primers.txt
 roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
 platform = Illumina
-runCNV = False
+runCNV = True
 sampleType =  Single
 duplex = False

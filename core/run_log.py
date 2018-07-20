@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys
 import datetime
 import logging
@@ -11,12 +12,17 @@ timeStart = None
 # stream handler object that redirects to Python logging facility
 #----------------------------------------------------------------------
 class RedirectToLogger(object):
-   def __init__(self):
+   def __init__(self,is_stderr):
+      self.is_stderr=is_stderr
+      if is_stderr:
+        self.log_level=logging.ERROR
+      else:
+        self.log_level=logging.DEBUG
       self.logger = logging.getLogger()
  
    def write(self, buf):
       for line in buf.rstrip().splitlines():
-         self.logger.debug(line.rstrip())
+        self.logger.log(self.log_level,line.rstrip())
          
    def flush(self):
       pass
@@ -30,6 +36,7 @@ def init(logFilePrefix):
    now = datetime.datetime.now()
    timestamp = now.strftime("%Y.%m.%d_%H.%M.%S")
    logFileName = logFilePrefix + ".run_log." + timestamp + ".txt"
+   print("We will write the log file in the path",logFileName)
 
    # set up logging to a log file
    logDateFormat = "%Y-%m-%d %H:%M:%S"
@@ -41,9 +48,8 @@ def init(logFilePrefix):
                        filemode="w")
 
    # create a stream redirection object for stdout, so print() goes to logger
-   rtl = RedirectToLogger()
-   sys.stdout = rtl
-   sys.stderr = rtl
+   sys.stdout = RedirectToLogger(False)
+   sys.stderr = RedirectToLogger(True)
 
    # time the entire pipeline
    global timeStart
