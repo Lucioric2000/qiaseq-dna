@@ -63,7 +63,8 @@ def close():
    # log run completion
    timeEnd = datetime.datetime.now()
    print("total run time: " + str(timeEnd-timeStart))
-   
+   print("Execution ended at",timeEnd)
+     
    # restore stdout and stderr
    sys.stdout = sysStdOut
    sys.stdout = sysStdErr
@@ -73,4 +74,6 @@ def close():
    handler = logger.handlers[0]
    handler.stream.close()
    logger.removeHandler(handler)
+
+   print("Logger closed at",timeEnd)
    

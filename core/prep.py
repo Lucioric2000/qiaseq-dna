@@ -72,6 +72,7 @@ def splitReadFile(readFile,filePrefixOut,readSide,numBatchesMax,deleteLocalFiles
    # delete local input file if no longer needed
    if deleteLocalFiles and len(os.path.dirname(readFile)) == 0:
       os.remove(readFile)
+      print("removed local input file",readFile)
    
    # done
    return numReads, numBatches
@@ -157,7 +158,6 @@ def run(cfg):
    # make sure all batches of work completed successfully
    for batchNum in range(len(workOut)):
       if not workOut[batchNum]:
-         print("wop",workOut[batchNum])
          raise Exception("read trimming failed for batch: {:04d}".format(batchNum))
 
    # concatenate the read files back into one file
@@ -167,6 +167,7 @@ def run(cfg):
       readFileOut = "{}.{}.fastq".format(filePrefixOut,readEnd)
       if os.path.isfile(readFileOut):
          os.remove(readFileOut)
+         print("removing fileout",readFileOut)
    
       # concatenate read file and delete (Linux cat probaby faster than Python line reads)
       for batchNum in range(numBatches):
@@ -174,6 +175,7 @@ def run(cfg):
          cmd = "cat {} >> {} ".format(readFileIn,readFileOut)
          subprocess.check_call(cmd,shell=True)
          os.remove(readFileIn)
+         print("removing filein",readFileIn)
 
    # concatenate the log files - note dangerous wildcards here!
    logFileOut = open(filePrefixOut + ".log","w")
@@ -204,7 +206,6 @@ def run(cfg):
       sumFileOut.write("\t".join((str(x) for x in row)))
       sumFileOut.write("\n")
    sumFileOut.close()
-   
    # report completion
    print("prep: done")
    

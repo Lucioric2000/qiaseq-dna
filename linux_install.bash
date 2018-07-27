@@ -18,7 +18,7 @@ rm Miniconda2-latest-Linux-x86_64.sh
 source ~/.bashrc
 
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
-conda install -c bioconda bedtools htslib cutadapt picard snpeff bwa pysam samtools biopython rstudio samtools scipy MySQL-python
+conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
 
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
@@ -95,16 +95,13 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
      https://storage.googleapis.com/qiaseq-dna/data/annotation/simpleRepeat.full.bed \
       -P ${srv_qiagen}/data/annotation/
 
-## Download annotation using SnpEff command
-wget http://downloads.sourceforge.net/project/snpeff/databases/v4_2/snpEff_v4_2_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.2-0/
-rm -rf ${conda_home}/share/snpeff-4.2-0/data/
-cd ${conda_home}/share/snpeff-4.2-0/
-unzip snpEff_v4_2_GRCh37.75.zip
-#Frees up some space
-rm snpEff_v4_2_GRCh37.75.zip
-
-## The command below is not working anymore because of some certificate issue (debug later)
-#RUN ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.2-0/snpEff.jar download GRCh37.75
+## Download annotations for SnpEff (4.3)
+sudo mkdir -p ${conda_home}/share/snpeff-4.3.1t-1/data/GRCh37.75
+wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
+rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
+cd ${conda_home}/share/snpeff-4.3.1t-1/
+unzip snpEff_v4_3_GRCh37.75.zip
+/opt/conda/jre/bin/java -jar /opt/conda/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \

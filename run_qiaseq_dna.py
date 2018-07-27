@@ -79,7 +79,6 @@ def run(args):
    core.samtools.sort(cfg,bamFileIn,bamFileOut)   
   
    if cfg.duplex.lower() == "false": # do not run smCounter for duplex reads
-
       if cfg.platform.lower() != "illumina": # ion reads
          misc.tvc.run(cfg)
 

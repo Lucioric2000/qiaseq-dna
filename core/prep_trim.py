@@ -1,6 +1,6 @@
 import sys
 import subprocess
-import os
+import os, shutil
 import os.path
 
 #-------------------------------------------------------------------------------------
@@ -25,22 +25,22 @@ def runShellCommand(cmd):
 def run(cutadaptDir,umiTagName,filePrefix):
 
    # split read set name from input file directory (NOTE: ".R1.fastq" and ".R2.fastq" are required file suffixes here!)
-   dirIn, filePrefix = os.path.split(filePrefix)
-   if len(dirIn) > 0:
-      dirIn = dirIn + "/"
+   #dirIn, filePrefix = os.path.split(filePrefix)
+   #if len(dirIn) > 0:
+   #   dirIn = dirIn + "/"
    
    # trim R1 reads 3' end (gets R2 12 bp barcode, 11-mer common, and ILMN adapter not cut by ILMN software) (primer side)
    cmd  = cutadaptDir + "cutadapt -e 0.18 -O 3 " \
         + "-a AGGACTCCAAT -n 1 " \
         + "-o " + filePrefix + ".temp0.R1.fastq " \
-        + dirIn + filePrefix +       ".R1.fastq "
+                + filePrefix +       ".R1.fastq "#antes era dirIn + filePrefix + ".R1.fastq "
    runShellCommand(cmd)
    
    # trim R2 reads 3' end (gets R1 custom sequencing adapter region not cut by ILMN software - customer sequencing primer settings usually wrong) (barcode side)
    cmd  = cutadaptDir + "cutadapt -e 0.18 -O 3 " \
         + "-a CAAAACGCAATACTGTACATT -n 1 " \
         + "-o " + filePrefix + ".temp0.R2.fastq " \
-        + dirIn + filePrefix +       ".R2.fastq "
+                + filePrefix +       ".R2.fastq "#antes era dirIn + filePrefix + ".R1.fastq "
    runShellCommand(cmd)
       
    # open output
@@ -121,10 +121,13 @@ def run(cutadaptDir,umiTagName,filePrefix):
    # delete unneeded temp files
    os.remove(filePrefix + ".temp0.R1.fastq")
    os.remove(filePrefix + ".temp0.R2.fastq")
-   
+   print("worked with filePrefix",filePrefix,filePrefix + ".temp1.R1.fastq",filePrefix + ".temp1.R2.fastq")
+
    # rename the output files - overwrite the input files!
    os.rename(filePrefix + ".temp1.R1.fastq", filePrefix + ".R1.fastq")
    os.rename(filePrefix + ".temp1.R2.fastq", filePrefix + ".R2.fastq")
+   #shutil.copyfile(filePrefix + ".temp1.R1.fastq", filePrefix + ".R1.fastq")
+   #shutil.copyfile(filePrefix + ".temp1.R2.fastq", filePrefix + ".R2.fastq")
    
 #-------------------------------------------------------------------------------------
 if __name__ == "__main__":

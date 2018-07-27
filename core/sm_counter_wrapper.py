@@ -35,7 +35,7 @@ def makeLowPIFile(readSet,smCounterThreshold):
 
 def run(cfg, paramFile, vc):
    # get read set name
-   readSet = cfg.readSet
+   (path,readSet) = os.path.split(cfg.readSet)
 
    # get standard smCounter parameters from the main run-params.txt file
    parser = ConfigParser.SafeConfigParser()
@@ -55,24 +55,25 @@ def run(cfg, paramFile, vc):
 
    if vc == 'v1':
       cfgSmCounter["mtDepth"] = cfg.umiDepthMean # this comes from metrics.umi_depths module   
+      cfgSmCounter["runPath"] = os.path.normpath(path)
       # run smCounter variant caller
       smCounterThreshold = sm_counter_v1.sm_counter.main(cfgSmCounter)      
    else:
-      cfgSmCounter["runPath"] = os.getcwd()
+      cfgSmCounter["runPath"] = os.path.normpath(path)
       sm_counter_v2.sm_counter_v2.main(cfgSmCounter)
       smCounterThreshold = 6
 
    # create low PI file for v1
    if vc == 'v1':
-      makeLowPIFile(readSet,smCounterThreshold)
+      makeLowPIFile(cfg.readSet,smCounterThreshold)
    
    # write smCounter threshold to disk file, for main summary table
-   fileout = open(readSet + ".smCounter.summary.txt", "w")
+   fileout = open(cfg.readSet + ".smCounter.summary.txt", "w")
    fileout.write("{}\tsmCounter variant calling threshold\n".format(smCounterThreshold))
    fileout.close()
    # return number of primitive variants called
    numVariants = -1
-   for line in open(readSet + ".smCounter.cut.txt","r"):
+   for line in open(cfg.readSet + ".smCounter.cut.txt","r"):
       numVariants += 1
    return numVariants
    
