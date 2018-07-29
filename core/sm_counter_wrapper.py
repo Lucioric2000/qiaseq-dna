@@ -53,6 +53,7 @@ def run(cfg, paramFile, vc):
    cfgSmCounter["nCPU"     ] = cfg.numCores
    cfgSmCounter["refGenome"] = cfg.genomeFile
 
+   olddir=os.getcwd()#Save the current dirname for changing to it back after execution of smCounter
    if vc == 'v1':
       cfgSmCounter["mtDepth"] = cfg.umiDepthMean # this comes from metrics.umi_depths module   
       cfgSmCounter["runPath"] = os.path.normpath(path)
@@ -62,6 +63,7 @@ def run(cfg, paramFile, vc):
       cfgSmCounter["runPath"] = os.path.normpath(path)
       sm_counter_v2.sm_counter_v2.main(cfgSmCounter)
       smCounterThreshold = 6
+   os.chdir(olddir)#returns to the directory that was current before the execution of smCounter
 
    # create low PI file for v1
    if vc == 'v1':
