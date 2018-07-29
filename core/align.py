@@ -88,7 +88,7 @@ def run_through_tempfile(cfg, readFile1, readFile2, bamFileOut):
    + " 1> " + bamFileOut \
    + " 2> " + logFileSamtools
    print("bwacmd",cmd1)
-   print("camcmd",cmd2)
+   print("samcmd",cmd2)
    #Hasta el momento se han quitado -Cen bwa y -1 en samtools
    subprocess.check_call(cmd1, shell=True)
    subprocess.check_call(cmd2, shell=True)

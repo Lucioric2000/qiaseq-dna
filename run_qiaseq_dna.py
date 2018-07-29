@@ -1,5 +1,5 @@
 import ConfigParser
-import sys, os
+import sys, os, argparse
 import multiprocessing
 # our modules
 import core.run_log
@@ -29,10 +29,10 @@ import annotate.vcf_annotate
 # call input molecules, build consenus reads, align to genome, trim primer region
 #--------------------------------------------------------------------------------------
 def run(args):
-   readSet, paramFile, vc = args
+   readSet, paramFile, vc, outputPath = args
 
    # read run configuration file to memory
-   cfg = core.run_config.run(readSet,paramFile)
+   cfg = core.run_config.run(readSet,paramFile,outputPath)
    fullReadSetPath=cfg.readSet
 
    # initialize logger
@@ -108,7 +108,7 @@ def run(args):
    core.run_log.close()
 
 
-def run_tumor_normal(readSet,paramFile,vc):
+def run_tumor_normal(readSet,paramFile,vc,outputPath):
    ''' Wrapper around run() for tumor-normal analysis
    '''
    # 2 read set names which are space delimited
@@ -133,10 +133,10 @@ def run_tumor_normal(readSet,paramFile,vc):
 
    assert tumor!=None and normal!=None, "Could not sync read set names supplied with config file !"
   
-   run((normal,paramFile,vc))
-   run((tumor,paramFile,vc))
+   run((normal,paramFile,vc,outputPath))
+   run((tumor,paramFile,vc,outputPath))
    ## Additional analysis steps
-   cfg = core.run_config.run(tumor,paramFile)
+   cfg = core.run_config.run(tumor,paramFile,outputPath)
    core.tumor_normal.removeNormalVariants(cfg)
    core.tumor_normal.runCopyNumberEstimates(cfg)
 
@@ -144,22 +144,18 @@ def run_tumor_normal(readSet,paramFile,vc):
 # main program for running from shell 
 #-------------------------------------------------------------------------------------
 if __name__ == "__main__":
+   cfg=core.run_config.parse_command_line_arguments()#This function handles the command line parsing and validtion, and, in its case, the prinitng of the USAGE screen
+   #assert 0,(cfg,vars(cfg),cfg())
 
    miscfileparts=os.path.split(misc.__file__)
    miscparentparts=os.path.split(miscfileparts[0])#Gets the current path of this file
    os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
-   if len(sys.argv) > 6 :
-      print "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
-      sys.exit(-1)
+   #Anterior command line: "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
+   readSet   = " ".join(cfg.readSet)
 
-   paramFile = sys.argv[1]
-   vc = sys.argv[2]
-   analysis = sys.argv[3]
-   readSet   = " ".join(sys.argv[4:]) # 2 readSets in case of tumor-normal
-
-   if analysis.lower() == "tumor-normal":     
-      run_tumor_normal(readSet,paramFile,vc)
+   if cfg.analysis.lower() == "tumor-normal":     
+      run_tumor_normal(readSet,cfg.paramFile,cfg.vc,cfg.outputPath)
    else: # Single sample, might still need to run quandico
-      run((readSet,paramFile,vc))
-      cfg = core.run_config.run(readSet,paramFile)
+      run((readSet,cfg.paramFile,cfg.vc,cfg.outputPath))
+      cfg = core.run_config.run(readSet,cfg.paramFile,cfg.outputPath)
       core.tumor_normal.runCopyNumberEstimates(cfg)

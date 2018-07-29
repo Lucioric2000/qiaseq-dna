@@ -4,7 +4,6 @@ cutadaptDir = /opt/conda/bin/
 bwaDir      = /opt/conda/bin/
 samtoolsDir = /opt/conda/bin/
 javaExe     = /opt/conda/jre/bin/java
-outputPath  = outv1
 
 # ssw for fast Smith-Waterman
 sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
@@ -24,7 +23,6 @@ samtoolsMem = 2500M
 outputDetail = True
 
 # prep module - read preparation (common region trimming) params
-#trimScript = /srv/qgen/code/qiaseq-dna/core/prep_trim.py
 trimScript = core/prep_trim.py
 
 # geneome file
