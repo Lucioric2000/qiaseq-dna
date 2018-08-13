@@ -1,22 +1,28 @@
 #!/bin/bash
 #Code for installing the qiagen-dna software and the example in BASH
-#Sets up a script with the environment variables needed
-srv_qiagen=/srv/qgen
-#Declare the location of the conda installaction
-conda_home=/opt/conda
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
 sudo yum install git unzip cpan wget gcc bzip2 python-devel
-#Install the Miniconda Python pachages manager
-echo "Next, the Miniconda package will be downloaded and installed"
-echo "You should install it at the default location shown"
-wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-chmod +x Miniconda2-latest-Linux-x86_64.sh
-sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home
-rm Miniconda2-latest-Linux-x86_64.sh
-#Make the updated shell path available in this session:
-source ~/.bashrc
-
+#Sets up a script with the environment variables needed
+srv_qiagen=/srv/qgen
+#Declare the location of the conda installaction
+condabin=`which conda`
+if [ -z $condabin]
+then
+    conda_home=/opt/conda
+    #Install the Miniconda Python pachages manager
+    echo "Next, the Miniconda package will be downloaded and installed"
+    echo "You should install it at the default location shown"
+    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+    chmod +x Miniconda2-latest-Linux-x86_64.sh
+    sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home
+    rm Miniconda2-latest-Linux-x86_64.sh
+    #Make the updated shell path available in this session:
+    source ~/.bashrc
+else
+    conda_home=${conda_home%/bin/conda}
+    echo "Conda installation found at $conda_home. Script will use tht installation."
+fi
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
 conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
 
