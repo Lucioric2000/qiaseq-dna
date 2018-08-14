@@ -9,7 +9,7 @@ cd qiaseq-dna
 srv_qiagen=/srv/qgen
 #Declare the location of the conda installaction
 condabin=`which conda`
-if [ -z $condabin]
+if [ -z $condabin ]
 then
     conda_home=/opt/conda
     #Install the Miniconda Python pachages manager
