@@ -3,6 +3,8 @@
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
 sudo yum install git unzip cpan wget gcc bzip2 python-devel
+git clone https://github.com/Lucioric2000/qiaseq-dna
+cd qiaseq-dna
 #Sets up a script with the environment variables needed
 srv_qiagen=/srv/qgen
 #Declare the location of the conda installaction
