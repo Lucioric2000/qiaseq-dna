@@ -22,7 +22,7 @@ then
     #Make the updated shell path available in this session:
     source ~/.bashrc
 else
-    conda_home=${conda_home%/bin/conda}
+    conda_home=${condabin%/bin/conda}
     echo "Conda installation found at $conda_home. Script will use tht installation."
 fi
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
