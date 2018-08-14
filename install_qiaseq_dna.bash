@@ -39,8 +39,7 @@ mv -f ~/.bashrc.new.qiagen ~/.bashrc
 ##Calls this script
 #bash -c /etc/profile.d/qiagen.sh
 #Make the directories if don't exist
-mkdir -p ${srv_qiagen}/code && \
-    mkdir -p ${srv_qiagen}/bin/downloads && \
+mkdir -p ${srv_qiagen}/bin/downloads && \
     mkdir -p ${srv_qiagen}/data/genome && \
     mkdir -p ${srv_qiagen}/data/annotation && \
     mkdir -p ${srv_qiagen}/example/
@@ -105,10 +104,10 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
 
 ## Download annotations for SnpEff (4.3)
 sudo mkdir -p ${conda_home}/share/snpeff-4.3.1t-1/data/GRCh37.75
-wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
-rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
+sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
+sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
 cd ${conda_home}/share/snpeff-4.3.1t-1/
-unzip snpEff_v4_3_GRCh37.75.zip
+sudo unzip snpEff_v4_3_GRCh37.75.zip
 /opt/conda/jre/bin/java -jar /opt/conda/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
 
 ## Annotation file
@@ -117,14 +116,14 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
 
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
-wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
+sudo wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
          https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
      -P ${srv_qiagen}/bin/TorrentSuite/
-chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
+sudo chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
 
 
 ## Add example fastqs and files
-wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
+sudo wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
          https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
