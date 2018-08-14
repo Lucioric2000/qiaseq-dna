@@ -51,6 +51,7 @@ mkdir -p ${srv_qiagen}/bin/downloads && \
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
+source activate base
 sudo ${conda_home}/bin/conda install -c bioconda rstudio biopython samtools pysam scipy MySQL-python
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
@@ -116,14 +117,14 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
 
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
-sudo wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
+wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
          https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
      -P ${srv_qiagen}/bin/TorrentSuite/
-sudo chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
+chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
 
 
 ## Add example fastqs and files
-sudo wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
+wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
          https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
