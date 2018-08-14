@@ -26,7 +26,7 @@ else
     echo "Conda installation found at $conda_home. Script will use tht installation."
 fi
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
-conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
+sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
 
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
@@ -52,14 +52,14 @@ mkdir -p ${srv_qiagen}/code && \
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-conda install -c bioconda rstudio biopython samtools pysam scipy MySQL-python
+sudo ${conda_home}/bin/conda install -c bioconda rstudio biopython samtools pysam scipy MySQL-python
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
-conda install -c cyclus java-jdk=8.45.14
-conda install openpyxl
-pip install --upgrade pip
-pip install statistics
+sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
+sudo ${conda_home}/bin/conda install openpyxl
+${conda_home}/bin/pip install --upgrade pip
+${conda_home}/bin/pip install statistics
 
 wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
 cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz
@@ -75,17 +75,17 @@ wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https:
     cd sendgrid-python-2.2.1 && python setup.py install
 
 ################ R packages ################
-echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > ~/.Rprofile
-Rscript -e "install.packages('plyr')"
-Rscript -e "install.packages('MASS')"
-Rscript -e "install.packages('ggplot2')"
-Rscript -e "install.packages('gridExtra')"
-Rscript -e "install.packages('naturalsort')"
-Rscript -e "install.packages('scales')"
-Rscript -e "install.packages('extrafont')"
+sudo echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > /root/.Rprofile
+sudo ${conda_home}/bin/Rscript -e "install.packages('plyr')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('MASS')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
+sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
 
 ## Perl
-cpan Module::Runtime DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+sudo cpan Module::Runtime DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ################ Add data directory ################
 
