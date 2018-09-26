@@ -3,10 +3,15 @@
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
 sudo yum install git unzip cpan wget gcc bzip2 python-devel
-git clone https://github.com/Lucioric2000/qiaseq-dna
+srv_qiagen=/srv/qgen
+sudo mkdir ${srv_qiagen}
+cd ${srv_qiagen}
+
+git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
 cd qiaseq-dna
 #Sets up a script with the environment variables needed
-srv_qiagen=/srv/qgen
+#To uninstall:
+#sudo rm -rf /srv/qgen; sudo rm -rf /opt/conda
 #Declare the location of the conda installaction
 condabin=`which conda`
 if [ -z $condabin ]
@@ -28,7 +33,6 @@ fi
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
 sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
 
-sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
 #sudo echo -e "#Shell environment for qiagen\nexport PYTHONPATH=$PYTHONPATH:${srv_qiagen}/code/qiaseq-dna/\nexport LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/">/etc/profile.d/qiagen.sh
 #Output the contents of ~/.bashrc plus the content enclosed in qoutes (which is in a string representation that handles newline characters) to the file ~/.bashrc.new.qiagen
@@ -85,7 +89,7 @@ sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
 
 ## Perl
-sudo cpan Module::Runtime DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+sudo cpan Module::Runtime XML::Twig DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ################ Add data directory ################
 
@@ -147,7 +151,7 @@ cd ${srv_qiagen}/data/genome && \
     samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
-#time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single NEB_S2 &> run_v1.log &
-#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single NEB_S2 &> run_v2.log &
+#time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2 NEB_S2 &> run_v2.log &
 #python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_v1_tn.log 2>&1 &
 
