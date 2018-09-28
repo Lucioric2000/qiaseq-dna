@@ -9,9 +9,10 @@ sudo chmod 777 ${srv_qiagen}
 cd ${srv_qiagen}
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
-if [[ $qseqdnamatch -eq "qiaseq-dna" ]]; then
+if [[ $qseqdnamatch -eq "qiaseq-dna" ]]
+then
     echo "Already in qiaseq-dna folder."
-else;
+else
     echo "Not in qiaseq-dna folder."
     git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
     cd qiaseq-dna
