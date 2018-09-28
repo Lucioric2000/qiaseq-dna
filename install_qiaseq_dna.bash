@@ -5,7 +5,7 @@
 sudo yum install git unzip cpan wget gcc bzip2 python-devel
 srv_qiagen=/srv/qgen
 sudo mkdir ${srv_qiagen}
-sudo chmod 775 ${srv_qiagen}
+sudo chmod 777 ${srv_qiagen}
 cd ${srv_qiagen}
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
