@@ -2,7 +2,7 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc bzip2 python-devel
+sudo yum install git unzip cpan wget gcc bzip2 python-devel expat-devel openssl-devel
 srv_qiagen=/srv/qgen
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
@@ -28,6 +28,7 @@ condabin=`which conda`
 if [ -z $condabin ]
 then
     conda_home=/opt/conda
+    conda_home=/srv/conda
     #Install the Miniconda Python pachages manager
     echo "Next, the Miniconda package will be downloaded and installed"
     echo "You should install it at the default location shown"
@@ -45,16 +46,16 @@ fi
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-source activate base
+source ${conda_home}/bin/activate base
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
 sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
-sudo ${conda_home}/bin/conda install openpyxl
+sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64
 sudo ${conda_home}/bin/pip install --upgrade pip
-sudo ${conda_home}/bin/pip install statistics
+sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
-sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio samtools scipy MySQL-python
+sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 
 #Output the contents of ~/.bashrc plus the content enclosed in qoutes (which is in a string representation that handles newline characters) to the file ~/.bashrc.new.qiagen
 #echo -e "\n#Shell environment for qiagen\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
@@ -82,23 +83,27 @@ sudo ldconfig
 ## Download and install 3rd party libraries
 wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
     cd ${srv_qiagen}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
-    cd py-editdist-0.3 && python setup.py install && \
+    cd py-editdist-0.3 && sudo ${conda_home}/bin/python setup.py install && \
     cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
-    cd sendgrid-python-2.2.1 && python setup.py install
+    cd sendgrid-python-2.2.1 && sudo ${conda_home}/bin/python setup.py install
 
 ################ R packages ################
-sudo echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" > /root/.Rprofile
-sudo ${conda_home}/bin/Rscript -e "install.packages('plyr')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('MASS')"
+echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
+#sudo ${conda_home}/bin/Rscript -e "install.packages('plyr')"
+#sudo ${conda_home}/bin/Rscript -e "install.packages('MASS')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
+#sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
+#sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
 
 ## Perl
-sudo cpan Module::Runtime
-sodo cpan XML::Twig DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+sudo cpan install CPAN
+sudo cpan reload cpan
+sudo cpan install CPAN::Meta CPAN::Meta::YAML ExtUtils::CBuilder Module::Metadata Parse::CPAN::Meta Perl::OSType TAP::Harness JSON::PP
+
+sudo cpan Module::Runtime HTTP::Date Test::Pod XML::Twig
+sudo cpan IO::Socket::SSL DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
@@ -157,7 +162,7 @@ wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
 cd ${srv_qiagen}/data/genome && \
     gunzip ucsc.hg19.fa.gz  && \
     ## Index the fasta using samtools
-    samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+    ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 
