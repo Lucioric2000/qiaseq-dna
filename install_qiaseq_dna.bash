@@ -159,17 +159,17 @@ wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.varian
 ## Download genome files
 wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
          https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
-cd ${srv_qiagen}/data/genome && \
-    gunzip ucsc.hg19.fa.gz  && \
-    ## Index the fasta using samtools
-    ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-    ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
-
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
          -P ${srv_qiagen}/data/annotation/
 
+#Index the genome fasta file
+cd ${srv_qiagen}/data/genome && \
+    gunzip ucsc.hg19.fa.gz  && \
+    ## Index the fasta using samtools
+    ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+    ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
 
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
