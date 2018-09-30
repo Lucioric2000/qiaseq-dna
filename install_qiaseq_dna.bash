@@ -57,20 +57,7 @@ sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client=
 #conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
 sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 
-#Output the contents of ~/.bashrc plus the content enclosed in qoutes (which is in a string representation that handles newline characters) to the file ~/.bashrc.new.qiagen
-#echo -e "\n#Shell environment for qiagen\nexport LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:${srv_qiagen}/bin/ssw/src/"|cat ~/.bashrc ->~/.bashrc.new.qiagen
-#Move the file ~/.bashrc.new.qiagen to ~/.bashrc (overwriting the existent ~/.bashrc withouk asking for confirmation)
-#mv -f ~/.bashrc.new.qiagen ~/.bashrc
-##Calls this script
-#bash -c /etc/profile.d/qiagen.sh
-#Make the directories if don't exist
-mkdir -p ${srv_qiagen}/bin/downloads && \
-    mkdir -p ${srv_qiagen}/data/genome && \
-    mkdir -p ${srv_qiagen}/data/annotation && \
-    mkdir -p ${srv_qiagen}/example/
-
-#Update the updatable software in Debian repositories
-#sudo apt-get -y update
+mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
 ################ Install various version specific 3rd party tools ################
 
@@ -164,10 +151,9 @@ wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
          -P ${srv_qiagen}/data/annotation/
 
-#Index the genome fasta file
+#Index the genome fasta file, using samtools and bwa
 cd ${srv_qiagen}/data/genome && \
     gunzip ucsc.hg19.fa.gz  && \
-    ## Index the fasta using samtools
     ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
