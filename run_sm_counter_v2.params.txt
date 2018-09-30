@@ -1,9 +1,9 @@
 [general]
 # tools
-cutadaptDir = /opt/conda/bin/
-bwaDir      = /opt/conda/bin/
-samtoolsDir = /opt/conda/bin/
-javaExe     = /opt/conda/jre/bin/java
+cutadaptDir = /srv/conda/bin/
+bwaDir      = /srv/conda/bin/
+samtoolsDir = /srv/conda/bin/
+javaExe     = /srv/conda/jre/bin/java
 
 # ssw for fast Smith-Waterman
 sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
@@ -42,8 +42,8 @@ vcfComplexGapMax = 3
 
 # variant annotation
 #snpeff-4.3.1t-1 now instead of snpeff-4.2-0
-snpEffPath   = /opt/conda/share/snpeff-4.3.1t-1/
-snpEffConfig = /opt/conda/share/snpeff-4.3.1t-1/snpEff.config
+snpEffPath   = /srv/conda/share/snpeff-4.3.1t-1/
+snpEffConfig = /srv/conda/share/snpeff-4.3.1t-1/snpEff.config
 dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
 cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
 clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
