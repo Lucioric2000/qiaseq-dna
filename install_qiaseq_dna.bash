@@ -2,7 +2,7 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc bzip2 python-devel
+sudo yum install git unzip cpan wget gcc bzip2 python-devel nano
 srv_qiagen=/srv/qgen
 sudo mkdir ${srv_qiagen}
 sudo chmod 777 ${srv_qiagen}
@@ -19,7 +19,7 @@ else
 fi
 #Sets up a script with the environment variables needed
 #To uninstall:
-#sudo rm -rf /srv/qgen; sudo rm -rf /opt/conda
+#sudo rm -rf /srv/qgen; sudo rm -rf /opt/conda; sudo rm -rf /srv/conda
 #Declare the location of the conda installation
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
@@ -45,7 +45,7 @@ fi
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-source activate base
+source ${conda_home}/bin/activate base
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
@@ -97,6 +97,7 @@ sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
 
 ## Perl
+sudo cpan install CPAN reload CPAN
 sudo cpan Module::Runtime
 sodo cpan XML::Twig DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
@@ -129,7 +130,7 @@ sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_
 sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
 cd ${conda_home}/share/snpeff-4.3.1t-1/
 sudo unzip snpEff_v4_3_GRCh37.75.zip
-/opt/conda/jre/bin/java -jar /opt/conda/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
+${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
