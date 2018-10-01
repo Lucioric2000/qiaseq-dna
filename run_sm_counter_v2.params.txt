@@ -58,15 +58,19 @@ mtThreshold = 0.8
 minAltUMI = 3
 maxAltAllele = 2
 primerDist = 2 
-repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
-srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
+#repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
+#srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
+repBed = /srv/qgen/data/annotation/simpleRepeat.hg38.bed
+srBed = /srv/qgen/data/annotation/SR_LC_SL.hg38.bed
 
 # readSet
 [NEB_S2]
 readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
 readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
-primerFile = /srv/qgen/example/DHS-101Z.primers.txt
-roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+#primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+#roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.txt
 platform = Illumina
 runCNV = True
 sampleType =  Single
