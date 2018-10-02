@@ -2,18 +2,19 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc bzip2 python-devel nano expat-devel openssl-devel
+sudo yum install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
 srv_qiagen=/srv/qgen
-sudo mkdir ${srv_qiagen}
-sudo chmod -R 777 ${srv_qiagen}
-cd ${srv_qiagen}
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
-if [[ $qseqdnamatch -eq "qiaseq-dna" ]]
+if [[ $qseqdnamatch = "qiaseq-dna" ]]
 then
     echo "Already in qiaseq-dna folder."
+    sudo chmod -R 777 ${srv_qiagen}
 else
     echo "Not in qiaseq-dna folder."
+    sudo mkdir ${srv_qiagen}
+    cd ${srv_qiagen}
+    sudo chmod -R 777 ${srv_qiagen}
     git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
     cd qiaseq-dna
 fi
@@ -137,7 +138,10 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
 wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
          https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
+     https://storage.googleapis.com/qiaseq-dna/example/CDHS-13593Z-900.primer3.txt  \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
+         -P ${srv_qiagen}/example/
+wget https://github.com/qiaseq/qiaseq-dna/files/2401686/CDHS-13593Z-900.primer3.txt \
          -P ${srv_qiagen}/example/
 
 ## Add test files for smCounterv2
@@ -151,10 +155,6 @@ wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.varian
 ## Download genome files
 wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
          https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
-
-## Annotation file
-wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
-         -P ${srv_qiagen}/data/annotation/
 
 #Index the genome fasta file, using samtools and bwa
 cd ${srv_qiagen}/data/genome && \

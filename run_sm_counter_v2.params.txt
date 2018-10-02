@@ -58,10 +58,10 @@ mtThreshold = 0.8
 minAltUMI = 3
 maxAltAllele = 2
 primerDist = 2 
-#repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
-#srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
-repBed = /srv/qgen/data/annotation/simpleRepeat.hg38.bed
-srBed = /srv/qgen/data/annotation/SR_LC_SL.hg38.bed
+repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
+srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
+#repBed = /srv/qgen/data/annotation/simpleRepeat.hg38.bed
+#srBed = /srv/qgen/data/annotation/SR_LC_SL.hg38.bed
 
 # readSet
 [NEB_S2]
