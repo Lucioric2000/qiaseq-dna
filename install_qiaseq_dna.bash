@@ -143,7 +143,9 @@ wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.
          -P ${srv_qiagen}/example/
 wget https://github.com/qiaseq/qiaseq-dna/files/2401686/CDHS-13593Z-900.primer3.txt \
          -P ${srv_qiagen}/example/
-
+wget https://github.com/qiaseq/qiaseq-dna/files/2405163/CDHS-13593Z-900.roi.txt \
+         -P ${srv_qiagen}/example/
+mv /srv/qgen/example/CDHS-13593Z-900.roi.txt /srv/qgen/example/CDHS-13593Z-900.roi.bed
 ## Add test files for smCounterv2
 mkdir -p ${srv_qiagen}/test_smcounter-v2/
 wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed \
