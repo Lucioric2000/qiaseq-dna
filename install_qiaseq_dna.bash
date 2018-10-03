@@ -2,7 +2,7 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
+sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
 srv_qiagen=/srv/qgen
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
@@ -15,6 +15,8 @@ else
     sudo mkdir ${srv_qiagen}
     cd ${srv_qiagen}
     sudo chmod -R 777 ${srv_qiagen}
+    mv qiaseq-dna qiaseq-dna-old
+    echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
     git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
     cd qiaseq-dna
 fi
@@ -164,8 +166,10 @@ cd ${srv_qiagen}/data/genome && \
     ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
     ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
 
+cd ${srv_qiagen}/qiaseq-dna
+
 
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
-#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2 NEB_S2 &> run_v2.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v5 NEB_S2 &> run_v2_5.log &
 #python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_v1_tn.log 2>&1 &
 
