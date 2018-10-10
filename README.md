@@ -37,10 +37,14 @@ This package contains the smCounter-v2 variant caller
 #### annotate
 This package contains downstream VCF annotation using snpEff.
 
-
+#### Installing:
+There are two ways to get ready to run the commands in the sample, or the commands required by you.
+Installer (beta):
+------------------
+There are a shell installer (qiaseq_installer.bash) that should be run before running the commands in the sample, to install the dependencies needed by the software, download the data files and index the data in the genome files.
 Docker image for third-party dependencies
 -----------------------------------------
-The python modules in this repository have many dependencies on third-party NGS software (e.g. BWA, samtools, etc.) and GNU Linux utilities (sort, zcat, etc).  Please **DO NOT ATTEMPT** to use the python modules in this git repository without first running the code on the example read set using our Docker image:
+The python modules in this repository have many dependencies on third-party NGS software (e.g. BWA, samtools, etc.) and GNU Linux utilities (sort, zcat, etc).  Please **DO NOT ATTEMPT** to use the python modules in this git repository without first running the code on the example read set using our Docker image (the docker image does not contains the changes made in this fork):
 
 ```bash
 ### Pull the docker image
@@ -60,7 +64,7 @@ cp /srv/qgen/code/qiaseq-dna/run_sm_counter_v1.params.txt ./
 ### Edit the bottom of run_consensus.params.txt if you need to change the read set and primer file
 
 ### Run the pipeline
-python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single NEB_S2 > run.log 2>&1 &  
+python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single smc1out NEB_S2 > run.log 2>&1 &  
 ```
 
 **The parameters are explained below :**
@@ -70,6 +74,8 @@ python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt 
 ***v1*** : smCounter variant caller version to use. You can specify v1 or v2. Please use run_sm_counter_v2.params.txt if specifying v2.
 
 ***single*** : Whether this is a single read set analysis or tumor-normal.
+
+***smc1out**: The directory for the output files (if it does not exists, and if it exists, files with the same name of the files generated will be overwritten). This option is in experimental (beta) status.
 
 ***NEB_S2*** : Corresponds to the name of the readSet, should match the section in the params file. For tumor-normal analysis please specify the two read set names delimited by a space.
 
@@ -112,7 +118,7 @@ You may also give a comma delimited string with the paths to multiple sum.primer
 
 Run the pipeline as :
 ```
-python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run.log 2>&1 &
+python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal out_tumnorm_v1 tumor_readset normal_readset > run.log 2>&1 &
 ```
 
 The dependencies are fully documented in the Dockerfile in this repository.
