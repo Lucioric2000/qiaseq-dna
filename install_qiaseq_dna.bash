@@ -57,7 +57,6 @@ sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
 sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64
 sudo ${conda_home}/bin/pip install --upgrade pip
 sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
-#conda install bedtools=2.25.0 htslib=1.3.1 cutadapt=1.10 picard=1.97 snpeff=4.2 bwa=0.7.15 pysam=0.9.0 java-jdk=8.45.14 samtools 1.5
 sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
@@ -79,13 +78,9 @@ wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https:
 
 ################ R packages ################
 echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
-#sudo ${conda_home}/bin/Rscript -e "install.packages('plyr')"
-#sudo ${conda_home}/bin/Rscript -e "install.packages('MASS')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
-#sudo ${conda_home}/bin/Rscript -e "install.packages('scales')"
-#sudo ${conda_home}/bin/Rscript -e "install.packages('extrafont')"
 
 ## Perl
 sudo cpan install CPAN
@@ -121,15 +116,12 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
       -P ${srv_qiagen}/data/annotation/
 
 ## Download annotations for SnpEff (4.3)
-# /databases/v4_3/snpEff_v4_3_GRCh38.86.zip
-#sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh38.86.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
 sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
 sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
 cd ${conda_home}/share/snpeff-4.3.1t-1/
-#sudo unzip snpEff_v4_3_GRCh38.86.zip
 sudo unzip snpEff_v4_3_GRCh37.75.zip
-#${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh38.86
 ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
+#If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in the preceeding lines
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
@@ -140,14 +132,11 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
 wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
          https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
-     https://storage.googleapis.com/qiaseq-dna/example/CDHS-13593Z-900.primer3.txt  \
+     #https://storage.googleapis.com/qiaseq-dna/example/CDHS-13593Z-900.primer3.txt  \
      https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
+     #https://github.com/qiaseq/qiaseq-dna/files/2405163/CDHS-13593Z-900.roi.txt \
          -P ${srv_qiagen}/example/
-wget https://github.com/qiaseq/qiaseq-dna/files/2401686/CDHS-13593Z-900.primer3.txt \
-         -P ${srv_qiagen}/example/
-wget https://github.com/qiaseq/qiaseq-dna/files/2405163/CDHS-13593Z-900.roi.txt \
-         -P ${srv_qiagen}/example/
-mv /srv/qgen/example/CDHS-13593Z-900.roi.txt /srv/qgen/example/CDHS-13593Z-900.roi.bed
+#mv /srv/qgen/example/CDHS-13593Z-900.roi.txt /srv/qgen/example/CDHS-13593Z-900.roi.bed
 ## Add test files for smCounterv2
 mkdir -p ${srv_qiagen}/test_smcounter-v2/
 wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed \
@@ -168,7 +157,7 @@ cd ${srv_qiagen}/data/genome && \
 
 cd ${srv_qiagen}/qiaseq-dna
 
-
+#After installing, you may rin smcounter with commands like that:
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v5 NEB_S2 &> run_v2_5.log &
 #python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_v1_tn.log 2>&1 &
