@@ -10,8 +10,8 @@ if [[ $qseqdnamatch = "qiaseq-dna" ]]
 then
     echo "Already in qiaseq-dna folder."
     sudo chmod -R 777 ${srv_qiagen}
-    git pull
-    git pull origin
+    #git pull
+    git pull origin master
     git submodule sync --recursive
 else
     echo "Not in qiaseq-dna folder."

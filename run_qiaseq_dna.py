@@ -171,7 +171,7 @@ if __name__ == "__main__":
          else:
             outputpath=cfg.outputPath
          print("parun",read,cfg.paramFile,cfg.vc,outputpath)
-         continue
+         #continue
          run((read,cfg.paramFile,cfg.vc,outputpath))
          cfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
          core.tumor_normal.runCopyNumberEstimates(cfg)
