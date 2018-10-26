@@ -151,11 +151,27 @@ if __name__ == "__main__":
    miscparentparts=os.path.split(miscfileparts[0])#Gets the current path of this file
    os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
    #Anterior command line: "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
-   readSet   = " ".join(cfg.readSet)
+   #readSet   = " ".join(cfg.readSet)
 
-   if cfg.analysis.lower() == "tumor-normal":     
-      run_tumor_normal(readSet,cfg.paramFile,cfg.vc,cfg.outputPath)
+   if cfg.analysis.lower() == "tumor-normal":
+      for (iread,read) in enumerate(cfg.readSet):
+         if "{1}" in cfg.outputPath:
+            outputpath=cfg.outputPath.format(read,iread)
+         elif "{0}" in cfg.outputPath:
+            outputpath=cfg.outputPath.format(read)
+         else:
+            outputpath=cfg.outputPath
+         run_tumor_normal(read,cfg.paramFile,cfg.vc,outputpath)
    else: # Single sample, might still need to run quandico
-      run((readSet,cfg.paramFile,cfg.vc,cfg.outputPath))
-      cfg = core.run_config.run(readSet,cfg.paramFile,cfg.outputPath)
-      core.tumor_normal.runCopyNumberEstimates(cfg)
+      for (iread,read) in enumerate(cfg.readSet):
+         if "{1}" in cfg.outputPath:
+            outputpath=cfg.outputPath.format(read,iread)
+         elif "{0}" in cfg.outputPath:
+            outputpath=cfg.outputPath.format(read)
+         else:
+            outputpath=cfg.outputPath
+         print("parun",read,cfg.paramFile,cfg.vc,outputpath)
+         continue
+         run((read,cfg.paramFile,cfg.vc,outputpath))
+         cfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
+         core.tumor_normal.runCopyNumberEstimates(cfg)

@@ -10,6 +10,9 @@ if [[ $qseqdnamatch = "qiaseq-dna" ]]
 then
     echo "Already in qiaseq-dna folder."
     sudo chmod -R 777 ${srv_qiagen}
+    git pull
+    git pull origin
+    git submodule sync --recursive
 else
     echo "Not in qiaseq-dna folder."
     sudo mkdir ${srv_qiagen}
@@ -158,7 +161,13 @@ cd ${srv_qiagen}/data/genome && \
 cd ${srv_qiagen}/qiaseq-dna
 
 #After installing, you may rin smcounter with commands like that:
+#Smcounterv1
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
+#Smcounterv2
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v5 NEB_S2 &> run_v2_5.log &
+#Tumor-normal analysis
 #python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_v1_tn.log 2>&1 &
+#Multiple samples
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
 
