@@ -61,6 +61,7 @@ def run(cfg,bamFileIn):
    primerSsw0 = {}
    primerSsw1 = {}
    for line in open(primerFile, "r"):
+      print("pline",line)
       (chrom, loc3, direction, primer) = line.strip().split("\t")
       primerStrand = 0 if direction == "L" or direction == "0" else 1
       primerRc = reverseComplement(primer)

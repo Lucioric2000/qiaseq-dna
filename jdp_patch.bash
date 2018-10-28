@@ -2,26 +2,26 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
+#sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
 srv_qiagen=/srv/qgen
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
 if [[ $qseqdnamatch = "qiaseq-dna" ]]
 then
     echo "Already in qiaseq-dna folder."
-    sudo chmod -R 777 ${srv_qiagen}
+    #sudo chmod -R 777 ${srv_qiagen}
     #git pull
-    git pull origin master
-    git submodule update --recursive
-    git submodule sync --recursive
+    #git pull origin master
+    #git submodule update --recursive
+    #git submodule sync --recursive
 else
     echo "Not in qiaseq-dna folder."
-    sudo mkdir ${srv_qiagen}
+    #sudo mkdir ${srv_qiagen}
     cd ${srv_qiagen}
-    sudo chmod -R 777 ${srv_qiagen}
-    mv qiaseq-dna qiaseq-dna-old
-    echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
-    git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
+    #sudo chmod -R 777 ${srv_qiagen}
+    #mv qiaseq-dna qiaseq-dna-old
+    #echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
+    #git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
     cd qiaseq-dna
 fi
 #Sets up a script with the environment variables needed
@@ -37,12 +37,12 @@ then
     #conda_home=/opt/conda
     conda_home=/srv/conda
     #Install the Miniconda Python pachages manager
-    echo "Next, the Miniconda package will be downloaded and installed"
-    echo "You should install it at the default location shown"
-    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-    chmod +x Miniconda2-latest-Linux-x86_64.sh
-    sudo sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u
-    rm Miniconda2-latest-Linux-x86_64.sh
+    #echo "Next, the Miniconda package will be downloaded and installed"
+    #echo "You should install it at the default location shown"
+    #wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+    #chmod +x Miniconda2-latest-Linux-x86_64.sh
+    #sudo sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u
+    #rm Miniconda2-latest-Linux-x86_64.sh
     #Make the updated shell path available in this session:
     source ~/.bashrc
 else
@@ -57,50 +57,50 @@ source ${conda_home}/bin/activate base
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
-sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
-sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64
-sudo ${conda_home}/bin/pip install --upgrade pip
-sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
-sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
+#sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
+#sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64
+#sudo ${conda_home}/bin/pip install --upgrade pip
+#sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
+#sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 
-mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
+#mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
 ################ Install various version specific 3rd party tools ################
 
-wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
-cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz
-sudo bash -c "echo '/srv/qgen/bin/ssw/src'>/etc/ld.so.conf.d/ssw.conf"
+#wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${srv_qiagen}/bin/
+#cd ${srv_qiagen}/bin/ && tar -xvf ssw.tar.gz
+#sudo bash -c "echo '/srv/qgen/bin/ssw/src'>/etc/ld.so.conf.d/ssw.conf"
 #Import the configuration files into the system
-sudo ldconfig
+#sudo ldconfig
 
 ## Download and install 3rd party libraries
-wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
-    cd ${srv_qiagen}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
-    cd py-editdist-0.3 && sudo ${conda_home}/bin/python setup.py install && \
-    cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
-    cd sendgrid-python-2.2.1 && sudo ${conda_home}/bin/python setup.py install
+#wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
+#    cd ${srv_qiagen}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
+#    cd py-editdist-0.3 && sudo ${conda_home}/bin/python setup.py install && \
+#    cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
+#    cd sendgrid-python-2.2.1 && sudo ${conda_home}/bin/python setup.py install
 
 ################ R packages ################
-echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
-sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
+#echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
+#sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
+#sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
+#sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
 
 ## Perl
-sudo cpan install CPAN
-sudo cpan reload cpan
-sudo cpan install XML XML::Twig XML::XPath HTML::TreeBuilder
-sudo cpan install CPAN::Meta CPAN::Meta::YAML ExtUtils::CBuilder Module::Metadata Parse::CPAN::Meta Perl::OSType TAP::Harness JSON::PP
+#sudo cpan install CPAN
+#sudo cpan reload cpan
+#sudo cpan install XML XML::Twig XML::XPath HTML::TreeBuilder
+#sudo cpan install CPAN::Meta CPAN::Meta::YAML ExtUtils::CBuilder Module::Metadata Parse::CPAN::Meta Perl::OSType TAP::Harness JSON::PP
 
-sudo cpan install Module::Runtime HTTP::Date Test::Pod XML::Twig
-sudo cpan install IO::Socket::SSL DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+#sudo cpan install Module::Runtime HTTP::Date Test::Pod XML::Twig
+#sudo cpan install IO::Socket::SSL DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
 
 ################ TVC binaries ################
-mkdir -p ${srv_qiagen}/bin/TorrentSuite/
-wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
-         https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
-     -P ${srv_qiagen}/bin/TorrentSuite/
-chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
+#mkdir -p ${srv_qiagen}/bin/TorrentSuite/
+#wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
+#         https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
+#     -P ${srv_qiagen}/bin/TorrentSuite/
+#chmod 775 ${srv_qiagen}/bin/TorrentSuite/tmap ${srv_qiagen}/bin/TorrentSuite/tvc
 
 ################ Add data directory ################
 
@@ -156,9 +156,9 @@ wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
 #a successful bwa run below
 md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac &>/dev/null && echo found bwa results file with the epected hash || (
     cd ${srv_qiagen}/data/genome && \
-        gunzip ucsc.hg19.fa.gz  && \
-        echo lugar de ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-        echo lugar de ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
+        #gunzip ucsc.hg19.fa.gz  && \
+        #echo placeholder for ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+        #echo placeholder for ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
         md5sum -b ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac > ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 )
 cd ${srv_qiagen}/qiaseq-dna
 
@@ -172,4 +172,6 @@ cd ${srv_qiagen}/qiaseq-dna
 #Multiple samples
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
-
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} NEB_S2 NEB_S3 &> run_v6.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} NEB_S2 NEB_S2bis &> run_v6.log &
+#time /srv/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} NEB_S2 NEB_S2bis &> run_v6.log &

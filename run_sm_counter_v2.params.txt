@@ -67,8 +67,21 @@ srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
 [NEB_S2]
 readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
 readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
-#primerFile = /srv/qgen/example/DHS-101Z.primers.txt
-primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+#roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
+platform = Illumina
+runCNV = True
+sampleType =  Single
+duplex = False
+
+# readSet
+[NEB_S2bis]
+readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
 #roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
 roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
 platform = Illumina

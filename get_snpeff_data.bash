@@ -8,4 +8,4 @@ sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_
 sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
 cd ${conda_home}/share/snpeff-4.3.1t-1/
 sudo unzip snpEff_v4_3_GRCh38.86.zip
-${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh38.86
+sudo ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh38.86
