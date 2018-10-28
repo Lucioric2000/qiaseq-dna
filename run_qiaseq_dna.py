@@ -1,3 +1,4 @@
+from __future__ import print_function
 import ConfigParser
 import sys, os, argparse
 import multiprocessing
@@ -36,7 +37,7 @@ def run(args):
    fullReadSetPath=cfg.readSet
 
    # initialize logger
-   core.run_log.init(fullReadSetPath)
+   core.run_log.init(fullReadSetPath,cfg)
 
    if cfg.platform.lower() == "illumina":
 
@@ -145,13 +146,14 @@ def run_tumor_normal(readSet,paramFile,vc,outputPath):
 #-------------------------------------------------------------------------------------
 if __name__ == "__main__":
    cfg=core.run_config.parse_command_line_arguments()#This function handles the command line parsing and validtion, and, in its case, the prinitng of the USAGE screen
-   #assert 0,(cfg,vars(cfg),cfg())
 
    miscfileparts=os.path.split(misc.__file__)
    miscparentparts=os.path.split(miscfileparts[0])#Gets the current path of this file
    os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
    #Anterior command line: "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
-   #readSet   = " ".join(cfg.readSet)
+   print("pid:",os.getpid())
+   #referenceUmiFiles = getattr(cfg,'refUmiFiles',cfg.readSet+'.sum.primer.umis.txt').split(",")
+   #assert 0,referenceUmiFiles
 
    if cfg.analysis.lower() == "tumor-normal":
       for (iread,read) in enumerate(cfg.readSet):
@@ -161,6 +163,7 @@ if __name__ == "__main__":
             outputpath=cfg.outputPath.format(read)
          else:
             outputpath=cfg.outputPath
+         #print("paruntn",read,cfg.paramFile,cfg.vc,outputpath)
          run_tumor_normal(read,cfg.paramFile,cfg.vc,outputpath)
    else: # Single sample, might still need to run quandico
       for (iread,read) in enumerate(cfg.readSet):
@@ -170,8 +173,7 @@ if __name__ == "__main__":
             outputpath=cfg.outputPath.format(read)
          else:
             outputpath=cfg.outputPath
-         print("parun",read,cfg.paramFile,cfg.vc,outputpath)
-         #continue
+         #print("parun",read,cfg.paramFile,cfg.vc,outputpath)
          run((read,cfg.paramFile,cfg.vc,outputpath))
-         cfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
-         core.tumor_normal.runCopyNumberEstimates(cfg)
+         runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
+         core.tumor_normal.runCopyNumberEstimates(runcfg)

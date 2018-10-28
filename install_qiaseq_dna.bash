@@ -10,11 +10,12 @@ if [[ $qseqdnamatch = "qiaseq-dna" ]]
 then
     echo "Already in qiaseq-dna folder."
     sudo chmod -R 777 ${srv_qiagen}
-    #git pull
     git pull origin master
     git submodule update --recursive
     git submodule sync --recursive
 else
+    #Now, this script, when executed from outside the qiaseq folder, it downloads the qiaseq repository and then executes the script 'install_qiaseq_dna.bash'.
+    #This allows that the installer be updated and not to have to provide the updated installer script
     echo "Not in qiaseq-dna folder."
     sudo mkdir ${srv_qiagen}
     cd ${srv_qiagen}
@@ -23,6 +24,8 @@ else
     echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
     git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
     cd qiaseq-dna
+    ./install_qiaseq_dna.bash $@
+    exit
 fi
 #Sets up a script with the environment variables needed
 #To uninstall:
@@ -34,7 +37,6 @@ fi
 condabin=`which conda`
 if [ -z $condabin ]
 then
-    #conda_home=/opt/conda
     conda_home=/srv/conda
     #Install the Miniconda Python pachages manager
     echo "Next, the Miniconda package will be downloaded and installed"
@@ -154,7 +156,8 @@ wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
 
 #Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 #a successful bwa run below
-md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac &>/dev/null && echo found bwa results file with the epected hash || (
+#md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
+ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
     cd ${srv_qiagen}/data/genome && \
         gunzip ucsc.hg19.fa.gz  && \
         echo lugar de ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 

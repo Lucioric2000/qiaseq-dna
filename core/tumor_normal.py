@@ -7,7 +7,8 @@ def runCopyNumberEstimates(cfg):
    '''
    if cfg.runCNV.lower() == "false":
       return
-   referenceUmiFiles = cfg.refUmiFiles.split(",")
+   readSet = cfg.readSet
+   referenceUmiFiles = getattr(cfg,'refUmiFiles',readSet+'.sum.primer.umis.txt').split(",")
    assert len(referenceUmiFiles) >= 1, "No reference UMI Files supplied !"
     
    # read reference UMI counts, normalize by read set, and get median for each primer across read sets (not necessary for only one reference read set)
@@ -39,7 +40,6 @@ def runCopyNumberEstimates(cfg):
    dnaComplementTranslation = string.maketrans("ATGC", "TACG")
    
    # open output file for quandico input
-   readSet = cfg.readSet
    umiFileReference = readSet + ".copy-number.reference.txt"
    fileout = open(umiFileReference, "w")
       

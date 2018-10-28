@@ -12,13 +12,15 @@ timeStart = None
 # stream handler object that redirects to Python logging facility
 #----------------------------------------------------------------------
 class RedirectToLogger(object):
-   def __init__(self,is_stderr):
+   def __init__(self,is_stderr,logfilename):
       self.is_stderr=is_stderr
       if is_stderr:
         self.log_level=logging.ERROR
       else:
         self.log_level=logging.DEBUG
-      self.logger = logging.getLogger()
+      self.logger = logging.getLogger(logfilename)
+      handler=logging.FileHandler(logfilename,mode="w")
+      self.logger.addHandler(handler)
  
    def write(self, buf):
       for line in buf.rstrip().splitlines():
@@ -30,31 +32,32 @@ class RedirectToLogger(object):
 #----------------------------------------------------------------------
 # initialize the logging
 #----------------------------------------------------------------------
-def init(logFilePrefix):
+def init(logFilePrefix,cfg):
 
    # format a log file name
    now = datetime.datetime.now()
    timestamp = now.strftime("%Y.%m.%d_%H.%M.%S")
    logFileName = logFilePrefix + ".run_log." + timestamp + ".txt"
-   print("We will write the log file in the path",logFileName)
+   # time the entire pipeline
+   global timeStart
+   timeStart = datetime.datetime.now()
+   print("We will write the log file in the path",logFileName,logFilePrefix)
+   print("started at " + str(timeStart))
 
    # set up logging to a log file
    logDateFormat = "%Y-%m-%d %H:%M:%S"
    logFormat = "%(asctime)s.%(msecs)03d %(message)s"
-   logging.basicConfig(level=logging.DEBUG,
-                       format=logFormat,
-                       datefmt=logDateFormat,
-                       filename=logFileName,
-                       filemode="w")
-
+   logging.basicConfig(level=logging.DEBUG,format=logFormat,datefmt=logDateFormat)
+                     #filename=logFileName,filemode="w")
+  
    # create a stream redirection object for stdout, so print() goes to logger
-   sys.stdout = RedirectToLogger(False)
-   sys.stderr = RedirectToLogger(True)
+   sys.stdout = RedirectToLogger(False,logFileName)
+   sys.stderr = RedirectToLogger(True,logFileName)
+   cfg.print_data(logFilePrefix)
 
-   # time the entire pipeline
-   global timeStart
-   timeStart = datetime.datetime.now()
-   print("started at " + str(timeStart))
+
+
+
 
 #----------------------------------------------------------------------
 # close log file and restore stdout and stderr
@@ -64,16 +67,18 @@ def close():
    timeEnd = datetime.datetime.now()
    print("total run time: " + str(timeEnd-timeStart))
    print("Execution ended at",timeEnd)
-     
+   hdlrtonow=sys.stdout
+   logger=hdlrtonow.logger
    # restore stdout and stderr
    sys.stdout = sysStdOut
-   sys.stdout = sysStdErr
+   sys.stderr = sysStdErr
    
    # close log file, clean up
-   logger = logging.getLogger()
-   handler = logger.handlers[0]
-   handler.stream.close()
-   logger.removeHandler(handler)
+   #logger = logging.getLogger()
+   for (ihandler,handler) in enumerate(logger.handlers):
+     handler = logger.handlers[0]
+     handler.stream.close()
+     logger.removeHandler(handler)
 
    print("Logger closed at",timeEnd)
    
