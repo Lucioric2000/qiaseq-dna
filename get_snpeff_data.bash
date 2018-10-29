@@ -1,11 +1,14 @@
 #!/bin/bash
 ## Download annotations for SnpEff (4.3)
 conda_home=/srv/conda
-# /databases/v4_3/snpEff_v4_3_GRCh38.86.zip
-#sudo mkdir -p ${conda_home}/share/snpeff-4.3.1t-1/data/GRCh37.75
-sudo mkdir -p ${conda_home}/share/snpeff-4.3.1t-1/data/GRCh38.86
-sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh38.86.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
-sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
-cd ${conda_home}/share/snpeff-4.3.1t-1/
-sudo unzip snpEff_v4_3_GRCh38.86.zip
-sudo ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh38.86
+snpeff_version=4.3.1t-1
+snpeff_version_short=4_3
+genome_version=GRCh37.75
+
+sudo mkdir -p ${conda_home}/share/snpeff-${snpeff_version}/data/${genome_version}
+sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v${snpeff_version_short}/snpEff_v${snpeff_version_short}_${genome_version}.zip -P ${conda_home}/share/snpeff-${snpeff_version}/
+sudo rm -rf ${conda_home}/share/snpeff-${snpeff_version}/data/
+cd ${conda_home}/share/snpeff-${snpeff_version}/
+sudo unzip snpEff_v${snpeff_version_short}_${genome_version}.zip
+#sudo chmod 777 ${conda_home}/share/snpeff-${snpeff_version}
+sudo ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-${snpeff_version}/snpEff.jar download ${genome_version}

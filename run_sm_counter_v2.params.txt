@@ -14,7 +14,8 @@ vcflibDir = /srv/qgen/bin/vcflib/bin/
 
 # quandico
 #quandicoDir = /srv/qgen/code/qiaseq-dna/quandico/
-quandicoDir = quandico/
+#quandicoDir = quandico/
+quandicoDir = copy_number/
 
 # general params
 numCores = 0

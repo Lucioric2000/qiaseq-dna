@@ -59,10 +59,10 @@ source ${conda_home}/bin/activate base
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version
-sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
-sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64
 sudo ${conda_home}/bin/pip install --upgrade pip
 sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
+sudo ${conda_home}/bin/conda install -c cyclus java-jdk=8.45.14
+sudo ${conda_home}/bin/conda install openpyxl gxx_linux-64 gcc_linux-64 gfortran_linux-64
 sudo ${conda_home}/bin/conda install -c bioconda bedtools htslib cutadapt picard snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
@@ -89,13 +89,16 @@ sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
 
 ## Perl
-sudo cpan install CPAN
-sudo cpan reload cpan
-sudo cpan install XML XML::Twig XML::XPath HTML::TreeBuilder
-sudo cpan install CPAN::Meta CPAN::Meta::YAML ExtUtils::CBuilder Module::Metadata Parse::CPAN::Meta Perl::OSType TAP::Harness JSON::PP
+cpan install CPAN
+cpan reload cpan
+cpan install HTTP::Tiny Archive::Zip Test::MockModule
+cpan install XML XML::Twig XML::XPath XML::Parser HTML::TreeBuilder YAML HTML::Entities HTML::HeadParser HTML::Element HTML::Tree
+cpan install CPAN::Meta CPAN::Meta::YAML ExtUtils::CBuilder Module::Metadata Parse::CPAN::Meta Perl::OSType TAP::Harness JSON::PP
 
-sudo cpan install Module::Runtime HTTP::Date Test::Pod XML::Twig
-sudo cpan install IO::Socket::SSL DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+cpan install Module::Runtime HTTP::Date Test::Pod Sub::Identify
+cpan install IO::Socket::SSL DateTime DBI DBD::SQLite Env::Path File::chdir Getopt::Long::Descriptive Sort:Naturally Config::IniFiles Data::Dump::Color Data::Table::Excel Hash::Merge File::Slurp
+#Requirements for quandico:
+#sudo cpan install Config::IniFiles inc::latest
 
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
@@ -125,12 +128,12 @@ sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_
 sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
 cd ${conda_home}/share/snpeff-4.3.1t-1/
 sudo unzip snpEff_v4_3_GRCh37.75.zip
-sudo ${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
+sudo chmod 777 ${conda_home}/share/snpeff-${snpeff_version}
+${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in the preceeding lines
 
 ## Annotation file
-wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt \
-         -P ${srv_qiagen}/data/annotation/
+wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt -P ${srv_qiagen}/data/annotation/
 
 
 ## Add example fastqs and files
@@ -150,18 +153,18 @@ wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.varian
      https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam.bai \
      -P ${srv_qiagen}/test_smcounter-v2/
 
-## Download genome files
-wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
-         https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
 
 #Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 #a successful bwa run below
 #md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
 ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
+## Download genome files
+    wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
+         https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
     cd ${srv_qiagen}/data/genome && \
         gunzip ucsc.hg19.fa.gz  && \
-        echo lugar de ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-        echo lugar de ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
+        ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+        ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
         md5sum -b ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac > ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 )
 cd ${srv_qiagen}/qiaseq-dna
 
@@ -175,4 +178,5 @@ cd ${srv_qiagen}/qiaseq-dna
 #Multiple samples
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.1.log &
 

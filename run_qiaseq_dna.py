@@ -1,6 +1,6 @@
 from __future__ import print_function
 import ConfigParser
-import sys, os, argparse
+import sys, os, argparse, traceback, socket
 import multiprocessing
 # our modules
 import core.run_log
@@ -31,7 +31,7 @@ import annotate.vcf_annotate
 #--------------------------------------------------------------------------------------
 def run(args):
    readSet, paramFile, vc, outputPath = args
-
+   
    # read run configuration file to memory
    cfg = core.run_config.run(readSet,paramFile,outputPath)
    fullReadSetPath=cfg.readSet
@@ -39,72 +39,83 @@ def run(args):
    # initialize logger
    core.run_log.init(fullReadSetPath,cfg)
 
-   if cfg.platform.lower() == "illumina":
+   try:
+      if socket.gethostname()=='vmi186699.contaboserver.net' and outputPath=="out2v6_NEB_S2_0":
+         #Clause only for the development server and sample instance out2v6_NEB_S2_0
+         print("inicc")
+         core.tumor_normal.runCopyNumberEstimates(cfg)
+         # close log file
+         core.run_log.close()
+         return
+      if cfg.platform.lower() == "illumina":
 
-      if cfg.duplex.lower() == "true": ## Duplex sequencing run
-         core.prep_trim_duplex.trimDuplex(cfg)
-      else:
-         # trim 3' ends of both reads, and extract UMI sequence
-         core.prep.run(cfg)
-   
-      # align trimmed reads to genome using BWA MEM
-      readFileIn1 = fullReadSetPath + ".prep.R1.fastq"
-      readFileIn2 = fullReadSetPath + ".prep.R2.fastq"
-      bamFileOut  = fullReadSetPath + ".align.bam"
-      core.align.run(cfg, readFileIn1, readFileIn2, bamFileOut)
-   else:
-      misc.process_ion.trimIon(cfg)
-      misc.process_ion.alignToGenomeIon(cfg)
-
-   # call putative unique input molecules using BOTH UMI seq AND genome alignment position on random fragmentation side
-   bamFileIn  = fullReadSetPath+ ".align.bam"
-   core.umi_filter.run(cfg, bamFileIn)
-   core.umi_mark.run(cfg)   
-   metrics.umi_frags.run(cfg)   
-   metrics.umi_depths.run(cfg)   
-   core.umi_merge.run(cfg, bamFileIn)
-   
-   # soft clip primer regions from read alignments
-   bamFileIn  = fullReadSetPath + ".umi_merge.bam"
-   bamFileOut = fullReadSetPath + ".primer_clip.bam"
-   core.primer_clip.run(cfg,bamFileIn,bamFileOut,False)
-
-   # additional metrics to generate
-   metrics.sum_primer_umis.run(cfg) # primer-level umi and read metrics
-   metrics.sum_specificity.run(cfg) # priming specificity
-   metrics.sum_uniformity_primer.run(cfg) # primer-level uniformity
-
-   # sort the final BAM file, to prepare for downstream variant calling
-   bamFileIn  = fullReadSetPath + ".primer_clip.bam"
-   bamFileOut = fullReadSetPath + ".bam"
-   core.samtools.sort(cfg,bamFileIn,bamFileOut)   
-  
-   if cfg.duplex.lower() == "false": # do not run smCounter for duplex reads
-      if cfg.platform.lower() != "illumina": # ion reads
-         misc.tvc.run(cfg)
-
-      # run smCounter variant calling
-      numVariants = core.sm_counter_wrapper.run(cfg, paramFile, vc)
+         if cfg.duplex.lower() == "true": ## Duplex sequencing run
+            core.prep_trim_duplex.trimDuplex(cfg)
+         else:
+            # trim 3' ends of both reads, and extract UMI sequence
+            core.prep.run(cfg)
       
-      if cfg.platform.lower() != "illumina":
-         numVariants = misc.tvc.smCounterFilter(cfg,vc)
+         # align trimmed reads to genome using BWA MEM
+         readFileIn1 = fullReadSetPath + ".prep.R1.fastq"
+         readFileIn2 = fullReadSetPath + ".prep.R2.fastq"
+         bamFileOut  = fullReadSetPath + ".align.bam"
+         core.align.run(cfg, readFileIn1, readFileIn2, bamFileOut)
+      else:
+         misc.process_ion.trimIon(cfg)
+         misc.process_ion.alignToGenomeIon(cfg)
 
-      # create complex variants, and annotate using snpEff
-      if numVariants > 0:
-         # convert nearby primitive variants to complex variants
-         bamFileIn  = fullReadSetPath + ".bam"
-         vcfFileIn  = fullReadSetPath + ".smCounter.cut.vcf"
-         vcfFileOut = fullReadSetPath + ".smCounter.cplx.vcf"
-         annotate.vcf_complex.run(cfg, bamFileIn, vcfFileIn, vcfFileOut, vc)
+      # call putative unique input molecules using BOTH UMI seq AND genome alignment position on random fragmentation side
+      bamFileIn  = fullReadSetPath+ ".align.bam"
+      core.umi_filter.run(cfg, bamFileIn)
+      core.umi_mark.run(cfg)   
+      metrics.umi_frags.run(cfg)   
+      metrics.umi_depths.run(cfg)   
+      core.umi_merge.run(cfg, bamFileIn)
+      
+      # soft clip primer regions from read alignments
+      bamFileIn  = fullReadSetPath + ".umi_merge.bam"
+      bamFileOut = fullReadSetPath + ".primer_clip.bam"
+      core.primer_clip.run(cfg,bamFileIn,bamFileOut,False)
+
+      # additional metrics to generate
+      metrics.sum_primer_umis.run(cfg) # primer-level umi and read metrics
+      metrics.sum_specificity.run(cfg) # priming specificity
+      metrics.sum_uniformity_primer.run(cfg) # primer-level uniformity
+
+      # sort the final BAM file, to prepare for downstream variant calling
+      bamFileIn  = fullReadSetPath + ".primer_clip.bam"
+      bamFileOut = fullReadSetPath + ".bam"
+      core.samtools.sort(cfg,bamFileIn,bamFileOut)   
+     
+      if cfg.duplex.lower() == "false": # do not run smCounter for duplex reads
+         if cfg.platform.lower() != "illumina": # ion reads
+            misc.tvc.run(cfg)
+
+         # run smCounter variant calling
+         numVariants = core.sm_counter_wrapper.run(cfg, paramFile, vc)
          
-         # annotate variants in the VCF file
-         vcfFileIn  = fullReadSetPath + ".smCounter.cplx.vcf"
-         vcfFileOut = fullReadSetPath + ".smCounter.anno.vcf"
-         annotate.vcf_annotate.run(cfg, vcfFileIn, vcfFileOut,vc)        
-   
-   # aggregate all summary metrics
-   metrics.sum_all.run(cfg)
-   
+         if cfg.platform.lower() != "illumina":
+            numVariants = misc.tvc.smCounterFilter(cfg,vc)
+
+         # create complex variants, and annotate using snpEff
+         if numVariants > 0:
+            # convert nearby primitive variants to complex variants
+            bamFileIn  = fullReadSetPath + ".bam"
+            vcfFileIn  = fullReadSetPath + ".smCounter.cut.vcf"
+            vcfFileOut = fullReadSetPath + ".smCounter.cplx.vcf"
+            annotate.vcf_complex.run(cfg, bamFileIn, vcfFileIn, vcfFileOut, vc)
+            
+            # annotate variants in the VCF file
+            vcfFileIn  = fullReadSetPath + ".smCounter.cplx.vcf"
+            vcfFileOut = fullReadSetPath + ".smCounter.anno.vcf"
+            annotate.vcf_annotate.run(cfg, vcfFileIn, vcfFileOut,vc)        
+      
+      # aggregate all summary metrics
+      metrics.sum_all.run(cfg)
+      core.tumor_normal.runCopyNumberEstimates(cfg)
+
+   except Exception as exc:
+      traceback.print_exc()
    # close log file
    core.run_log.close()
 
@@ -176,4 +187,3 @@ if __name__ == "__main__":
          #print("parun",read,cfg.paramFile,cfg.vc,outputpath)
          run((read,cfg.paramFile,cfg.vc,outputpath))
          runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
-         core.tumor_normal.runCopyNumberEstimates(runcfg)
