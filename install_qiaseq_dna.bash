@@ -79,7 +79,7 @@ sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
 sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
 
-./install_perl_modules.bash
+#./install_perl_modules.bash
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
 wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
@@ -103,13 +103,7 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
      https://storage.googleapis.com/qiaseq-dna/data/annotation/simpleRepeat.full.bed \
       -P ${srv_qiagen}/data/annotation/
 
-## Download annotations for SnpEff (4.3)
-sudo wget http://downloads.sourceforge.net/project/snpeff/databases/v4_3/snpEff_v4_3_GRCh37.75.zip -P ${conda_home}/share/snpeff-4.3.1t-1/
-sudo rm -rf ${conda_home}/share/snpeff-4.3.1t-1/data/
-cd ${conda_home}/share/snpeff-4.3.1t-1/
-sudo unzip snpEff_v4_3_GRCh37.75.zip
-sudo chmod 777 ${conda_home}/share/snpeff-${snpeff_version}
-${conda_home}/jre/bin/java -jar ${conda_home}/share/snpeff-4.3.1t-1/snpEff.jar download GRCh37.75
+./get_snpeff_data.bash ${conda_home} 4.3.1t-1 4_3 GRCh37.75
 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in the preceeding lines
 
 ## Annotation file
