@@ -25,7 +25,7 @@ def run_pipeline():
     """
 
     cmd = (
-        """ python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 """
+        """ python /srv/qgen/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 """
         """ single NEB_S2 > run.log 2>&1 """
     )
     return_code =  utils.run_shell_cmd(cmd)

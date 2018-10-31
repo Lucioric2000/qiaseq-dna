@@ -18,8 +18,8 @@ ${conda_home}/bin/conda config --add channels conda-forge
 sudo ${conda_preffix}/bin/pip install --upgrade pip
 sudo ${conda_preffix}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0
 #sudo ${conda_home}/bin/conda install -n ${conda_env} -c tsnyder gcc_linux-cos6-x86_64 tsnyder gxx_linux-cos6-x86_64 tsnyder binutils_linux-cos6-x86_64
-sudo ${conda_home}/bin/conda install -n ${conda_env} -c bioconda perl perl-cpan perl-cpan-shell perl-app-cpanminus
+sudo ${conda_home}/bin/conda install -n ${conda_env} -c bioconda perl perl-cpan-shell perl-app-cpanminus
 sudo ${conda_home}/bin/conda install -n ${conda_env} -c cyclus java-jdk=8.45.14
 sudo ${conda_home}/bin/conda install -n ${conda_env} openpyxl gxx_linux-64 gcc_linux-64 gfortran_linux-64
-sudo ${conda_home}/bin/conda install -n ${conda_env} -c bioconda r-ggplot2 bedtools htslib cutadapt picard=2.18.12 snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
+sudo ${conda_home}/bin/conda install -n ${conda_env} -c bioconda r-ggplot2 bedtools htslib cutadapt picard=2.18.15 snpeff snpsift bwa pysam samtools biopython rstudio r-essentials r-mass r-scales r-extrafont r-plyr samtools scipy MySQL-python
 sudo ${conda_home}/bin/conda install -n ${conda_env} -c conda-forge r-gridextra r-naturalsort

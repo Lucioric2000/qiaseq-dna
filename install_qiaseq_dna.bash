@@ -57,7 +57,7 @@ fi
 #This includes R (rstudio) and biopython
 conda_env=base
 source ${conda_home}/bin/activate $conda_env
-./conda_packages.bash ${conda_home} $conda_env
+./conda_packages.bash ${conda_home} ${CONDA_PREFIX} $conda_env
 ./install_perl_modules ${conda_home} ${CONDA_PREFIX} $conda_env
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
@@ -77,11 +77,7 @@ wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https:
 
 ################ R packages ################
 echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
-sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('ggplot2')"
-#sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('gridExtra')"
-sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('naturalsort')"
 
-#./install_perl_modules.bash
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
 wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
@@ -105,12 +101,10 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
      https://storage.googleapis.com/qiaseq-dna/data/annotation/simpleRepeat.full.bed \
       -P ${srv_qiagen}/data/annotation/
 
-./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75
-#If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in the preceeding lines
+./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt -P ${srv_qiagen}/data/annotation/
-
 
 ## Add example fastqs and files
 wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
@@ -144,7 +138,7 @@ ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa 
         md5sum -b ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac > ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 )
 cd ${srv_qiagen}/qiaseq-dna
 
-#Before running, you shoudl activate the conda environment:
+#Before running, you should activate the 'base' conda environment, with the following command:
 #source /srv/conda/bin/activate base
 #After installing, you may run smcounter with commands like that:
 #Smcounterv1
