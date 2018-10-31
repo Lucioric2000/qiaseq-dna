@@ -9,7 +9,8 @@ options(error = quote({
 
 # save current directory, change to code directory (need to remove hard-code here)
 dirsave <- getwd()
-setwd("/srv/qgen/code/qiaseq-dna/copy_number/R/")
+#setwd("/srv/qgen/code/qiaseq-dna/copy_number/R/")
+setwd(paste(dirsave,"copy_number/R/",sep="/"))
 
 # import libraries and own sources
 #suppressPackageStartupMessages(
@@ -498,7 +499,7 @@ for (genename in unique(depth$gene)) {
   
   # do the multiplotting
   if (counter == 4) {
-    multiplot(plotlist = plots, layout=config.report.layout)
+    multiplot(plotlist = plots, file     = paste(output.dir , '/Quandico_4_plots.pdf', sep=""),layout=config.report.layout)
     plots<-list()
     counter = 0
   }
@@ -689,7 +690,7 @@ for (genename in unique(depth$gene)) {
 
 if (counter == 2) {
   # add the last plot to the pdf (if any)
-  multiplot(plotlist = plots, layout=config.report.layout)
+  multiplot(plotlist = plots, file     = paste(output.dir , '/Quandico_2_plots.pdf', sep=""),,layout=config.report.layout)
 }
 
 if (nrow(vcf) > 0) {

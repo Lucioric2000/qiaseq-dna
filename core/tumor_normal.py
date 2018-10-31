@@ -85,8 +85,9 @@ def runCopyNumberEstimates(cfg):
    fileout.close()
 
    # make work directory
-   if not os.path.exists("_quandico_work_"):
-      os.mkdir("_quandico_work_")
+   work_dir=cfg.file_path("_quandico_work_")
+   if not os.path.exists(work_dir):
+      os.makedirs(work_dir)
    
    # get code dir for quandico
    codeDirQuandico = cfg.quandicoDir
@@ -96,10 +97,11 @@ def runCopyNumberEstimates(cfg):
 
    # call quandico (note: hack in quandico.pl looks for ".copy-number" in the -b parameter)
    filePrefix = "{}.copy-number".format(readSet)
-   cmd = "perl {}quandico.pl ".format(codeDirQuandico) \
+   #Uses system's perl, not the Perl installed by conda to run bwa
+   cmd = "/usr/bin/perl {}quandico.pl ".format(codeDirQuandico) \
        + "-E {}cluster.pl ".format(codeDirQuandico) \
        + "-y {}R/ ".format(codeDirQuandico) \
-       + "-t _quandico_work_ " \
+       + "-t {} ".format(work_dir) \
        + "-s data={} -s x=2 -s y=0 ".format(umiFileSample)  \
        + "-r data={} -r x=2 -r y=0 ".format(umiFileReference)  \
        + "-G data={} -G name=GRCh37 ".format(genomeFile) \

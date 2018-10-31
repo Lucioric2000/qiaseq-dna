@@ -2,7 +2,7 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel
+sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc
 srv_qiagen=/srv/qgen
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
@@ -55,8 +55,10 @@ fi
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-source ${conda_home}/bin/activate base
-./conda_packages.bash
+conda_env=base
+source ${conda_home}/bin/activate $conda_env
+./conda_packages.bash ${conda_home} $conda_env
+./install_perl_modules ${conda_home} ${CONDA_PREFIX} $conda_env
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
 ################ Install various version specific 3rd party tools ################
@@ -69,15 +71,15 @@ sudo ldconfig
 
 wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${srv_qiagen}/bin/downloads/
     cd ${srv_qiagen}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
-    cd py-editdist-0.3 && sudo ${conda_home}/bin/python setup.py install && \
+    cd py-editdist-0.3 && sudo ${CONDA_PREFIX}/bin/python setup.py install && \
     cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
-    cd sendgrid-python-2.2.1 && sudo ${conda_home}/bin/python setup.py install
+    cd sendgrid-python-2.2.1 && sudo ${CONDA_PREFIX}/bin/python setup.py install
 
 ################ R packages ################
 echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
-sudo ${conda_home}/bin/Rscript -e "install.packages('ggplot2')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('gridExtra')"
-sudo ${conda_home}/bin/Rscript -e "install.packages('naturalsort')"
+sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('ggplot2')"
+#sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('gridExtra')"
+sudo ${CONDA_PREFIX}/bin/Rscript -e "install.packages('naturalsort')"
 
 #./install_perl_modules.bash
 ################ TVC binaries ################
@@ -103,7 +105,7 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
      https://storage.googleapis.com/qiaseq-dna/data/annotation/simpleRepeat.full.bed \
       -P ${srv_qiagen}/data/annotation/
 
-./get_snpeff_data.bash ${conda_home} 4.3.1t-1 4_3 GRCh37.75
+./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75
 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in the preceeding lines
 
 ## Annotation file
@@ -137,12 +139,14 @@ ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa 
          https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
     cd ${srv_qiagen}/data/genome && \
         gunzip ucsc.hg19.fa.gz  && \
-        ${conda_home}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
-        ${conda_home}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
+        ${CONDA_PREFIX}/bin/samtools faidx ${srv_qiagen}/data/genome/ucsc.hg19.fa && \ 
+        ${CONDA_PREFIX}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
         md5sum -b ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac > ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 )
 cd ${srv_qiagen}/qiaseq-dna
 
-#After installing, you may rin smcounter with commands like that:
+#Before running, you shoudl activate the conda environment:
+#source /srv/conda/bin/activate base
+#After installing, you may run smcounter with commands like that:
 #Smcounterv1
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
 #Smcounterv2
@@ -152,5 +156,5 @@ cd ${srv_qiagen}/qiaseq-dna
 #Multiple samples
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
-#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.1.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.2.log &
 

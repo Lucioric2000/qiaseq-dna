@@ -1,6 +1,7 @@
 #!/usr/bin/perl -w
 use strict;
 use Data::Dump::Color qw<dd>;
+
 use DBI;
 use Getopt::Long::Descriptive;
 use List::Util qw<min max>;

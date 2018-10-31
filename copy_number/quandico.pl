@@ -53,9 +53,9 @@ my ( $opt, $usage ) = describe_options(
 	['
   internals:'
 	],
-	['rexe|x=s',  'R executable (default: /usr/bin/R)',      {default => '/usr/bin/R'}],
-	['rpath|y=s', 'path where the R script resides in',      {default => '/srv/qiagen/software/quandico/R/'}],
-	['rcall|z=s', 'R script to run (default: < quandico.R)', {default => ' < /srv/qgen/code/qiaseq-dna/copy_number/R/quandico.R'}],
+	['rexe|x=s',  'R executable (default: /usr/bin/R)',      {default => '/srv/conda/bin/R'}], #¿Remove hardcoding?
+	['rpath|y=s', 'path where the R script resides in',      {default => '/srv/qgen/qiaseq-dna/copy_number/R/'}],
+	['rcall|z=s', 'R script to run (default: < quandico.R)', {default => ' < /srv/qgen/qiaseq-dna/copy_number/R/quandico.R'}],
 	['mock|m',    'do not run R, only print the call'],
 	['
   standard options:'
@@ -157,7 +157,8 @@ ERROR: Input data file not readable.
 				$file = rel2abs($file);
 				my $sink           = $file . '.clustered';
 				my $clust_cmd      = join( " ", $opt->{clustering}, '--input', $file, '>', $sink );
-				my $cluster_output = `perl $clust_cmd`;
+				#Use the system-wide Prl, not the one installed in conda, which is hard to have modules installed
+				my $cluster_output = `/usr/bin/perl $clust_cmd`;
 				$opt->{$group}{$type} = $sink;
 			}
 		} ## end foreach my $type (qw<data>)

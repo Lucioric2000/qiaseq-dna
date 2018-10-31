@@ -27,7 +27,7 @@ class ArgumentFileParserAction(argparse.Action):
                   raise Exception("Config file contains duplicate specification of parameter {0}, first time defining it to {1} and second one defining to {2}".format(
                      paramName,getattr(namespace,paramName),paramVal))
                setattr(namespace,paramName,paramVal)
-               print("Parameter",paramName, "==",paramVal)
+               print("Parameter_actioncalled",paramName, "==",paramVal)
 
          setattr(namespace,"readSet",cfgobj.file_path(readSet))
          if str(cfgobj.numCores) == '0':      

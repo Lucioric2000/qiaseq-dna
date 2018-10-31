@@ -1,6 +1,6 @@
 from __future__ import print_function
 import ConfigParser
-import sys, os, argparse, traceback, socket
+import sys, os, argparse, traceback, socket, warnings
 import multiprocessing
 # our modules
 import core.run_log
@@ -40,13 +40,13 @@ def run(args):
    core.run_log.init(fullReadSetPath,cfg)
 
    try:
-      if socket.gethostname()=='vmi186699.contaboserver.net' and outputPath=="out2v6_NEB_S2_0":
-         #Clause only for the development server and sample instance out2v6_NEB_S2_0
-         print("inicc")
-         core.tumor_normal.runCopyNumberEstimates(cfg)
-         # close log file
-         core.run_log.close()
-         return
+      #if socket.gethostname()=='vmi186699.contaboserver.net' and outputPath=="out2v6_NEB_S2_0":
+      #   #Clause only for the development server and sample instance out2v6_NEB_S2_0
+      #   print("inicc")
+      #   core.tumor_normal.runCopyNumberEstimates(cfg)
+      #   # close log file
+      #   core.run_log.close()
+      #   return
       if cfg.platform.lower() == "illumina":
 
          if cfg.duplex.lower() == "true": ## Duplex sequencing run
@@ -163,27 +163,35 @@ if __name__ == "__main__":
    os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
    #Anterior command line: "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
    print("pid:",os.getpid())
-   #referenceUmiFiles = getattr(cfg,'refUmiFiles',cfg.readSet+'.sum.primer.umis.txt').split(",")
-   #assert 0,referenceUmiFiles
+   if "{1}" in cfg.outputPath:
+      cfg.outputPathTemplate=cfg.outputPath
+   elif "{0}" in cfg.outputPath:
+      cfg.outputPathTemplate=cfg.outputPath
+   else:
+      if len(cfg.readSet)>1:
+         warnings.warn("The directory was not provided in the form of a name template and there is more than one sample. The sample name will be "+
+            "append to the end of the name provided (separated by an underscore).")
+         cfg.outputPathTemplate=cfg.outputPath+"_{0}"
+      #else:
+      #   outputpath=cfg.outputPath
 
+   outptemplate=getattr(cfg,"outputPathTemplate",None)
    if cfg.analysis.lower() == "tumor-normal":
       for (iread,read) in enumerate(cfg.readSet):
-         if "{1}" in cfg.outputPath:
-            outputpath=cfg.outputPath.format(read,iread)
+         if outptemplate is None:
+            pass#The outputpath attribute is already with its final value
+         elif "{1}" in outptemplate:
+            cfg.outputpath=outptemplate.format(read,iread)
          elif "{0}" in cfg.outputPath:
-            outputpath=cfg.outputPath.format(read)
-         else:
-            outputpath=cfg.outputPath
-         #print("paruntn",read,cfg.paramFile,cfg.vc,outputpath)
-         run_tumor_normal(read,cfg.paramFile,cfg.vc,outputpath)
+            cfg.outputpath=cfg.outputPathTemplate.format(read)
+         run_tumor_normal(read,cfg.paramFile,cfg.vc,cfg.outputpath)
    else: # Single sample, might still need to run quandico
       for (iread,read) in enumerate(cfg.readSet):
-         if "{1}" in cfg.outputPath:
-            outputpath=cfg.outputPath.format(read,iread)
+         if outptemplate is None:
+            pass#The outputpath attribute is already with its final value
+         elif "{1}" in outptemplate:
+            cfg.outputpath=outptemplate.format(read,iread)
          elif "{0}" in cfg.outputPath:
-            outputpath=cfg.outputPath.format(read)
-         else:
-            outputpath=cfg.outputPath
-         #print("parun",read,cfg.paramFile,cfg.vc,outputpath)
-         run((read,cfg.paramFile,cfg.vc,outputpath))
+            cfg.outputpath=cfg.outputPathTemplate.format(read)
+         run((read,cfg.paramFile,cfg.vc,cfg.outputpath))
          runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)

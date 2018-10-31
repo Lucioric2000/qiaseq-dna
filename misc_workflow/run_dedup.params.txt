@@ -1,10 +1,15 @@
 [general]
 # tools
-cutadaptDir = /opt/conda/bin/
-bwaDir      = /opt/conda/bin/
-samtoolsDir = /srv/qgen/bin/samtools-1.5/bin/
-javaExe     = /opt/conda/jre/bin/java
-picardJar   = /opt/conda/share/picard-2.9.2-1/picard.jar
+cutadaptDir = /srv/conda/bin/
+bwaDir      = /srv/conda/bin/
+#samtoolsDir = /srv/qgen/bin/samtools-1.5/bin/
+#In this fork samtools is installed via conda
+samtoolsDir = /srv/conda/bin/
+#javaExe     = /opt/conda/jre/bin/java
+#In this fork, java is executed from the JDK
+javaExe     = /srv/conda/bin/java
+#picardJar   = /opt/conda/share/picard-2.9.2-1/picard.jar
+picardJar   = /srv/conda/share/picard-2.18.15-0/picard-2.18.15-0/picard.jar
 
 # general params
 numCores = 0
@@ -13,7 +18,7 @@ samtoolsMem = 2500M
 outputDetail = True
 
 # prep - read preparation (common region trimming)
-trimScript = /srv/qgen/code/qiaseq-dna/core/prep_trim.py
+trimScript = /srv/qgen/qiaseq-dna/core/prep_trim.py
 
 # genome file
 genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa  ; this has some ALT haplotype mask hacks, and has NC_012920 instead of UCSC chrM (NC_001807)

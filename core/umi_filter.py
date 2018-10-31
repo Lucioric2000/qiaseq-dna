@@ -60,8 +60,6 @@ def run(cfg,bamFileIn):
    primerDicts = (defaultdict(list), defaultdict(list))
    primerSsw0 = {}
    primerSsw1 = {}
-   print("file",primerFile)
-   print("bamfilein",bamFileIn)
    for line in open(primerFile, "r"):
       #print("pline",line)
       (chrom, loc3, direction, primer) = line.strip().split("\t")

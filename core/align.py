@@ -45,7 +45,7 @@ def run(cfg, readFile1, readFile2, bamFileOut):
    + " - " \
    + " 1> " + bamFileOut \
    + " 2> " + logFileSamtools
-   print("bwacmd",cmd)
+   print("Executing bwa and samtools commands:",cmd)
    #Hasta el momento se han quitado -Cen bwa y -1 en samtools
    subprocess.check_call(cmd, shell=True)
 
@@ -87,8 +87,7 @@ def run_through_tempfile(cfg, readFile1, readFile2, bamFileOut):
    + " "+ tmpOutFile \
    + " 1> " + bamFileOut \
    + " 2> " + logFileSamtools
-   print("bwacmd",cmd1)
-   print("samcmd",cmd2)
+   print("Executing bwa command:",cmd1,"and samtools command:",cmd2)
    #Hasta el momento se han quitado -Cen bwa y -1 en samtools
    subprocess.check_call(cmd1, shell=True)
    subprocess.check_call(cmd2, shell=True)
