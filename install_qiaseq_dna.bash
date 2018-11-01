@@ -4,6 +4,7 @@
 #   informative purposes: no hurt for re-trying to install it)
 sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc
 srv_qiagen=/srv/qgen
+repository_dir=/srv/qgen/qiaseq-dna
 
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
 if [[ $qseqdnamatch = "qiaseq-dna" ]]
@@ -17,15 +18,25 @@ else
     #Now, this script, when executed from outside the qiaseq folder, it downloads the qiaseq repository and then executes the script 'install_qiaseq_dna.bash'.
     #This allows that the installer be updated and not to have to provide the updated installer script
     echo "Not in qiaseq-dna folder."
-    sudo mkdir ${srv_qiagen}
-    cd ${srv_qiagen}
-    sudo chmod -R 777 ${srv_qiagen}
-    mv qiaseq-dna qiaseq-dna-old
-    echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
-    git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
-    cd qiaseq-dna
-    ./install_qiaseq_dna.bash $@
-    exit
+    if [[ -d "${repository_dir}" ]]
+    then
+        cd "${repository_dir}"
+        ./install_qiaseq_dna.bash $@
+        exit
+    elif [[ -e "${repository_dir}" ]]
+    then
+        echo "File ${repository_dir} exists but it is not a directory, thus we can not create a directory with that path tho hold the software reposotory. \
+        See if it is safe to delete or move it, and then execute again this script."
+    else
+        sudo mkdir -p ${srv_qiagen}
+        cd ${srv_qiagen}
+        sudo chmod -R 777 ${srv_qiagen}
+        echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
+        git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
+        cd qiaseq-dna
+        ./install_qiaseq_dna.bash $@
+        exit
+    fi
 fi
 #Sets up a script with the environment variables needed
 #To uninstall:
