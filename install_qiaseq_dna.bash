@@ -70,6 +70,7 @@ conda_env=base
 source ${conda_home}/bin/activate $conda_env
 ./conda_packages.bash ${conda_home} ${CONDA_PREFIX} $conda_env
 ./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} $conda_env
+./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
 ################ Install various version specific 3rd party tools ################
@@ -112,7 +113,6 @@ wget https://storage.googleapis.com/qiaseq-dna/data/annotation/clinvar_20160531.
      https://storage.googleapis.com/qiaseq-dna/data/annotation/simpleRepeat.full.bed \
       -P ${srv_qiagen}/data/annotation/
 
-./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 ## Annotation file
 wget https://storage.googleapis.com/qiaseq-dna/data/annotation/refGene.txt -P ${srv_qiagen}/data/annotation/
