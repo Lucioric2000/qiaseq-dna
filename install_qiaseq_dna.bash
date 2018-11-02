@@ -2,7 +2,7 @@
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc
+sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus
 srv_qiagen=/srv/qgen
 repository_dir=/srv/qgen/qiaseq-dna
 
