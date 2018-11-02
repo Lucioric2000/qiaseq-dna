@@ -40,7 +40,7 @@ def run(args):
    core.run_log.init(fullReadSetPath,cfg)
 
    try:
-      lastfilegenerated= = cfg.readSet + ".vcf_complex.summary.txt"
+      lastfilegenerated = cfg.readSet + ".vcf_complex.summary.txt"
       if os.path.exists(lastfilegenerated):
          print("Last file listed to be generated was found: {0}, with stats {1}".format(lastfilegenerated,os.stat(lastfilegenerated)))
          core.tumor_normal.runCopyNumberEstimates(cfg)
