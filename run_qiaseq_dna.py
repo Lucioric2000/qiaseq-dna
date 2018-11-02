@@ -40,13 +40,13 @@ def run(args):
    core.run_log.init(fullReadSetPath,cfg)
 
    try:
-      #if socket.gethostname()=='vmi186699.contaboserver.net' and outputPath=="out2v6_NEB_S2_0":
-      #   #Clause only for the development server and sample instance out2v6_NEB_S2_0
-      #   print("inicc")
-      #   core.tumor_normal.runCopyNumberEstimates(cfg)
-      #   # close log file
-      #   core.run_log.close()
-      #   return
+      lastfilegenerated= = cfg.readSet + ".vcf_complex.summary.txt"
+      if os.path.exists(lastfilegenerated):
+         print("Last file listed to be generated was found: {0}, with stats {1}".format(lastfilegenerated,os.stat(lastfilegenerated)))
+         core.tumor_normal.runCopyNumberEstimates(cfg)
+         # close log file
+         core.run_log.close()
+         return
       if cfg.platform.lower() == "illumina":
 
          if cfg.duplex.lower() == "true": ## Duplex sequencing run

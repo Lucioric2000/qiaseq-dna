@@ -1,5 +1,5 @@
 from __future__ import print_function
-import ConfigParser, os, argparse, sys
+import ConfigParser, os, argparse, sys, traceback
 from multiprocessing.dummy import cpu_count as cpu_count
 
 class ArgumentFileParserAction(argparse.Action):
@@ -58,6 +58,12 @@ class ConfigObj(object):
          return filename
       else:
          if not os.path.exists(outputPath):
+            try:
+               assert "{0}" not in outputPath
+            except AssertionError as asserr:
+                  print("Occurred the exception: {0}".format(asserr))
+                  traceback.print_exc()
+
             os.makedirs(outputPath)
          return os.path.join(outputPath,filename)
    def print_data(self,readsetbasename):

@@ -69,7 +69,7 @@ fi
 conda_env=base
 source ${conda_home}/bin/activate $conda_env
 ./conda_packages.bash ${conda_home} ${CONDA_PREFIX} $conda_env
-./install_perl_modules ${conda_home} ${CONDA_PREFIX} $conda_env
+./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} $conda_env
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
 ################ Install various version specific 3rd party tools ################
@@ -86,8 +86,8 @@ wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https:
     cd ${srv_qiagen}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
     cd sendgrid-python-2.2.1 && sudo ${CONDA_PREFIX}/bin/python setup.py install
 
-################ R packages ################
-echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
+################# R packages ################
+#echo "r <- getOption('repos'); r['CRAN'] <- 'http://cran.us.r-project.org'; options(repos = r);" | sudo tee /root/.Rprofile >/dev/null
 
 ################ TVC binaries ################
 mkdir -p ${srv_qiagen}/bin/TorrentSuite/
