@@ -31,7 +31,6 @@ else
         sudo mkdir -p ${srv_qiagen}
         cd ${srv_qiagen}
         sudo chmod -R 777 ${srv_qiagen}
-        echo "Qiaseq-dna folder (if any) was moved to qiaseq-dna-old"
         git clone --recursive https://github.com/Lucioric2000/qiaseq-dna
         cd qiaseq-dna
         ./install_qiaseq_dna.bash $@
