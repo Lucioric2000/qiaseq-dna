@@ -1,5 +1,6 @@
 #Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 #a successful bwa run below
+srv_qiagen=/srv/qgen
 #md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 ## Download genome files
