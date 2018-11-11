@@ -84,7 +84,6 @@ else
         echo Created and activated the conda environment ${conda_env}
     )
 fi
-exit
 
 ################ Install python modules ################
 ## Install some modules with conda
