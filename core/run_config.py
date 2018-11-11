@@ -61,8 +61,7 @@ class ConfigObj(object):
             try:
                assert "{0}" not in outputPath
             except AssertionError as asserr:
-                  print("Occurred the exception: {0}".format(asserr))
-                  traceback.print_exc()
+                  print("Occurred the exception: {0}, tb: {1}".format(asserr,traceback.format_exc()))
 
             os.makedirs(outputPath)
          return os.path.join(outputPath,filename)

@@ -57,16 +57,38 @@ then
     rm Miniconda2-latest-Linux-x86_64.sh
     #Make the updated shell path available in this session:
     source ~/.bashrc
+    conda_env=base
+    source ${conda_home}/bin/activate $conda_env
+    echo Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}.
 else
     conda_home=${condabin%/bin/conda}
-    echo "Conda installation found at $conda_home. Script will use tht installation."
+    echo "Conda installation found at $conda_home. Script will use that installation."
+    conda_env=base
+    source ${conda_home}/bin/activate conda_env && (
+        echo Activated conda environment ${conda_env}
+        apyversion=$(python -c "import sys;print(sys.version)")
+        if [[ $apyversion =~ ^2.7 ]]
+        then
+            echo Python version is 2.7 in the base conda environment
+        else
+            conda_env=python2.7
+            #Conda environment not found: creating it
+            ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
+            source ${conda_home}/bin/activate ${conda_env};
+            echo Created and activated the conda environment ${conda_env}
+        fi
+         ) || ( 
+        #Conda environment not found: creating it
+        ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
+        source ${conda_home}/bin/activate ${conda_env};
+        echo Created and activated the conda environment ${conda_env}
+    )
 fi
+exit
 
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-conda_env=base
-source ${conda_home}/bin/activate $conda_env
 ./conda_packages.bash ${conda_home} ${CONDA_PREFIX} $conda_env
 ./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} $conda_env
 ./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
@@ -136,8 +158,8 @@ wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.varian
 
 #Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 #a successful bwa run below
-#md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
-ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the epected hash || (
+#md5sum -c ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
+ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 ## Download genome files
     wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
          https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${srv_qiagen}/data/genome/
