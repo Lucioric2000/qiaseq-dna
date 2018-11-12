@@ -194,4 +194,4 @@ if __name__ == "__main__":
          elif "{0}" in cfg.outputPath:
             cfg.outputpath=cfg.outputPathTemplate.format(read)
          run((read,cfg.paramFile,cfg.vc,cfg.outputpath))
-         runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
+         #runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
