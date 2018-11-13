@@ -181,5 +181,6 @@ cd ${srv_qiagen}/qiaseq-dna
 #Multiple samples
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
-#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.2.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} NEB_S2 NEB_S2_bis &> run_v6.2.log &
+#time python run_qiaseq_dna.py forcellline.txt v2 single out2v6_{0} NEB_S2 Cellline_S10 &> run_v6.3.log &
 

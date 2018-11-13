@@ -95,7 +95,8 @@ def run(readSet,paramFile,outputPath):
    cfgobj=ConfigObj()
    cfgobj.outputPath=outputPath
    (readsetpath,readsetbasename)=os.path.split(readSet)
-   for section in ("general", readsetbasename):
+   #assert 0,(parser.sections(),paramFile,os.getcwd())
+   for section in ("general","smCounter", readsetbasename):
       for (paramName, paramVal) in parser.items(section):
          if paramName in cfgobj.__dict__:
             raise Exception("Config file contains duplicate specification of parameter: " + paramName)
