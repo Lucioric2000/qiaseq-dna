@@ -21,6 +21,7 @@ else
     if [[ -d "${repository_dir}" ]]
     then
         cd "${repository_dir}"
+        git pull origin master
         ./install_qiaseq_dna.bash $@
         exit
     elif [[ -e "${repository_dir}" ]]
@@ -53,7 +54,7 @@ then
     echo "You should install it at the default location shown"
     wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
     chmod +x Miniconda2-latest-Linux-x86_64.sh
-    sudo sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u
+    sudo sh Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u -b
     rm Miniconda2-latest-Linux-x86_64.sh
     #Make the updated shell path available in this session:
     source ~/.bashrc
