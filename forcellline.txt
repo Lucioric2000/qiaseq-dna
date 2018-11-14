@@ -1,0 +1,91 @@
+[general]
+# tools
+cutadaptDir = /srv/conda/bin/
+bwaDir      = /srv/conda/bin/
+samtoolsDir = /srv/conda/bin/
+javaExe     = /srv/conda/jre/bin/java
+
+# ssw for fast Smith-Waterman
+sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
+
+# Ion torrent tools
+torrentBinDir = /srv/qgen/bin/TorrentSuite/
+vcflibDir = /srv/qgen/bin/vcflib/bin/
+
+# quandico
+#quandicoDir = /srv/qgen/code/qiaseq-dna/quandico/
+#quandicoDir = quandico/
+quandicoDir = copy_number/
+
+# general params
+numCores = 0
+deleteLocalFiles = False
+samtoolsMem = 2500M
+outputDetail = True
+
+# prep module - read preparation (common region trimming) params
+trimScript = core/prep_trim.py
+
+# genome file
+genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa
+
+# umi module
+endogenousLenMin = 15
+
+# SAM tag names
+tagNameUmiSeq   = mi
+tagNameUmi      = Mi
+tagNamePrimer   = pr
+tagNameResample = re
+
+# variant primitive to complex conversion
+vcfComplexGapMax = 3
+
+# variant annotation
+#snpeff-4.3.1t-1 now instead of snpeff-4.2-0
+snpEffPath   = /srv/conda/share/snpeff-4.3.1t-1/
+snpEffConfig = /srv/conda/share/snpeff-4.3.1t-1/snpEff.config
+dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+
+# variant caller parameters (these need a separate section)
+[smCounter]
+minBQ = 25 
+minMQ = 50 
+hpLen = 8 
+mismatchThr = 6.0 
+mtThreshold = 0.8
+minAltUMI = 3
+maxAltAllele = 2
+primerDist = 2 
+repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
+srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
+#repBed = /srv/qgen/data/annotation/simpleRepeat.hg38.bed
+#srBed = /srv/qgen/data/annotation/SR_LC_SL.hg38.bed
+
+# readSet
+[NEB_S2]
+readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+#roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
+platform = Illumina
+runCNV = True
+sampleType =  Single
+duplex = False
+
+# readSet
+[Cellline_S10]
+readFile1 = /srv/qgen/example/Cellline_S10_L001_R1_001.fastq.gz
+readFile2 = /srv/qgen/example/Cellline_S10_L001_R2_001.fastq.gz
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+#roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
+platform = Illumina
+runCNV = True
+sampleType =  Single
+duplex = False
