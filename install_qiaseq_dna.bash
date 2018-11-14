@@ -65,9 +65,10 @@ else
     conda_home=${condabin%/bin/conda}
     echo "Conda installation found at $conda_home. Script will use that installation."
     conda_env=base
-    source ${conda_home}/bin/activate conda_env && (
+    source ${conda_home}/bin/activate ${conda_env} && (
         echo Activated conda environment ${conda_env}
         apyversion=$(python -c "import sys;print(sys.version)")
+        echo "Python version: ${apyversion}"
         if [[ $apyversion =~ ^2.7 ]]
         then
             echo Python version is 2.7 in the base conda environment
@@ -89,8 +90,8 @@ fi
 ################ Install python modules ################
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
-./conda_packages.bash ${conda_home} ${CONDA_PREFIX} $conda_env
-./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} $conda_env
+./conda_packages.bash ${conda_home} ${CONDA_PREFIX} ${conda_env}
+./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} ${conda_env}
 ./get_snpeff_data.bash ${CONDA_PREFIX} 4.3.1t-1 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 mkdir -p ${srv_qiagen}/bin/downloads && mkdir -p ${srv_qiagen}/data/genome && mkdir -p ${srv_qiagen}/data/annotation && mkdir -p ${srv_qiagen}/example/
 
@@ -182,6 +183,5 @@ cd ${srv_qiagen}/qiaseq-dna
 #Multiple samples
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 #time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.log &
-#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0} NEB_S2 NEB_S2_bis &> run_v6.2.log &
-#time python run_qiaseq_dna.py forcellline.txt v2 single out2v6_{0} NEB_S2 Cellline_S10 &> run_v6.3.log &
+#time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2v6_{0}_{1} NEB_S2 NEB_S2 &> run_v6.2.log &
 
