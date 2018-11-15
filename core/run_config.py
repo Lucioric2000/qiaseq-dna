@@ -18,9 +18,6 @@ class ArgumentFileParserAction(argparse.Action):
 
          # copy all options to a config object - both general params, and params for this readSet
          #cfgobj = lambda:0
-         #cfgobj=ConfigObj()
-         #(readsetpath,readsetbasename)=os.path.split(readSet)
-         #for section in ("general", readSet):
          for section in ("general", readsetbasename):
             for (paramName, paramVal) in parser.items(section):
                if paramName in namespace.__dict__:
@@ -73,10 +70,12 @@ class ConfigObj(object):
 def parse_command_line_arguments():
    """This function has the arguments definitions needed to process the command line arguments using the argparse standard library."""
    parser = argparse.ArgumentParser(prog="python "+sys.argv[0])
-   parser.add_argument("paramFile",metavar="<param_file>",help="Parameter file. This file may contain several sections with names of read sets. Only the parameters the sections 'general', 'smconunter' and with the name of the read set will take effect.")
+   parser.add_argument("paramFile",metavar="<param_file>",help="Parameter file. This file may contain several sections with names of read sets. Only the parameters the sections 'general', 'smCounter' (case sensitive) and with the name of the read set will take effect.")
    parser.add_argument("vc",help="version of smcounter",choices=("v1","v2"))
    parser.add_argument("analysis",help="Type of analysis",choices=("single","tumor-normal"))
-   parser.add_argument("outputPath",help="Path where the output files will be created. If it does not exist, program will create it.")
+   parser.add_argument("outputPath",help="Path where the output files will be created. If it does not exist, program will create it. If there is more than 1 "+\
+      "sample, this name needs to have at least one {0} substring; such substring(s) will be replaced by the name of the sample (as reflected in its "+\
+      "configuration file section file).")
    parser.add_argument("readSet",help="Read set(s)",nargs="+")
    args = parser.parse_args()
    #args=run(" ".join(args.readSet),args.paramFile,args)
@@ -95,7 +94,6 @@ def run(readSet,paramFile,outputPath):
    cfgobj=ConfigObj()
    cfgobj.outputPath=outputPath
    (readsetpath,readsetbasename)=os.path.split(readSet)
-   #assert 0,(parser.sections(),paramFile,os.getcwd())
    for section in ("general","smCounter", readsetbasename):
       for (paramName, paramVal) in parser.items(section):
          if paramName in cfgobj.__dict__:
