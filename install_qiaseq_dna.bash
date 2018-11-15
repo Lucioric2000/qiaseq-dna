@@ -75,13 +75,13 @@ else
         else
             conda_env=python2.7
             #Conda environment not found: creating it
-            ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
+            sudo ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
             source ${conda_home}/bin/activate ${conda_env};
             echo Created and activated the conda environment ${conda_env}
         fi
          ) || ( 
         #Conda environment not found: creating it
-        ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
+        sudo ${conda_home}/bin/conda create -n ${conda_env} python=2.7;
         source ${conda_home}/bin/activate ${conda_env};
         echo Created and activated the conda environment ${conda_env}
     )
@@ -170,9 +170,16 @@ ls ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa 
         ${CONDA_PREFIX}/bin/bwa index ${srv_qiagen}/data/genome/ucsc.hg19.fa
         md5sum -b ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac > ${srv_qiagen}/data/genome/ucsc.hg19.fa.pac.md5 )
 cd ${srv_qiagen}/qiaseq-dna
-
-#Before running, you should activate the 'base' conda environment, with the following command:
-#source /srv/conda/bin/activate base
+echo "Smcounter2 is now installed."
+echo "To run smcounter2, you should first:"
+echo "1. activate the Anaconda enviroment ${conda_env}, using the command source ${conda_home}/bin/activate ${conda_env}"
+echo "2. Go to the directory ${srv_qiagen}/qiaseq-dna"
+echo "After that, you can execute Smcounter2 using a command of this form:"
+echo "time python run_qiaseq_dna.py <config file> <v1/v2> <single/tumor-normal> <output file path> <sample1>[ <sample2>[ ...<samplen>]] &> <log_file> &"
+echo "To see a description of the command line options (except time and &> <log_file> &) you may execute the command:"
+echo "python run_qiaseq_dna.py --help (from the directory ${srv_qiagen}/qiaseq-dna and with the ${conda_env} environment activated)."
+echo "Now such help message will be displayed:"
+python run_qiaseq_dna.py --help
 #After installing, you may run smcounter with commands like that:
 #Smcounterv1
 #time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_v1.log &
