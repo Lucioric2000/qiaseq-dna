@@ -48,20 +48,6 @@ fi
 #condabin=`which conda`
 if [ -e /srv/conda ]
 then
-    conda_home=/srv/conda
-    #Install the Miniconda Python pachages manager
-    echo "Next, the Miniconda package will be downloaded and installed"
-    echo "You should install it at the default location shown"
-    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-    chmod +x Miniconda2-latest-Linux-x86_64.sh
-    sudo bash Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u -b
-    rm Miniconda2-latest-Linux-x86_64.sh
-    #Make the updated shell path available in this session:
-    source ~/.bashrc
-    conda_env=base
-    source ${conda_home}/bin/activate $conda_env
-    echo Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}.
-else
     #conda_home=${condabin%/bin/conda}
     conda_home=/srv/conda
     echo "Conda installation found at $conda_home. Script will use that installation."
@@ -86,6 +72,20 @@ else
         source ${conda_home}/bin/activate ${conda_env};
         echo Created and activated the conda environment ${conda_env}
     )
+else
+    conda_home=/srv/conda
+    #Install the Miniconda Python pachages manager
+    echo "Next, the Miniconda package will be downloaded and installed"
+    echo "You should install it at the default location shown"
+    wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
+    chmod +x Miniconda2-latest-Linux-x86_64.sh
+    sudo bash Miniconda2-latest-Linux-x86_64.sh -p $conda_home -u -b
+    rm Miniconda2-latest-Linux-x86_64.sh
+    #Make the updated shell path available in this session:
+    source ~/.bashrc
+    conda_env=base
+    source ${conda_home}/bin/activate $conda_env
+    echo Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}.
 fi
 
 ################ Install python modules ################
