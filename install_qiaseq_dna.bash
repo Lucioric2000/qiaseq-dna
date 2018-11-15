@@ -45,8 +45,8 @@ fi
 #Code for installing the qiagen-dna software and the example in BASH
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
-condabin=`which conda`
-if [ -z $condabin ]
+#condabin=`which conda`
+if [ -e /srv/conda ]
 then
     conda_home=/srv/conda
     #Install the Miniconda Python pachages manager
@@ -62,7 +62,8 @@ then
     source ${conda_home}/bin/activate $conda_env
     echo Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}.
 else
-    conda_home=${condabin%/bin/conda}
+    #conda_home=${condabin%/bin/conda}
+    conda_home=/srv/conda
     echo "Conda installation found at $conda_home. Script will use that installation."
     conda_env=base
     source ${conda_home}/bin/activate ${conda_env} && (
@@ -177,7 +178,7 @@ echo "2. Go to the directory ${srv_qiagen}/qiaseq-dna"
 echo "After that, you can execute Smcounter2 using a command of this form:"
 echo "time python run_qiaseq_dna.py <config file> <v1/v2> <single/tumor-normal> <output file path> <sample1>[ <sample2>[ ...<samplen>]] &> <log_file> &"
 echo "To see a description of the command line options (except time and &> <log_file> &) you may execute the command:"
-echo "python run_qiaseq_dna.py --help (from the directory ${srv_qiagen}/qiaseq-dna and with the ${conda_env} environment activated)."
+echo "python run_qiaseq_dna.py --help (from the directory ${srv_qiagen}/qiaseq-dna and with the conda environment ${conda_env} activated)."
 echo "Now such help message will be displayed:"
 python run_qiaseq_dna.py --help
 #After installing, you may run smcounter with commands like that:
