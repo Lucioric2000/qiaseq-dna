@@ -27,6 +27,6 @@ sudo ${conda_preffix}/bin/pip install statistics msgpack-python python_http_clie
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard=2.18.15 snpeff snpsift
 #sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl-cpan-shell perl-app-cpanminus
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c cyclus java-jdk=8.45.14
-sudo ${conda_home}/bin/conda install -y -n ${conda_env} openpyxl gxx_linux-64 gcc_linux-64 gfortran_linux-64
+sudo ${conda_home}/bin/conda install -y -n ${conda_env} openpyxl #gxx_linux-64 gcc_linux-64 gfortran_linux-64
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda r-ggplot2 rstudio r-essentials r-mass r-scales r-extrafont r-plyr
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c conda-forge r-gridextra r-naturalsort
