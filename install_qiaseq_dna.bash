@@ -46,6 +46,9 @@ fi
 #Install the packages needed to start (Note that to get his file you should have installed git earlier, buy the word git stays here for
 #   informative purposes: no hurt for re-trying to install it)
 #condabin=`which conda`
+pkill python
+pkill conda
+sudo rm -rf /srv/conda /srv/qgen/conda ~/.conda ~/.condarc ~/.continuum
 if [ -e /srv/conda ]
 then
     #conda_home=${condabin%/bin/conda}
