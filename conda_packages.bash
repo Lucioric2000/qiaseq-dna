@@ -14,9 +14,9 @@ fi
 #This includes R (rstudio) and biopython
 echo Installing conda packages in environment ${conda_env}, which reside in the folder ${conda_preffix}.
 source ${conda_home}/bin/activate ${conda_env}
-${conda_home}/bin/conda config --add channels defaults
-${conda_home}/bin/conda config --add channels bioconda
-${conda_home}/bin/conda config --add channels conda-forge
+#${conda_home}/bin/conda config --add channels defaults
+#${conda_home}/bin/conda config --add channels bioconda
+#${conda_home}/bin/conda config --add channels conda-forge
 
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
