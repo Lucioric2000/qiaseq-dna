@@ -157,15 +157,15 @@ def run_tumor_normal(readSet,paramFile,vc,outputPath):
 #-------------------------------------------------------------------------------------
 if __name__ == "__main__":
    cfg=core.run_config.parse_command_line_arguments()#This function handles the command line parsing and validtion, and, in its case, the prinitng of the USAGE screen
-
+   parser = ConfigParser.SafeConfigParser()
+   parser.optionxform = str
+   parser.read(cfg.paramFile)
    miscfileparts=os.path.split(misc.__file__)
    miscparentparts=os.path.split(miscfileparts[0])#Gets the current path of this file
    os.environ["PATH"]=os.environ["PATH"]+":"+miscparentparts[0]#Adds the pah of the current file to the environment
    #Anterior command line: "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
    print("pid:",os.getpid())
-   if "{1}" in cfg.outputPath:
-      cfg.outputPathTemplate=cfg.outputPath
-   elif "{0}" in cfg.outputPath:
+   if "{0}" in cfg.outputPath or "{1}" in cfg.outputPath:
       cfg.outputPathTemplate=cfg.outputPath
    else:
       if len(cfg.readSet)>1:
@@ -180,18 +180,18 @@ if __name__ == "__main__":
       for (iread,read) in enumerate(cfg.readSet):
          if outptemplate is None:
             pass#The outputpath attribute is already with its final value
-         elif "{1}" in outptemplate:
-            cfg.outputpath=outptemplate.format(read,iread)
-         elif "{0}" in cfg.outputPath:
-            cfg.outputpath=cfg.outputPathTemplate.format(read)
+         elif "{0}" in outptemplate or "{1}" in outptemplate:
+            cfg.outputpath=outptemplate.format(read,iread+1)
          run_tumor_normal(read,cfg.paramFile,cfg.vc,cfg.outputpath)
    else: # Single sample, might still need to run quandico
-      for (iread,read) in enumerate(cfg.readSet):
+      if len(cfg.readSet)==0:
+         readsets=[sec for sec in parser.sections() if sec not in ("general","smCounter")]
+      else:
+         readsets=cfg.readSet
+      for (iread,read) in enumerate(readsets):
          if outptemplate is None:
             pass#The outputpath attribute is already with its final value
-         elif "{1}" in outptemplate:
-            cfg.outputpath=outptemplate.format(read,iread)
-         elif "{0}" in cfg.outputPath:
-            cfg.outputpath=cfg.outputPathTemplate.format(read)
+         elif "{0}" in outptemplate or "{1}" in outptemplate:
+            cfg.outputpath=outptemplate.format(read,iread+1)
          run((read,cfg.paramFile,cfg.vc,cfg.outputpath))
          #runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
