@@ -181,8 +181,8 @@ if __name__ == "__main__":
          if outptemplate is None:
             pass#The outputpath attribute is already with its final value
          elif "{0}" in outptemplate or "{1}" in outptemplate:
-            cfg.outputpath=outptemplate.format(read,iread+1)
-         run_tumor_normal(read,cfg.paramFile,cfg.vc,cfg.outputpath)
+            cfg.outputPath=outptemplate.format(read,iread+1)
+         run_tumor_normal(read,cfg.paramFile,cfg.vc,cfg.outputPath)
    else: # Single sample, might still need to run quandico
       if len(cfg.readSet)==0:
          readsets=[sec for sec in parser.sections() if sec not in ("general","smCounter")]
@@ -192,6 +192,6 @@ if __name__ == "__main__":
          if outptemplate is None:
             pass#The outputpath attribute is already with its final value
          elif "{0}" in outptemplate or "{1}" in outptemplate:
-            cfg.outputpath=outptemplate.format(read,iread+1)
-         run((read,cfg.paramFile,cfg.vc,cfg.outputpath))
+            cfg.outputPath=outptemplate.format(read,iread+1)
+         run((read,cfg.paramFile,cfg.vc,cfg.outputPath))
          #runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
