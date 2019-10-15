@@ -11,7 +11,7 @@ libraries:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus
 toroot: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
-	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo rm -rf $(SOURCE) && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
+	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo mv -f $(SOURCE) $(SOURCE)-old && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
 
 install:
 	make conda_install
