@@ -8,8 +8,8 @@ then
 	conda_env=$4
 else
 	qiagen_parent_folder=/srv/qgen
-	conda_home=/srv/conda
-	conda_preffix=/srv/conda
+	conda_home=/root/conda
+	conda_preffix=/root/conda
 	conda_env=base
 fi
 

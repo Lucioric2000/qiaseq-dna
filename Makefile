@@ -1,4 +1,4 @@
-VERSION=14.0
+VERSION=14.1
 SOURCE=qiaseq-dna
 qiagen_parent_folder=/srv/qgen
 conda_home=/root/conda
@@ -10,8 +10,8 @@ archive:
 libraries:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus
 toroot: archive
-	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_${SOURCE}-v${VERSION}.bash ${qiagen_parent_folder}
-	cp ./Makefile ${qiagen_parent_folder}/${SOURCE}
+	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
+	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo rm -rf $(SOURCE) && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
 
 install:
 	make conda_install
@@ -28,7 +28,7 @@ conda_install: clean
 	chmod +x Miniconda2-latest-Linux-x86_64.sh
 	sudo bash Miniconda2-latest-Linux-x86_64.sh -p ${conda_home} -u -b
 	rm Miniconda2-latest-Linux-x86_64.sh
-	${conda_home}/bin/conda init --bash
+	${conda_home}/bin/conda init
 	#Make the updated shell path available in this session:
 	#source ~/.bashrc
 	#source ${conda_home}/bin/activate ${conda_env}
@@ -171,6 +171,16 @@ help:
 	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
 	@echo For instance:
 	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2 &> run_smcounterv2_multiplesamples.log &
+test1:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out_smcounterv1 NEB_S2 &> run_smcounterv1.log"
+test2single:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v2 single out_smcounterv2 NEB_S2 &> run_smcounterv2.log"
+testtn:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_smcounterv1_tn.log 2>&1"
+test2multi:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py forcellline.txt v2 single out_smcounterv2_{0} NEB_S2 Cellline_S10 &> run_smcounterv2_multisamples.log"
+testx:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; pwd; which python"
 
 
 #Cleaning

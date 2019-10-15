@@ -15,9 +15,11 @@ def run(cfg, vcfFileIn, vcfFileOut,vc):
    clinVarFile = cfg.clinVarFile
    readSet     = cfg.readSet
    logFile = readSet + ".vcf_annotate.snpEffSift.log"
-   snpSiftPath=snpEffPath.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
-   snpSiftConfig=snpEffConfig.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
-      
+   #snpSiftPath=snpEffPath.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
+   #snpSiftConfig=snpEffConfig.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
+   snpSiftPath = cfg.snpSiftPath
+   snpSiftConfig = cfg.snpSiftConfig
+
    # snpEff eff (NOTE: removed the "-t" option for multi-thread operation, due to multiple customer cases of "java.util.ConcurrentModificationException")
    print("vcf_annotate: starting snpEff eff...")
    cmd = javaExe + " -Xmx6G" \
@@ -177,4 +179,7 @@ if __name__ == "__main__":
    cfg.readSet     = sys.argv[7]
    vcfFileIn  = cfg.readSet + ".smCounter.cplx.vcf"
    vcfFileOut = cfg.readSet + ".smCounter.anno.vcf"
+   cfg.snpSiftPath=cfg.snpEffPath.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
+   cfg.snpSiftConfig=cfg.snpEffConfig.replace(os.path.sep+"snpeff-",os.path.sep+"snpsift-")
+
    run(cfg, vcfFileIn, vcfFileOut)

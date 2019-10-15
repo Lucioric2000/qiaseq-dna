@@ -53,7 +53,7 @@ my ( $opt, $usage ) = describe_options(
 	['
   internals:'
 	],
-	['rexe|x=s',  'R executable (default: /usr/bin/R)',      {default => '/srv/conda/bin/R'}], #¿Remove hardcoding?
+	['rexe|x=s',  'R executable (default: /usr/bin/R)',      {default => '/root/conda/bin/R'}], #¿Remove hardcoding?
 	['rpath|y=s', 'path where the R script resides in',      {default => '/srv/qgen/qiaseq-dna/copy_number/R/'}],
 	['rcall|z=s', 'R script to run (default: < quandico.R)', {default => ' < /srv/qgen/qiaseq-dna/copy_number/R/quandico.R'}],
 	['mock|m',    'do not run R, only print the call'],

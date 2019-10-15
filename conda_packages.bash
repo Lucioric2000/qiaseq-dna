@@ -6,8 +6,8 @@ then
 	conda_preffix=$2
 	conda_env=$3
 else
-	conda_home=/srv/conda
-	conda_preffix=/srv/conda
+	conda_home=/root/conda
+	conda_preffix=/root/conda
 	conda_env=base
 fi
 ## Install some modules with conda
