@@ -1,0 +1,9 @@
+[submodule "qiaseq-smcounter-v2"]
+	path = qiaseq-smcounter-v2
+	url = https://github.com/qiaseq/qiaseq-smcounter-v2.git
+[submodule "qiaseq-smcounter-v1"]
+	path = qiaseq-smcounter-v1
+	url = https://github.com/qiaseq/qiaseq-smcounter-v1.git
+[submodule "read-trimmer"]
+	path = read-trimmer
+	url = https://github.com/qiaseq/read-trimmer.git

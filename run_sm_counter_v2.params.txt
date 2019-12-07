@@ -24,32 +24,43 @@ samtoolsMem = 2500M
 outputDetail = True
 
 # prep module - read preparation (common region trimming) params
+#Should this go off?-absent in the latest code
 trimScript = core/prep_trim.py
+primer3Bases  = 8
 
 # geneome file
-genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa
+genomeFile = /srv/qgen/data/genome/hg19/ucsc.hg19.fa
 
 # umi module
 endogenousLenMin = 15
 
 # SAM tag names
-tagNameUmiSeq   = mi
-tagNameUmi      = Mi
-tagNamePrimer   = pr
-tagNameResample = re
+tagNameUmiSeq    = mi
+tagNameUmi       = Mi
+tagNameDuplex    = Du
+tagNamePrimer    = pr
+tagNamePrimerErr = pe
+tagNameResample  = re
 
 # variant primitive to complex conversion
 vcfComplexGapMax = 3
 
 # variant annotation
 #snpeff-4.3.1t-3 now instead of snpeff-4.2-0
-snpEffPath   = /root//share/snpeff-4.3.1t-3/
+snpEffPath   = /root/conda/share/snpeff-4.3.1t-3/
 snpEffConfig = /root/conda/share/snpeff-4.3.1t-3/snpEff.config
 snpSiftPath   = /root/conda/share/snpsift-4.3.1t-1/
 snpSiftConfig = /root/conda/share/snpsift-4.3.1t-1/snpEff.config
+snpEffData   = /srv/qgen/data/annotation/snpEff/
 dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
 cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
 clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+
+# tumor-normal params
+# umiCutoff not being used currently
+umiCutoff = 10
+pValCutoff = 0.1
+tumorPurity  = 0.90
 
 # variant caller parameters (these need a separate section)
 [smCounter]
@@ -57,7 +68,7 @@ minBQ = 25
 minMQ = 50 
 hpLen = 8 
 mismatchThr = 6.0 
-mtThreshold = 0.8
+consThr = 0.8
 minAltUMI = 3
 maxAltAllele = 2
 primerDist = 2 
@@ -70,6 +81,7 @@ srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
 [NEB_S2]
 readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
 readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+instrument = MiSeq
 primerFile = /srv/qgen/example/DHS-101Z.primers.txt
 #primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
 roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed

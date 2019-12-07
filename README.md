@@ -5,13 +5,17 @@ python run examples
 -------------------
 The top level script run_qiaseq_dna.py process reads in fastq format to produce an annotated vcf along with relevant UMI and read level metrics. Variants are called using smCounter. The smCounter-v1 variant calling procedure is described here:
 
-[Detecting very low allele fraction variants using targeted DNA sequencing and a novel molecular barcode-aware variant caller", BMC Genomics, 2017 18:5](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3425-4)
+[Detecting very low allele fraction variants using targeted DNA sequencing and a novel molecular barcode-aware variant caller, BMC Genomics, 2017 18:5](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3425-4)
 
 The smCounter variant caller uses a statistical model that requires both raw sequencer base calls and identification of unique input molecules using the UMI tag and the genome position of the random fragmentation site.
 
-smCounter-v2 publication is under review. The pre-print is available here :
+smCounter-v2 is described in this publication:
 
-https://www.biorxiv.org/content/early/2018/03/14/281659
+[smCounter2: an accurate low-frequency variant caller for targeted sequencing data with unique molecular identifiers, Bioinformatics, 06 September 2018](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty790/5091498)
+
+We are actively developing smCounter-v2 to support Duplex variant calling as well, the method is desribed in the below publication:
+
+[Targeted Single Primer Enrichment Sequencing with Single End Duplex-UMI, Scientific Reports 9, Article number: 4810, 2019](https://www.nature.com/articles/s41598-019-41215-z)
 
 There are additional scripts under misc_workflow/ which contain the following :
 
@@ -48,30 +52,42 @@ The python modules in this repository have many dependencies on third-party NGS 
 
 ```bash
 ### Pull the docker image
-sudo docker pull rpadmanabhan9/qiaseq-dna:pipeline
+sudo docker pull qiaseq/qiaseq-dna
 
-### Run a container from the image above interactively, mounting your run directory i.e. directory where the output files will be created
-sudo docker run -it -v /home/your_fav_dir/:/mnt/qiaseq-run/ rpadmanabhan9/qiaseq-dna:pipeline
+### Install gsutil , pip install gsutil would likely be enough. See here for details : https://cloud.google.com/storage/docs/gsutil_install#deb
+
+### Get data dependencies, this will create a directory named data in your current folder
+gsutil -m cp -r gs://qiaseq-dna/data ./
+
+### cd to your_fav_dir and get example fastqs, roi and primer files
+wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
+https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
+https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt \
+https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed ./
+
+### Run a container from the image above interactively, mounting the data directory and your run directory, the output files will also be created in this directory.
+sudo docker run -it -v /home/your_data_dir/data:/srv/qgen/data/ -v /home/your_fav_dir/:/srv/qgen/example/ qiaseq/qiaseq-dna
 
 ### Change directory and get the latest code from github
 cd /srv/qgen/code/
 git clone --recursive https://github.com/qiaseq/qiaseq-dna.git
 
 ### Change to run directory and copy over parameters file
-cd /mnt/qiaseq-run/
-cp /srv/qgen/code/qiaseq-dna/run_sm_counter_v1.params.txt ./
+cd /srv/qgen/example
+cp /srv/qgen/code/qiaseq-dna/run_sm_counter_v2.params.txt ./
 
 ### Edit the bottom of run_consensus.params.txt if you need to change the read set and primer file
 
 ### Run the pipeline
 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single smc1out NEB_S2 > run.log 2>&1 &  
+#Old command was python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single NEB_S2 > run.log 2>&1 &  
 ```
 
 **The parameters are explained below :**
 
-***run_sm_counter_v1.params.txt*** : The config file with prepopulated parameters.
+***run_sm_counter_v2.params.txt*** : The config file with prepopulated parameters.
 
-***v1*** : smCounter variant caller version to use. You can specify v1 or v2. Please use run_sm_counter_v2.params.txt if specifying v2.
+***v2*** : smCounter variant caller version to use. You can specify v1 or v2. Please use run_sm_counter_v2.params.txt if specifying v2.
 
 ***single*** : Whether this is a single read set analysis or tumor-normal.
 
@@ -120,6 +136,7 @@ Run the pipeline as :
 ```
 python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal out_tumnorm_v1 tumor_readset normal_readset > run.log 2>&1 &
 ```
+#old command was python /srv/qgen/code/qiaseq-dna/run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 tumor-normal tumor_readset normal_readset > run.log 2>&1 &
 
 The dependencies are fully documented in the Dockerfile in this repository.
 

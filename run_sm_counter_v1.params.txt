@@ -24,6 +24,7 @@ outputDetail = True
 
 # prep module - read preparation (common region trimming) params
 trimScript = core/prep_trim.py
+primer3Bases = -1
 
 # geneome file
 genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa
@@ -32,10 +33,11 @@ genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa
 endogenousLenMin = 15
 
 # SAM tag names
-tagNameUmiSeq   = mi
-tagNameUmi      = Mi
-tagNamePrimer   = pr
-tagNameResample = re
+tagNameUmiSeq    = mi
+tagNameUmi       = Mi
+tagNamePrimer    = pr
+tagNamePrimerErr = pe
+tagNameResample  = re
 
 # variant primitive to complex conversion
 vcfComplexGapMax = 3
