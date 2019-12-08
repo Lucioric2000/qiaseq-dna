@@ -17,7 +17,7 @@ def runReadTrimmer(cfg):
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         'read-trimmer/trimmer/run.py')
 
-    cmd = "PYTHONPATH= python3 {trimmer} " \
+    cmd = "PYTHONPATH= ~/.conda/envs/python37/bin/python {trimmer} " \
           "--r1 {R1} --r2 {R2} --primer-file {primer} " \
           "--out-metrics {summary} --out-r1 {outR1} --out-r2 {outR2} " \
           "--check-primer-side --primer3-bases-R1 {primer3R1} " \
@@ -45,8 +45,9 @@ def runReadTrimmer(cfg):
         log = cfg.readSet + '.prep.log')
     p = subprocess.Popen(cmd, stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell=True)
     stdout, stderr = p.communicate()
-    print(stdout) # redirect stderr and stdout to main logfile so upstream error trapping modules can find UserWarning exception
-    print(stderr)
+    print("cmd:", cmd)
+    print("so:",stdout) # redirect stderr and stdout to main logfile so upstream error trapping modules can find UserWarning exception
+    print("se:",stderr)
     if p.returncode:
         raise Exception("Trimming of Fastqs failed !")
 

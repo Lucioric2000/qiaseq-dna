@@ -156,14 +156,14 @@ def run_tumor_normal(readSet,paramFile,vc,outputPath):
    core.tumor_normal.removeNormalVariants(cfg)
    core.tumor_normal.runCopyNumberEstimates(cfg)
 def run(args,tumorNormal):
-    readSet, paramFile, vc = args
-    # initialize logger
-    if not tumorNormal:
-        core.run_log.init(readSet)
+    readSet, paramFile, vc, outputPath = args
  
     # read run configuration file to memory
-    cfg = core.run_config.run(readSet,paramFile)
+    cfg = core.run_config.run(readSet, paramFile, outputPath)
 
+    # initialize logger
+    if not tumorNormal:
+        core.run_log.init(readSet, cfg)
     # trim adapters , umi and primers (this module spawns multiple processes)
     core.prep.run(cfg)
 
@@ -348,7 +348,7 @@ if __name__ == "__main__":
             pass#The outputpath attribute is already with its final value
          elif "{0}" in outptemplate or "{1}" in outptemplate:
             cfg.outputPath=outptemplate.format(read,iread+1)
-         run((read,cfg.paramFile,cfg.vc,cfg.outputPath))
+         run((read,cfg.paramFile,cfg.vc,cfg.outputPath), False)
          #runcfg = core.run_config.run(read,cfg.paramFile,cfg.outputPath)
 
     #if len(sys.argv) > 6 :

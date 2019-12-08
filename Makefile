@@ -1,4 +1,4 @@
-VERSION=14.1
+VERSION=15.0a
 SOURCE=qiaseq-dna
 qiagen_parent_folder=/srv/qgen
 conda_home=/root/conda
@@ -8,10 +8,13 @@ archive:
 	sudo rm -f $$p/$(SOURCE)-*.tar.gz $$p/Miniconda*
 	p=`pwd` && rm -f $$p/$(SOURCE)-$(VERSION).tar.gz && tar --transform="s@^@$(SOURCE)-$(VERSION)/@" -cvzf $$p/$(SOURCE)-$(VERSION).tar.gz *
 libraries:
-	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus
+	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
+	sudo pip3 install edlib
 toroot: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
-	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo mv -f $(SOURCE) $(SOURCE)-old && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
+	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo rm -rf $(SOURCE)-old && sudo mv -f $(SOURCE) $(SOURCE)-old && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
+update:
+	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/
 
 install:
 	make conda_install

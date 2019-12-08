@@ -13,7 +13,8 @@ import sys
 import warnings
 
 # our modules
-smcounter_v2 = __import__("qiaseq-smcounter-v2.vcf")
+#smcounter_v2 = __import__("qiaseq-smcounter-v2.vcf")
+smcounter_v2 = __import__("qiaseq-smcounter-v2")
 
 # some constants, learned from existing datasets
 _a_ = 0.381774 # het vmf lower bound

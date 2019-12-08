@@ -18,21 +18,21 @@ class ArgumentFileParserAction(argparse.Action):
 
         # copy all options to a config object - both general params, and params for this readSet
         #cfgobj = lambda:0
-          for section in ("general", readsetbasename):
-              for (paramName, paramVal) in parser.items(section):
-                  if paramName in namespace.__dict__:
-                      raise Exception("Config file contains duplicate specification of parameter {0}, first time defining it to {1} and second one defining to {2}".format(
-                         paramName,getattr(namespace,paramName),paramVal))
-                  setattr(namespace,paramName,paramVal)
-                  print("Parameter_actioncalled",paramName, "==",paramVal)
+        for section in ("general", readsetbasename):
+            for (paramName, paramVal) in parser.items(section):
+                if paramName in namespace.__dict__:
+                    raise Exception("Config file contains duplicate specification of parameter {0}, first time defining it to {1} and second one defining to {2}".format(
+                       paramName,getattr(namespace,paramName),paramVal))
+                setattr(namespace,paramName,paramVal)
+                print("Parameter_actioncalled",paramName, "==",paramVal)
 
-          setattr(namespace,"readSet",cfgobj.file_path(readSet))
-          if str(cfgobj.numCores) == '0':      
-              # use all cores if numCores = 0
-              cfgobj.numCores = str(cpu_count())
+        setattr(namespace,"readSet",cfgobj.file_path(readSet))
+        if str(cfgobj.numCores) == '0':      
+            # use all cores if numCores = 0
+            cfgobj.numCores = str(cpu_count())
          
-          # convert some params to boolean
-          cfgobj.deleteLocalFiles = cfgobj.deleteLocalFiles.lower() == "true"
+        # convert some params to boolean
+        cfgobj.deleteLocalFiles = cfgobj.deleteLocalFiles.lower() == "true"
 class ConfigObj(object):
     """Class intended for its instances to include the configuration values as atrributes-values, and based on the values to do some things like calculating output paths.
     This was created after the object layout that was present in the run function:
@@ -59,8 +59,7 @@ class ConfigObj(object):
                 assert "{0}" not in outputPath
                 #except AssertionError as asserr:
                 #      print("Occurred the exception: {0}, tb: {1}".format(asserr,traceback.format_exc()))
-
-            os.makedirs(outputPath)
+                os.makedirs(outputPath)
             return os.path.join(outputPath,filename)
     def print_data(self,readsetbasename):
         for (paramName,paramVal) in self.__dict__.items():
@@ -111,25 +110,25 @@ def run(readSet,paramFile,outputPath):
         cfgobj.numCores = str(cpu_count())
    
     # convert some params to boolean
-    if "outputDetail" in cfg.__dict__:
-        cfg.outputDetail = cfg.outputDetail.lower() == "true"
+    if "outputDetail" in cfgobj.__dict__:
+        cfgobj.outputDetail = cfgobj.outputDetail.lower() == "true"
     else:
-        cfg.outputDetail = False
-    if "multimodal" in cfg.__dict__:
-        cfg.multimodal = cfg.multimodal.lower() == "true"
+        cfgobj.outputDetail = False
+    if "multimodal" in cfgobj.__dict__:
+        cfgobj.multimodal = cfgobj.multimodal.lower() == "true"
     else:
-        cfg.multimodal = False
-    if "duplex" in cfg.__dict__:
-        cfg.duplex = cfg.duplex.lower() == "true"
+        cfgobj.multimodal = False
+    if "duplex" in cfgobj.__dict__:
+        cfgobj.duplex = cfgobj.duplex.lower() == "true"
     else:
-        cfg.duplex = False
-    if "deleteLocalFiles" in cfg.__dict__:        
-        cfg.deleteLocalFiles = cfg.deleteLocalFiles.lower() == "true"
+        cfgobj.duplex = False
+    if "deleteLocalFiles" in cfgobj.__dict__:        
+        cfgobj.deleteLocalFiles = cfgobj.deleteLocalFiles.lower() == "true"
     else:
-        cfg.deleteLocalFiles = False
-    if "instrument" not in cfg.__dict__: # IonTorrent, or 
-        cfg.instrument = "N/A"           # say the user forgot to specify this for Illumina - Use MiSeq as default
+        cfgobj.deleteLocalFiles = False
+    if "instrument" not in cfgobj.__dict__: # IonTorrent, or 
+        cfgobj.instrument = "N/A"           # say the user forgot to specify this for Illumina - Use MiSeq as default
 
  
-   # return config object
-   return cfgobj
+    # return config object
+    return cfgobj
