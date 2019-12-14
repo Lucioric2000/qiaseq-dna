@@ -48,8 +48,10 @@ class ConfigObj(object):
     """
     def __call__(self):
         return 0
+    def __repr__(self):
+        return "<ConfigObj {0}>".format(self.__dict__)
     def file_path(self,filename):
-        outputPath=getattr(self,"outputPath",None)
+        outputPath = getattr(self, "outputPath", None)
         if outputPath is None:
             #There is no outputpath specified
             return filename
@@ -102,7 +104,7 @@ def run(readSet,paramFile,outputPath):
             if paramName in cfgobj.__dict__:
                 raise Exception("Config file contains duplicate specification of parameter: {0}".format(paramName))
             cfgobj.__dict__[paramName] = paramVal
-            print("Parameter",paramName, "==",paramVal)
+            print("Parameter", paramName, "==", paramVal)
 
     cfgobj.__dict__["readSet"] = cfgobj.file_path(readSet)
     if str(cfgobj.numCores) == '0':      

@@ -25,8 +25,7 @@ install:
 	make help
 conda_install: clean
 	#Install the Miniconda Python pachages manager
-	echo "Next, the Miniconda package will be downloaded and installed"
-	echo "You should install it at the default location shown"
+	echo "Next, the Miniconda package will be downloaded and installed at the folder ${conda_home}."
 	wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
 	chmod +x Miniconda2-latest-Linux-x86_64.sh
 	sudo bash Miniconda2-latest-Linux-x86_64.sh -p ${conda_home} -u -b
@@ -35,7 +34,7 @@ conda_install: clean
 	#Make the updated shell path available in this session:
 	#source ~/.bashrc
 	#source ${conda_home}/bin/activate ${conda_env}
-	echo Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}.
+	echo "Conda was installed in the ${conda_home} folder. The environment that will be used is ${conda_env}."
 install_python27_env_if_needed:
 	source ${conda_home}/bin/activate ${conda_env} && (
 	#echo Activated conda environment ${conda_env}
@@ -135,15 +134,15 @@ genomes:
 	#Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 	#a successful bwa run below
 	## Download genome files
-	mkdir -p ${qiagen_parent_folder}/data/genome
-	#ls ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
-	md5sum -c ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
+	mkdir -p ${qiagen_parent_folder}/data/genome/hg19
+	#ls ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
+	md5sum -c ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
 	wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
-	https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.fa.gz -P ${qiagen_parent_folder}/data/genome/ && \
-	cd ${qiagen_parent_folder}/data/genome && gunzip ucsc.hg19.fa.gz && \
+	https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.fa.gz -P ${qiagen_parent_folder}/data/genome/hg19/ && \
+	cd ${qiagen_parent_folder}/data/genome/hg19 && gunzip ucsc.hg19.fa.gz && \
 	${CONDA_PREFIX}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa && \
 	${CONDA_PREFIX}/bin/bwa index ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa && \
-	md5sum -b ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa.pac > ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa.pac.md5 )
+	md5sum -b ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac > ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 )
 
 #help and debug:
 versions:

@@ -45,9 +45,9 @@ def run(cfg, readFile1, readFile2, bamFileOut):
    + " - " \
    + " 1> " + bamFileOut \
    + " 2> " + logFileSamtools
-   print("Executing bwa and samtools commands:",cmd)
+   print("Executing bwa and samtools commands:",cmd,"in", cfg.outputPath, "with configuration", cfg)
    #Hasta el momento se han quitado -Cen bwa y -1 en samtools
-   subprocess.check_call(cmd, shell=True)
+   subprocess.check_call(cmd, shell=True, cwd=cfg.outputPath)
 
    # delete local fastq files if not needed anymore, to conserve local disk space
    if deleteLocalFiles:

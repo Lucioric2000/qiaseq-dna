@@ -2,6 +2,7 @@ from __future__ import print_function
 import sys
 import datetime
 import logging
+import os
 
 # global hack
 sysStdOut = sys.stdout
@@ -38,12 +39,12 @@ def init(logFilePrefix,cfg):
     # format a log file name
     now = datetime.datetime.now()
     timestamp = now.strftime("%Y.%m.%d_%H.%M.%S")
-    logFileName = logFilePrefix + ".run_log." + timestamp + ".txt"
+    logFileName = os.path.join(cfg.outputPath, logFilePrefix + ".run_log." + timestamp + ".txt")
     # time the entire pipeline
     global timeStart
     timeStart = datetime.datetime.now()
-    print("We will write the log file in the path",logFileName,logFilePrefix)
-    print("started at " + str(timeStart))
+    print("We will write the log file in the path",logFileName)
+    print("started_log0 at " + str(timeStart))
 
     # set up logging to a log file
     logDateFormat = "%Y-%m-%d %H:%M:%S"
@@ -54,6 +55,9 @@ def init(logFilePrefix,cfg):
     # create a stream redirection object for stdout, so print() goes to logger
     sys.stdout = RedirectToLogger(False,logFileName)
     sys.stderr = RedirectToLogger(True,logFileName)
+    print("sys.argv:",sys.argv)
+    print("pid:",os.getpid())
+    print("started_log at " + str(timeStart))
     cfg.print_data(logFilePrefix)
 
 
@@ -66,7 +70,7 @@ def init(logFilePrefix,cfg):
 def close():
     # log run completion
     timeEnd = datetime.datetime.now()
-    print("total run time: " + str(timeEnd-timeStart))
+    print("total run time: " + str(timeEnd - timeStart))
     print("Execution ended at",timeEnd)
     hdlrtonow=sys.stdout
     logger=hdlrtonow.logger
