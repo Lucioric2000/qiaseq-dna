@@ -1,7 +1,7 @@
 #FROM centos:centos7.3.1611
 MAINTAINER lucioric2000@hotmail.com
-ENV version=14.1
-ENV installer=install_qiaseq-dna-v${version}.bash
+ENV version 14.1
+ENV installer install_qiaseq-dna-v${version}.bash
 ENV tarfileqiaseq-dna-v${version}.bash
 
 #RUN mkdir -p /srv/qgen
