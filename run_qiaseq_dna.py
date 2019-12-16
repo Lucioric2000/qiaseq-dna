@@ -213,7 +213,7 @@ def run(args,tumorNormal):
     numVariants = core.sm_counter_wrapper.run(cfg, paramFile, vc)
 
     if cfg.platform.lower() != "illumina":
-        numVariants = misc.tvc.smCounterFilter(cfg,vc)
+        numVariants = misc.tvc.smCounterFilter(cfg, vc)
 
     # create complex variants, and annotate using snpEff
     if not tumorNormal:

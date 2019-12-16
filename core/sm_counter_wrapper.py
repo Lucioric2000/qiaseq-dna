@@ -7,13 +7,13 @@ sm_counter_v1 = __import__("qiaseq-smcounter-v1.sm_counter")
 sm_counter_v2 = __import__("qiaseq-smcounter-v2.run")
 
 #---------------------------------------------------------------------------------
-def makeLowPIFile(readSet,smCounterThreshold):
+def makeLowPIFile(readSet, smCounterThreshold):
     ''' Make a file that contains variants with PI below-threshold but above 12
     Function used only for smCounterv1
     :param str readSet: The sample name
     :param int smCounterThreshold: Minimum prediction index for a variant to be called.
     '''
-    fileout = open(readSet + ".smCounter.GT12PI.txt","w")
+    fileout = open(readSet + ".smCounter.GT12PI.txt", "w")
     firstLine = True
     idxPI = None
     for line in open(readSet + ".smCounter.all.txt", "r"):
@@ -41,7 +41,7 @@ def run(cfg, paramFile, vc):
     parser.optionxform = str
     parser.read(paramFile)
     cfgSmCounter = {}
-    for (paramName, paramVal) in parser.items("smCounter"): 
+    for (paramName, paramVal) in parser.items("smCounter"):
         cfgSmCounter[paramName] = paramVal
       
     # set up config dictionary to pass to smCounter
@@ -51,7 +51,7 @@ def run(cfg, paramFile, vc):
         cfgSmCounter["bedTarget"] = readSet + ".tvc_roi.bed"  # subset to tvc variants
     else:
         cfgSmCounter["bedTarget"] = cfg.roiBedFile
-    cfgSmCounter["rpb"      ] = cfg.readsPerUmi  # this comes from metrics.umi_frags module
+    #cfgSmCounter["rpb"      ] = cfg.readsPerUmi  # this comes from metrics.umi_frags module
     cfgSmCounter["nCPU"     ] = cfg.numCores
     cfgSmCounter["refGenome"] = cfg.genomeFile
 
@@ -89,7 +89,7 @@ def run(cfg, paramFile, vc):
 
     # create low PI file for v1
     if vc == 'v1':
-        makeLowPIFile(cfg.readSet,smCounterThreshold)
+        makeLowPIFile(cfg.readSet, smCounterThreshold)
     
     # write smCounter threshold to disk file, for main summary table
     fileout = open(cfg.readSet + ".smCounter.summary.txt", "w")
