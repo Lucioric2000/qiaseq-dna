@@ -1,29 +1,43 @@
-VERSION=15.0a
+VERSION=15.4
 SOURCE=qiaseq-dna
 qiagen_parent_folder=/srv/qgen
+qiagen_code_parent_folder=/srv/qgen/code
 conda_home=/root/conda
 conda_env=base
 
 archive:
 	sudo rm -f $$p/$(SOURCE)-*.tar.gz $$p/Miniconda*
 	p=`pwd` && rm -f $$p/$(SOURCE)-$(VERSION).tar.gz && tar --transform="s@^@$(SOURCE)-$(VERSION)/@" -cvzf $$p/$(SOURCE)-$(VERSION).tar.gz *
+version:
+	@echo $(VERSION)
 libraries:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
 	sudo pip3 install edlib
-toroot: archive
+toqgz: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
-	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo rm -rf $(SOURCE)-old && sudo mv -f $(SOURCE) $(SOURCE)-old && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
+toqiaseq: archive
+	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
+	cd $(qiagen_parent_folder) && tar -xvzf $(qiagen_parent_folder)/$(SOURCE)-$(VERSION).tar.gz && sudo rm -rf $(SOURCE)-old
+	if [ -e $(qiagen_parent_folder)/$(SOURCE) ]; then sudo mv -f $(qiagen_parent_folder)/$(SOURCE) $(qiagen_parent_folder)/$(SOURCE)-old; fi
+	cd $(qiagen_parent_folder) && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
+toroot: archive
+	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash /root/
 update:
+	mkdir -p $(qiagen_parent_folder)/qiaseq-dna
 	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/
 
 install:
+	make libraries
 	make conda_install
 	#make install_python27_env_if_needed
 	make pythonmodules
 	make thirdparty_tools
+	make nirvana
 	make data_files
 	make help
-conda_install: clean
+nirvana:
+	bash ./install_Nirvana.bash
+conda_install:# clean
 	#Install the Miniconda Python pachages manager
 	echo "Next, the Miniconda package will be downloaded and installed at the folder ${conda_home}."
 	wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
@@ -64,8 +78,8 @@ pythonmodules:
 	################ Install python modules ################
 	## Install some modules with conda
 	#This includes R (rstudio) and biopython
-	./conda_packages.bash ${conda_home} ${CONDA_PREFIX} ${conda_env}
-	./install_perl_modules.bash ${conda_home} ${CONDA_PREFIX} ${conda_env}
+	bash -c "source ${conda_home}/bin/activate" && ./conda_packages.bash ${conda_home} ${conda_home} ${conda_env}
+	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
 	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 thirdparty_tools:
@@ -78,9 +92,9 @@ thirdparty_tools:
 	mkdir -p ${qiagen_parent_folder}/bin/downloads
 	wget https://storage.googleapis.com/qiaseq-dna/lib/py-editdist-0.3.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/sendgrid-v2.2.1.tar.gz -P ${qiagen_parent_folder}/bin/downloads/
 	cd ${qiagen_parent_folder}/bin/downloads/ && tar -xvf py-editdist-0.3.tar.gz && \
-	cd py-editdist-0.3 && sudo ${CONDA_PREFIX}/bin/python setup.py install && \
+	cd py-editdist-0.3 && sudo ${conda_home}/bin/python setup.py install && \
 	cd ${qiagen_parent_folder}/bin/downloads/ && tar -xvf sendgrid-v2.2.1.tar.gz && \
-	cd sendgrid-python-2.2.1 && sudo ${CONDA_PREFIX}/bin/python setup.py install
+	cd sendgrid-python-2.2.1 && sudo ${conda_home}/bin/python setup.py install
 	################ TVC binaries ################
 	mkdir -p ${qiagen_parent_folder}/bin/TorrentSuite/
 	wget https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tmap \
@@ -113,11 +127,9 @@ examples:
 	wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
 	https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
 	https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
-	https://github.com/qiaseq/qiaseq-dna/files/2405163/CDHS-13593Z-900.primer3.txt  \
 	https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
-	https://github.com/qiaseq/qiaseq-dna/files/2405163/CDHS-13593Z-900.roi.txt \
 	-P ${qiagen_parent_folder}/example/
-	mv ${qiagen_parent_folder}/example/CDHS-13593Z-900.roi.txt ${qiagen_parent_folder}/example/CDHS-13593Z-900.roi.bed
+	#mv ${qiagen_parent_folder}/example/CDHS-13593Z-900.roi.bed  ${qiagen_parent_folder}/CDHS-13593Z-900.primer3.txt ${qiagen_parent_folder}/example
 	ln /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz /srv/qgen/example/Cellline_S10_L001_R1_001.fastq.gz
 	ln /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz /srv/qgen/example/Cellline_S10_L001_R2_001.fastq.gz
 
@@ -137,11 +149,11 @@ genomes:
 	mkdir -p ${qiagen_parent_folder}/data/genome/hg19
 	#ls ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 	md5sum -c ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
-	wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.hg19.dict \
-	https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.fa.gz -P ${qiagen_parent_folder}/data/genome/hg19/ && \
-	cd ${qiagen_parent_folder}/data/genome/hg19 && gunzip ucsc.hg19.fa.gz && \
-	${CONDA_PREFIX}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa && \
-	${CONDA_PREFIX}/bin/bwa index ${qiagen_parent_folder}/data/genome/ucsc.hg19.fa && \
+	wget https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.dict \
+	https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.fa -P ${qiagen_parent_folder}/data/genome/hg19/ && \
+	#cd ${qiagen_parent_folder}/data/genome/hg19 && gunzip ucsc.hg19.fa.gz && \
+	${conda_home}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa && \
+	${conda_home}/bin/bwa index ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa && \
 	md5sum -b ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac > ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 )
 
 #help and debug:
@@ -157,7 +169,7 @@ help:
 	@echo "To see a description of the command line options (except time and &> <log_file> &) you may execute the command:"
 	@echo "python run_qiaseq_dna.py --help (from the directory ${qiagen_parent_folder}/qiaseq-dna and with the conda environment ${conda_env} activated)."
 	@echo "Now such help message will be displayed:"
-	@cd ${qiagen_parent_folder}/qiaseq-dna && python run_qiaseq_dna.py --help
+	@cd ${qiagen_parent_folder}/qiaseq-dna && bash -c "source ${conda_home}/bin/activate && python run_qiaseq_dna.py --help"
 	@echo you may run smcounter with commands like that:
 	@echo
 	@echo 1. Smcounterv1:
@@ -174,13 +186,13 @@ help:
 	@echo For instance:
 	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2 &> run_smcounterv2_multiplesamples.log &
 test1:
-	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out_smcounterv1 NEB_S2 &> run_smcounterv1.log"
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate && time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out_smcounterv1 NEB_S2 &> run_smcounterv1.log"
 test2single:
-	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v2 single out_smcounterv2 NEB_S2 &> run_smcounterv2.log"
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out_smcounterv2 NEB_S2 &> run_smcounterv2.log"
 testtn:
 	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_smcounterv1_tn.log 2>&1"
-test2multi:
-	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; time python run_qiaseq_dna.py forcellline.txt v2 single out_smcounterv2_{0} NEB_S2 Cellline_S10 &> run_smcounterv2_multisamples.log"
+testmulti:
+	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate base  && time python run_qiaseq_dna.py forcellline.txt v2 single out_smcounterv2_{0}_{1}_cellline NEB_S2 Cellline_S10 &> run_smcounterv2_multisamples_cellline.log"
 testx:
 	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate; pwd; which python"
 

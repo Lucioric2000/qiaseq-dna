@@ -68,6 +68,9 @@ def verifyCluster(bam, cluster, genomeFile, vc):
     # open input data files
     refseq = pysam.FastaFile(genomeFile)
     samfile = pysam.AlignmentFile(bam, 'rb')
+    print("genomefile", genomeFile)
+    print("samfile", samfile)
+    print("bam", bam)
 
     # check if the adjacent two variants are on the same reads
     outlines = []
@@ -91,7 +94,7 @@ def verifyCluster(bam, cluster, genomeFile, vc):
         # get read alignments supporting each of the two primitive variants
         qname = [set(), set()]
         for i in (0,1):
-            locus = "{0}:{1}:{1}".format(chrom, pos[i])
+            locus = "{0}:{1}-{1}".format(chrom, pos[i])
 
             if types[i] == 'SNP':
                 endRefPos = pos[i]

@@ -155,16 +155,21 @@ def run_tumor_normal(readSet,paramFile,vc,outputPath):
    cfg = core.run_config.run(tumor,paramFile,outputPath)
    core.tumor_normal.removeNormalVariants(cfg)
    core.tumor_normal.runCopyNumberEstimates(cfg)
+
 def run(args,tumorNormal):
     readSet, paramFile, vc, outputPath = args
-    #assert 0, args
  
     # read run configuration file to memory
     cfg = core.run_config.run(readSet, paramFile, outputPath)
-
     # initialize logger
     if not tumorNormal:
         core.run_log.init(readSet, cfg)
+
+    lastfilegenerated = cfg.readSet + ".vcf_complex.summary.txt"
+    print("lastfiletobegenerated", lastfilegenerated)
+    #if os.path.exists(lastfilegenerated):
+    #    print("Last file listed to be generated was found: {0}, with stats {1}".format(lastfilegenerated,os.stat(lastfilegenerated)))
+    #assert 0, lastfilegenerated
     # trim adapters , umi and primers (this module spawns multiple processes)
     core.prep.run(cfg)
 
@@ -217,17 +222,18 @@ def run(args,tumorNormal):
 
     # create complex variants, and annotate using snpEff
     if not tumorNormal:
-        post_smcounter_work(numVariants, cfg.readSet, cfg, tumorNormal=False)
-        # close log file
-        core.run_log.close()
+        post_smcounter_work(numVariants, cfg.readSet, cfg, vc, tumorNormal=False)
+    # close log file
+    core.run_log.close()
         
-def post_smcounter_work(numVariants, readSet, cfg, tumorNormal):
+def post_smcounter_work(numVariants, readSet, cfg, vc, tumorNormal):
     ''' Additional Steps after smCounter
     :param int numVariants
     :param str readSet
     :param lambda obj cfg
     :param bool tumorNormal 
     '''
+    GENOME_ASSEMBLY="GRCh37"
     if numVariants > 0:
         # convert nearby primitive variants to complex variants
         bamFileIn  = readSet + ".bam"
@@ -244,6 +250,12 @@ def post_smcounter_work(numVariants, readSet, cfg, tumorNormal):
         vcfFileIn  = readSet + ".smCounter.cut.vcf"
         vcfFileOut = readSet + ".smCounter.anno.vcf"
         shutil.copyfile(vcfFileIn,vcfFileOut)
+    vcfFileOut_word = "anno"
+    nirvcmd = "dotnet {0} -c {1}/Both --sd {2} -r {3} -i {4}.smCounter.cut.vcf -o {4}.smCounter.cut.anno.Nirvana".format(
+        "~/Nirvana/bin/Release/netcoreapp2.1/Nirvana.dll", "~/Nirvana/Data/Cache/{0}".format(GENOME_ASSEMBLY),
+        "~/Nirvana/Data/SupplementaryAnnotation/{0}".format(GENOME_ASSEMBLY),
+        "~/Nirvana/Data/References/Homo_sapiens.{0}.Nirvana.dat".format(GENOME_ASSEMBLY), readSet, vcfFileOut_word)
+    retvalue = os.system(nirvcmd)
     
     #else: numVariants == -1 , duplex, emptyBam
         

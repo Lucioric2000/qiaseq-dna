@@ -85,7 +85,6 @@ def run(cfg, paramFile, vc):
             # remove the temporary file
             os.remove(fileLodQuantiles)
 
-    os.chdir(olddir)#returns to the directory that was current before the execution of smCounter
 
     # create low PI file for v1
     if vc == 'v1':
@@ -101,5 +100,6 @@ def run(cfg, paramFile, vc):
     if os.path.exists(cutFile): # file could be absent - empty bed or bam , or hack for e.g. Duplex
         for line in open(cutFile):
             numVariants += 1
+    os.chdir(olddir)#returns to the directory that was current before the execution of smCounter
     return numVariants
    

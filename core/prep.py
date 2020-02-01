@@ -17,7 +17,8 @@ def runReadTrimmer(cfg):
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         'read-trimmer/trimmer/run.py')
 
-    cmd = "PYTHONPATH= ~/.conda/envs/python37/bin/python {trimmer} " \
+    #cmd = "python3 {trimmer} " \
+    cmd = "PYTHONPATH= /root/conda/envs/python37/bin/python {trimmer} " \
           "--r1 {R1} --r2 {R2} --primer-file {primer} " \
           "--out-metrics {summary} --out-r1 {outR1} --out-r2 {outR2} " \
           "--check-primer-side --primer3-bases-R1 {primer3R1} " \
@@ -90,17 +91,17 @@ def run(cfg):
     # report start
     print("prep: starting read prep - trimming ends and UMI extraction")    
     # get params
-    readSet          = cfg.readSet
-    readFile1        = cfg.readFile1
-    readFile2        = cfg.readFile2
-    deleteLocalFiles = cfg.deleteLocalFiles
-    numCores         = int(cfg.numCores)
-    tagNameUmiSeq    = cfg.tagNameUmiSeq
-    tagNamePrimer    = cfg.tagNamePrimer
-    tagNamePrimerErr = cfg.tagNamePrimerErr
-    primerFile       = cfg.primerFile
-    primer3Bases     = int(cfg.primer3Bases)
-    platform = cfg.platform
+    #readSet          = cfg.readSet
+    #readFile1        = cfg.readFile1
+    #readFile2        = cfg.readFile2
+    #deleteLocalFiles = cfg.deleteLocalFiles
+    #numCores         = int(cfg.numCores)
+    #tagNameUmiSeq    = cfg.tagNameUmiSeq
+    #tagNamePrimer    = cfg.tagNamePrimer
+    #tagNamePrimerErr = cfg.tagNamePrimerErr
+    #primerFile       = cfg.primerFile
+    #primer3Bases     = int(cfg.primer3Bases)
+    #platform = cfg.platform
     
     # debug check
     if cfg.readFile1 == cfg.readFile2:
@@ -108,7 +109,7 @@ def run(cfg):
 
     # Use new read-trimmer for Illumina reads.
     if cfg.platform.lower() == 'illumina':
-        runReadTrimmer(cfg)   
+        runReadTrimmer(cfg)  
     else: # legacy code for Ion Torrent reads
         misc.prep_ion.run(cfg)
     

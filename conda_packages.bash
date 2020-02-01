@@ -22,9 +22,12 @@ source ${conda_home}/bin/activate ${conda_env}
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version. Thus picard and jdk version should be pinned, at least by picard version is hardcoded in a configuration file
 sudo ${conda_home}/bin/pip install --upgrade pip
-sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0 openpyxl
+sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0 openpyxl edlib
 #sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard=2.18.15 snpeff snpsift r-ggplot2 rstudio r-essentials r-mass r-scales r-extrafont r-plyr
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard snpeff snpsift
 #sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda rstudio
 #sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c cyclus java-jdk=8.45.14
-sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c conda-forge r-ggplot2 r-essentials r-mass r-scales r-extrafont r-plyr r-gridextra r-naturalsort
+sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c conda-forge r-ggplot2 r-essentials r-mass r-scales r-extrafont r-plyr r-gridextra r-naturalsort r-tidyverse r-stringi pyicu
+sudo ${conda_home}/bin/conda create -y -n python37 python=3.7 cython
+#sudo ${conda_home}/bin/conda install -y -n python37 cython
+sudo ${conda_home}/envs/python37/bin/pip install edlib
