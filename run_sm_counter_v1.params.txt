@@ -48,6 +48,7 @@ snpEffPath   = /root/conda/share/snpeff-4.3.1t-3/
 snpEffConfig = /root/conda/share/snpeff-4.3.1t-3/snpEff.config
 snpSiftPath   = /root/conda/share/snpsift-4.3.1t-1/
 snpSiftConfig = /root/conda/share/snpsift-4.3.1t-1/snpEff.config
+snpEffData   = /root/conda/share/snpeff-4.3.1t-3/data/
 dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
 cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
 clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
