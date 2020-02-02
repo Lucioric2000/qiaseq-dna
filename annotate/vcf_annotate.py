@@ -9,7 +9,9 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
     # get params
     javaExe      = cfg.javaExe
     snpEffPath   = cfg.snpEffPath
+    snpSiftPath   = cfg.snpSiftPath
     snpEffConfig = cfg.snpEffConfig
+    snpSiftConfig = cfg.snpSiftConfig
     snpEffData   = cfg.snpEffData
     dbSnpFile    = cfg.dbSnpFile
     cosmicFile   = cfg.cosmicFile
@@ -33,8 +35,8 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
     # add dbSNP 
     print("vcf_annotate: starting snpSift annoate dbSNP...")
     cmd = javaExe + " -Xmx6G" \
-    + " -jar " + snpEffPath + "SnpSift.jar annotate" \
-    + " -c " + snpEffConfig \
+    + " -jar " + snpSiftPath + "SnpSift.jar annotate" \
+    + " -c " + snpSiftConfig \
     + " -id " + dbSnpFile \
     + " "   + readSet + ".temp0.vcf" \
     + " > " + readSet + ".temp1.vcf" \
@@ -44,8 +46,8 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
     # add cosmic
     print("vcf_annotate: starting snpSift annoate Cosmic...")
     cmd = javaExe + " -Xmx6G" \
-    + " -jar " + snpEffPath + "SnpSift.jar annotate" \
-    + " -c " + snpEffConfig \
+    + " -jar " + snpSiftPath + "SnpSift.jar annotate" \
+    + " -c " + snpSiftConfig \
     + " -id " + cosmicFile \
     + " "   + readSet + ".temp1.vcf" \
     + " > " + readSet + ".temp0.vcf" \
@@ -55,8 +57,8 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
     # add clinvar
     print("vcf_annotate: starting snpSift annoate ClinVar...")
     cmd = javaExe + " -Xmx6G" \
-    + " -jar " + snpEffPath + "SnpSift.jar annotate" \
-    + " -c " + snpEffConfig \
+    + " -jar " + snpSiftPath + "SnpSift.jar annotate" \
+    + " -c " + snpSiftConfig \
     + " -id " + clinVarFile \
     + " "   + readSet + ".temp0.vcf" \
     + " > " + readSet + ".temp1.vcf" \

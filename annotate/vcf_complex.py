@@ -68,9 +68,9 @@ def verifyCluster(bam, cluster, genomeFile, vc):
     # open input data files
     refseq = pysam.FastaFile(genomeFile)
     samfile = pysam.AlignmentFile(bam, 'rb')
-    print("genomefile", genomeFile)
-    print("samfile", samfile)
-    print("bam", bam)
+    #print("genomefile", genomeFile)
+    #print("samfile", samfile)
+    #print("bam", bam)
 
     # check if the adjacent two variants are on the same reads
     outlines = []

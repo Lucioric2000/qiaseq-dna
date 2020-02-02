@@ -30,7 +30,7 @@ install:
 	make libraries
 	make conda_install
 	#make install_python27_env_if_needed
-	make pythonmodules
+	make modules_and_snpeff
 	make thirdparty_tools
 	make nirvana
 	make data_files
@@ -74,7 +74,7 @@ install_python27_env_if_needed:
 	echo base
 	)
 
-pythonmodules:
+modules_and_snpeff:
 	################ Install python modules ################
 	## Install some modules with conda
 	#This includes R (rstudio) and biopython
@@ -124,23 +124,20 @@ annotations:
 examples:
 	## Add example fastqs and files
 	mkdir -p ${qiagen_parent_folder}/example/
-	wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz \
-	https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz \
-	https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt  \
-	https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed \
-	-P ${qiagen_parent_folder}/example/
-	#mv ${qiagen_parent_folder}/example/CDHS-13593Z-900.roi.bed  ${qiagen_parent_folder}/CDHS-13593Z-900.primer3.txt ${qiagen_parent_folder}/example
-	ln /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz /srv/qgen/example/Cellline_S10_L001_R1_001.fastq.gz
-	ln /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz /srv/qgen/example/Cellline_S10_L001_R2_001.fastq.gz
+	wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R1_001.fastq.gz -P ${qiagen_parent_folder}/example/
+	wget https://storage.googleapis.com/qiaseq-dna/example/NEB_S2_L001_R2_001.fastq.gz -P ${qiagen_parent_folder}/example/
+	wget https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.primers.txt -P ${qiagen_parent_folder}/example/
+	wget https://storage.googleapis.com/qiaseq-dna/example/DHS-101Z.roi.bed -P ${qiagen_parent_folder}/example/
+	ln -f ${qiagen_parent_folder}/example/NEB_S2_L001_R1_001.fastq.gz ${qiagen_parent_folder}/example/Cellline_S10_L001_R1_001.fastq.gz
+	ln -f ${qiagen_parent_folder}/example/NEB_S2_L001_R2_001.fastq.gz ${qiagen_parent_folder}/example/Cellline_S10_L001_R2_001.fastq.gz
 
 testfiles:
 	## Add test files for smCounterv2
 	mkdir -p ${qiagen_parent_folder}/test_smcounter-v2/
-	wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed \
-	https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam \
-	https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.VariantList.long.txt \
-	https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam.bai \
-	-P ${qiagen_parent_folder}/test_smcounter-v2/
+	wget https://storage.googleapis.com/qiaseq-dna/test_files/high.confidence.variants.bed -P ${qiagen_parent_folder}/test_smcounter-v2/
+	wget https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam -P ${qiagen_parent_folder}/test_smcounter-v2/
+	wget https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.VariantList.long.txt -P ${qiagen_parent_folder}/test_smcounter-v2/
+	wget https://storage.googleapis.com/qiaseq-dna/test_files/NB956-240-3-10_S1.highconfidence.bam.bai -P ${qiagen_parent_folder}/test_smcounter-v2/
 
 genomes:
 	#Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
