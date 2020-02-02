@@ -1,0 +1,43 @@
+[general]
+# tools
+cutadaptDir = /root/conda/bin/
+bwaDir      = /root/conda/bin/
+#samtoolsDir = /srv/qgen/bin/samtools-1.5/bin/
+#In this fork samtools is installed via conda
+samtoolsDir = /root/conda/bin/
+#javaExe     = /opt/conda/jre/bin/java
+#In this fork, java is executed from the JDK
+javaExe     = /root/conda/bin/java
+#picardJar   = /opt/conda/share/picard-2.9.2-1/picard.jar
+picardJar   = /root/conda/share/picard-2.18.15-0/picard-2.18.15-0/picard.jar
+
+# general params
+numCores = 0
+deleteLocalFiles = False
+samtoolsMem = 2500M
+outputDetail = True
+
+# prep - read preparation (common region trimming)
+trimScript = /srv/qgen/qiaseq-dna/core/prep_trim.py
+
+# genome file
+genomeFile = /srv/qgen/data/genome/ucsc.hg19.fa  ; this has some ALT haplotype mask hacks, and has NC_012920 instead of UCSC chrM (NC_001807)
+
+# SAM tag name
+tagNameUmiSeq = mi
+
+# parameters specific to a read set - one section per read set 
+[NEB_S2]
+readFile1  = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+readFile2  = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+
+[MS05-3-cfDNA_S2]
+readFile1 = /mnt/webserver/datadisk/resources/jdicarlo/MS05-3-cfDNA_S2_R1.fastq
+readFile2 = /mnt/webserver/datadisk/resources/jdicarlo/MS05-3-cfDNA_S2_R2.fastq
+primerFile = DHS-3501Z.primers3.txt
+
+[SRR3493403]
+readFile1  = /mnt/webserver/datadisk/resources/jdicarlo/SRR3493403_1.fastq
+readFile2  = /mnt/webserver/datadisk/resources/jdicarlo/SRR3493403_2.fastq
+primerFile = /mnt/webserver/datadisk/resources/jdicarlo/NA12878-194-genes-63-indels.10867.primers3.txt
