@@ -29,11 +29,10 @@ update:
 install:
 	make libraries
 	make conda_install
-	#make install_python27_env_if_needed
 	make modules_and_snpeff
-	make thirdparty_tools
 	make nirvana
 	make data_files
+	make genomes
 	make help
 nirvana:
 	bash ./install_Nirvana.bash
@@ -79,10 +78,6 @@ modules_and_snpeff:
 	## Install some modules with conda
 	#This includes R (rstudio) and biopython
 	bash -c "source ${conda_home}/bin/activate" && ./conda_packages.bash ${conda_home} ${conda_home} ${conda_env}
-	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
-	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
-
-thirdparty_tools:
 	################ Install various version specific 3rd party tools ################
 	wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${qiagen_parent_folder}/bin/
 	cd ${qiagen_parent_folder}/bin/ && tar -xvf ssw.tar.gz
@@ -101,6 +96,10 @@ thirdparty_tools:
 	https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
 	-P ${qiagen_parent_folder}/bin/TorrentSuite/
 	chmod 775 ${qiagen_parent_folder}/bin/TorrentSuite/tmap ${qiagen_parent_folder}/bin/TorrentSuite/tvc
+	#Install Perl modules
+	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
+	#Install Snpeff, Snpsift and their data
+	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 #Data files:
 data_files: annotations examples testfiles genomes
@@ -166,22 +165,22 @@ help:
 	@echo "To see a description of the command line options (except time and &> <log_file> &) you may execute the command:"
 	@echo "python run_qiaseq_dna.py --help (from the directory ${qiagen_parent_folder}/qiaseq-dna and with the conda environment ${conda_env} activated)."
 	@echo "Now such help message will be displayed:"
-	@cd ${qiagen_parent_folder}/qiaseq-dna && bash -c "source ${conda_home}/bin/activate && python run_qiaseq_dna.py --help"
+	@echo cd ${qiagen_parent_folder}/qiaseq-dna && bash -c "source ${conda_home}/bin/activate && python run_qiaseq_dna.py --help"
 	@echo you may run smcounter with commands like that:
 	@echo
 	@echo 1. Smcounterv1:
-	@echo time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_smcounterv1.log &
+	@echo "time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out1 NEB_S2 &> run_smcounterv1.log &"
 	@echo
 	@echo 2. Smcounterv2:
-	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2 NEB_S2 &> run_smcounterv2.log &
+	@echo "time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2 NEB_S2 &> run_smcounterv2.log &"
 	@echo
 	@echo 3. Tumor-normal analysis:
-	@echo python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_smcounterv1_tn.log 2>&1 &
+	@echo "time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 tumor-normal tumor_readset normal_readset > run_smcounterv1_tn.log 2>&1 &"
 	@echo
 	@echo 4. Multiple samples:
-	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &
+	@echo "time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0} sample1 sample2 sample3 (...) samplen &> run_v6.log &"
 	@echo For instance:
-	@echo time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2 &> run_smcounterv2_multiplesamples.log &
+	@echo "time python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2 &> run_smcounterv2_multiplesamples.log &"
 test1:
 	cd $(qiagen_parent_folder)/$(SOURCE) && bash -c "source ${conda_home}/bin/activate && time python run_qiaseq_dna.py run_sm_counter_v1.params.txt v1 single out_smcounterv1 NEB_S2 &> run_smcounterv1.log"
 test2single:

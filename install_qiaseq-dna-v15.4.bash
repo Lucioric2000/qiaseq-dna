@@ -11,15 +11,8 @@ version=15.4
 parent_folder_permissions=755
 
 function install(){
-    cd "${qseq_folder}" && /usr/bin/make clean
-    cd "${qseq_folder}" && /usr/bin/make libraries
-    /usr/bin/make conda_install
-    #/usr/bin/make install_python27_env_if_needed
-    /usr/bin/make modules_and_snpeff
-    /usr/bin/make thirdparty_tools
-    /usr/bin/make nirvana
-    /usr/bin/make data_files
-    /usr/bin/make genomes
+    /usr/bin/make clean
+    /usr/bin/make install
     source ~/.bashrc
 }
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
