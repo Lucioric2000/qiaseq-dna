@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [submodule "qiaseq-smcounter-v2"]
 	path = qiaseq-smcounter-v2
 	url = https://github.com/Lucioric2000/qiaseq-smcounter-v2.git
@@ -7,3 +8,8 @@
 [submodule "read-trimmer"]
 	path = read-trimmer
 	url = https://github.com/qiaseq/read-trimmer.git
+=======
+[submodule "read-trimmer"]
+	path = read-trimmer
+	url = https://github.com/rpadmanabhan/read-trimmer
+>>>>>>> master
