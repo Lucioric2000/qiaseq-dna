@@ -1,4 +1,4 @@
-VERSION=15.5
+VERSION=15.6
 SOURCE=qiaseq-dna
 qiagen_parent_folder=/srv/qgen
 qiagen_code_parent_folder=/srv/qgen/code

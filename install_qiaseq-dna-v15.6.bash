@@ -7,19 +7,11 @@ sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expa
 qseq_folder_title=qiaseq-dna
 parent_folder=/srv/qgen
 qseq_folder=${parent_folder}/${qseq_folder_title}
-version=15.4
+version=15.6
 parent_folder_permissions=755
 
 function install(){
-    cd "${qseq_folder}" && /usr/bin/make clean
-    cd "${qseq_folder}" && /usr/bin/make libraries
-    /usr/bin/make conda_install
-    #/usr/bin/make install_python27_env_if_needed
-    /usr/bin/make modules_and_snpeff
-    /usr/bin/make thirdparty_tools
-    /usr/bin/make nirvana
-    /usr/bin/make data_files
-    /usr/bin/make genomes
+    /usr/bin/make install
     source ~/.bashrc
 }
 qseqdnamatch=`expr match "$(pwd)" '.*\(qiaseq-dna\)'`
@@ -32,17 +24,14 @@ then
 else
     p=$(pwd);
     echo "Not in qiaseq_dna folder, but in $p."
-    #sudo mkdir -p ${parent_folder}
-    #sudo chmod -R ${parent_folder_permissions} ${parent_folder}
-    #cd "${parent_folder}" && tar -xvzf ${qseq_folder}-${version}.tar.gz
     tar -xvzf ${qseq_folder_title}-${version}.tar.gz
     if [ -e ${qseq_folder}-old ]; then sudo rm -rf ${qseq_folder}-old; fi
-    if [ -e ${qseq_folder} ]; then sudo mv -f ${qseq_folder} ${qseq_folder}-old; fi
+    if [ -e ${qseq_folder} ]; then sudo mv -Tf ${qseq_folder} ${qseq_folder}-old; fi
     if [ -e ${qseq_folder_title} ]; then sudo rm -rf ${qseq_folder_title}; fi
-    sudo mv ${qseq_folder_title}-${version} ${qseq_folder_title}
-    sudo mv -t ${qseq_folder_title} ${parent_folder}
+    cd "${qseq_folder_title}-${version}" && /usr/bin/make clean
+    echo sudo mv -T ${p}/${qseq_folder_title}-${version} ${qseq_folder}
+    cd ${p} && sudo mv -T ${p}/${qseq_folder_title}-${version} ${qseq_folder}
     cd "${qseq_folder}" && install $@
-    #cd $p;
 fi
 #Sets up a script with the environment variables needed
 #To uninstall:
