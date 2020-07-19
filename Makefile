@@ -13,10 +13,10 @@ archive:
 version:
 	@echo $(VERSION)
 libraries_centos:
-	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
+	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python2-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
 	sudo pip3 install edlib
 libraries_ubuntu:
-	sudo apt-get install -y git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
+	sudo apt-get install -y git unzip wget gcc build-essential bzip2 python2-dev nano perl curl python3 cpanminus python3-pip python3-dev #expat-dev openssl-dev perl-dev perl-App-cpanminus python3-libs python3-tools
 	sudo pip3 install edlib
 toqgz: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)

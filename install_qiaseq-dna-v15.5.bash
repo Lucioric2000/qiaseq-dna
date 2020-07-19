@@ -7,8 +7,8 @@ sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expa
 qseq_folder_title=qiaseq-dna
 parent_folder=/srv/qgen
 qseq_folder=${parent_folder}/${qseq_folder_title}
-#version=15.5
-version=$(cat version.dat)
+versvar=${0##.*install_qiaseq-dna-v}
+version=${versvar%%.bash} #to have this variable running, one have to execute only the versioned verison of this script
 
 parent_folder_permissions=755
 
@@ -29,9 +29,9 @@ else
     echo "Not in qiaseq_dna folder, but in $p."
     sudo tar -xvzf ${qseq_folder_title}-${version}.tar.gz
     if [ -e ${qseq_folder}-old ]; then sudo rm -rf ${qseq_folder}-old; fi
-    if [ -e ${qseq_folder} ]; then sudo mv -Tf ${qseq_folder} ${qseq_folder}-old; fi
+    if [ -e ${qseq_folder} ]; then mv -Tf ${qseq_folder} ${qseq_folder}-old; fi
     sudo mv -T ${qseq_folder_title}-${version} ${qseq_folder}
-    echo "cding ${qseq_folder} for ${qseq_folder_title}-${version}"
+    sudo chown ${USER} -R ${qseq_folder}
     cd "${qseq_folder}" && install $@
 fi
 #Sets up a script with the environment variables needed
