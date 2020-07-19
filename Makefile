@@ -29,13 +29,9 @@ update:
 install:
 	make libraries
 	make conda_install
-<<<<<<< HEAD
-	make modules_and_snpeff
-=======
 	#make install_python27_env_if_needed
 	make modules_and_snpeff
 	make thirdparty_tools
->>>>>>> master
 	make nirvana
 	make data_files
 	make genomes
@@ -84,13 +80,10 @@ modules_and_snpeff:
 	## Install some modules with conda
 	#This includes R (rstudio) and biopython
 	bash -c "source ${conda_home}/bin/activate" && ./conda_packages.bash ${conda_home} ${conda_home} ${conda_env}
-<<<<<<< HEAD
-=======
 	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
 	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 thirdparty_tools:
->>>>>>> master
 	################ Install various version specific 3rd party tools ################
 	wget https://storage.googleapis.com/qiaseq-dna/lib/ssw.tar.gz https://storage.googleapis.com/qiaseq-dna/lib/fgbio-0.1.4-SNAPSHOT.jar -P ${qiagen_parent_folder}/bin/
 	cd ${qiagen_parent_folder}/bin/ && tar -xvf ssw.tar.gz
@@ -178,11 +171,7 @@ help:
 	@echo "To see a description of the command line options (except time and &> <log_file> &) you may execute the command:"
 	@echo "python run_qiaseq_dna.py --help (from the directory ${qiagen_parent_folder}/qiaseq-dna and with the conda environment ${conda_env} activated)."
 	@echo "Now such help message will be displayed:"
-<<<<<<< HEAD
 	@echo cd ${qiagen_parent_folder}/qiaseq-dna && bash -c "source ${conda_home}/bin/activate && python run_qiaseq_dna.py --help"
-=======
-	@cd ${qiagen_parent_folder}/qiaseq-dna && bash -c "source ${conda_home}/bin/activate && python run_qiaseq_dna.py --help"
->>>>>>> master
 	@echo you may run smcounter with commands like that:
 	@echo
 	@echo 1. Smcounterv1:
