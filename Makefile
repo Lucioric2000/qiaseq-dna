@@ -1,17 +1,22 @@
-VERSION=15.4
+VERSION := $(shell cat version.dat)
 SOURCE=qiaseq-dna
 qiagen_parent_folder=/srv/qgen
 qiagen_code_parent_folder=/srv/qgen/code
 conda_home=/root/conda
 conda_env=base
+ROOT=/root
+DISTRO := $(shell bash -c "yum --help&>/dev/null && echo centos || echo ubuntu")
 
 archive:
 	sudo rm -f $$p/$(SOURCE)-*.tar.gz $$p/Miniconda*
 	p=`pwd` && rm -f $$p/$(SOURCE)-$(VERSION).tar.gz && tar --transform="s@^@$(SOURCE)-$(VERSION)/@" -cvzf $$p/$(SOURCE)-$(VERSION).tar.gz *
 version:
 	@echo $(VERSION)
-libraries:
+libraries_centos:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
+	sudo pip3 install edlib
+libraries_ubuntu:
+	sudo apt-get install -y git unzip cpan wget gcc gcc-c++ bzip2 python-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl gcc perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
 	sudo pip3 install edlib
 toqgz: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
@@ -21,20 +26,20 @@ toqiaseq: archive
 	if [ -e $(qiagen_parent_folder)/$(SOURCE) ]; then sudo mv -f $(qiagen_parent_folder)/$(SOURCE) $(qiagen_parent_folder)/$(SOURCE)-old; fi
 	cd $(qiagen_parent_folder) && sudo mv $(SOURCE)-$(VERSION) $(SOURCE)
 toroot: archive
-	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash /root/
+	sudo cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(ROOT)/
+	sudo chmod +x $(ROOT)/install_$(SOURCE)-v$(VERSION).bash
 update:
 	mkdir -p $(qiagen_parent_folder)/qiaseq-dna
 	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/
 
 install:
-	make libraries
+	make libraries_$(DISTRO)
 	make conda_install
 	#make install_python27_env_if_needed
 	make modules_and_snpeff
 	make thirdparty_tools
 	make nirvana
 	make data_files
-	make genomes
 	make help
 nirvana:
 	bash ./install_Nirvana.bash
@@ -205,5 +210,6 @@ procclean:
 	pkill conda
 clean:
 	sudo rm -rf ${conda_home} /srv/qgen/conda ~/.conda ~/.condarc ~/.continuum /srv/qgen/qiaseq-dna
-
+condaclean:
+	sudo rm -rf ${conda_home} /srv/qgen/conda ~/.conda ~/.condarc ~/.continuum
 

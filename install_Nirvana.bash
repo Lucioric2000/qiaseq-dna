@@ -10,10 +10,21 @@
 
 #. NET Core install:
 
-sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
-sudo yum update
-sudo yum install aspnetcore-runtime-2.1 dotnet-sdk-2.1
+DISTRO=$(yum --help&>/dev/null && echo centos || echo ubuntu)
 
+if [ $DISTRO = ubuntu ]
+then
+    sudo wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    sudo dpkg -i packages-microsoft-prod.deb
+    sudo apt-get install -y apt-transport-https
+    sudo apt-get update
+    sudo apt-get install aspnetcore-runtime-2.1 dotnet-sdk-2.1
+elif [ $DISTRO = centos ]
+then
+    sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
+    sudo yum update
+    sudo yum install aspnetcore-runtime-2.1 dotnet-sdk-2.1
+fi
 # Nirvana install
 
 TOP_DIR=~
