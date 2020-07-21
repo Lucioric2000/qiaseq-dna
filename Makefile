@@ -6,7 +6,17 @@ conda_home=/root/conda
 conda_env=base
 ROOT=/root
 DISTRO := $(shell bash -c "yum --help&>/dev/null && echo centos || echo ubuntu")
-
+GENOME_BUILD=GRCh37.75
+GENOME_BUILD_ALT_NAME=hg19
+#4.3.1t-3 4_3
+SNPEFF_VERSION=4.3.1t-3
+SNPEFF_VERSION_SHORT_STRING=4_3 
+SNPSIFT_VERSION=4.3.1t-2
+SNPEFF_VERSION_WO_BUILD=4.3.1t
+SNPSIFT_VERSION_WO_BUILD=4.3.1t
+#SNPEFF_VERSION=4.5covid19-1
+#SNPEFF_VERSION_SHORT_STRING=4_5_covid19_1 
+#SNPEFF_VERSION_SHORT_STRING=4_5_covid19_1 
 archive:
 	sudo rm -f $$p/$(SOURCE)-*.tar.gz $$p/Miniconda*
 	p=`pwd` && rm -f $$p/$(SOURCE)-$(VERSION).tar.gz && tar --transform="s@^@$(SOURCE)-$(VERSION)/@" -cvzf $$p/$(SOURCE)-$(VERSION).tar.gz *
@@ -84,9 +94,10 @@ modules_and_snpeff:
 	################ Install python modules ################
 	## Install some modules with conda
 	#This includes R (rstudio) and biopython
-	bash -c "source ${conda_home}/bin/activate" && ./conda_packages.bash ${conda_home} ${conda_home} ${conda_env}
+	bash -c "source ${conda_home}/bin/activate" && ./conda_packages.bash ${conda_home} ${conda_home} ${conda_env} ${SNPEFF_VERSION_WO_BUILD} ${SNPSIFT_VERSION_WO_BUILD}
 	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
-	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
+	#Install Snpeff, Snpsift and their data
+	./get_snpeff_data.bash ${conda_home} ${SNPEFF_VERSION} ${SNPEFF_VERSION_SHORT_STRING} ${GENOME_BUILD} #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 thirdparty_tools:
 	################ Install various version specific 3rd party tools ################
@@ -109,8 +120,6 @@ thirdparty_tools:
 	chmod 775 ${qiagen_parent_folder}/bin/TorrentSuite/tmap ${qiagen_parent_folder}/bin/TorrentSuite/tvc
 	#Install Perl modules
 	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
-	#Install Snpeff, Snpsift and their data
-	./get_snpeff_data.bash ${conda_home} 4.3.1t-3 4_3 GRCh37.75 #If you wanted to use the GRCh38, you should replace GRCh37.75 to GRCh38.86 in this line
 
 #Data files:
 data_files: annotations examples testfiles genomes
@@ -153,15 +162,15 @@ genomes:
 	#Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 	#a successful bwa run below
 	## Download genome files
-	mkdir -p ${qiagen_parent_folder}/data/genome/hg19
-	#ls ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
-	md5sum -c ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
-	wget https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.dict \
-	https://storage.googleapis.com/qiaseq-dna/data/genome/hg19/ucsc.hg19.fa -P ${qiagen_parent_folder}/data/genome/hg19/ && \
-	#cd ${qiagen_parent_folder}/data/genome/hg19 && gunzip ucsc.hg19.fa.gz && \
-	${conda_home}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa && \
-	${conda_home}/bin/bwa index ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa && \
-	md5sum -b ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac > ${qiagen_parent_folder}/data/genome/hg19/ucsc.hg19.fa.pac.md5 )
+	mkdir -p ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}
+	#ls ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
+	md5sum -c ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
+	wget https://storage.googleapis.com/qiaseq-dna/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.dict \
+	https://storage.googleapis.com/qiaseq-dna/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa -P ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ && \
+	#cd ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME} && gunzip ucsc.${GENOME_BUILD_ALT_NAME}.fa.gz && \
+	${conda_home}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa && \
+	${conda_home}/bin/bwa index ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa && \
+	md5sum -b ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac > ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 )
 
 #help and debug:
 versions:

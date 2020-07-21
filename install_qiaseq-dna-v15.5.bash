@@ -31,7 +31,7 @@ else
     if [ -e ${qseq_folder}-old ]; then sudo rm -rf ${qseq_folder}-old; fi
     if [ -e ${qseq_folder} ]; then mv -Tf ${qseq_folder} ${qseq_folder}-old; fi
     sudo mv -T ${qseq_folder_title}-${version} ${qseq_folder}
-    sudo chown ${USER} -R ${qseq_folder}
+    sudo chown ${USER}:${USER} -R ${qseq_folder}
     cd "${qseq_folder}" && install $@
 fi
 #Sets up a script with the environment variables needed

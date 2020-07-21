@@ -18,7 +18,7 @@ then
     sudo dpkg -i packages-microsoft-prod.deb
     sudo apt-get install -y apt-transport-https
     sudo apt-get update
-    sudo apt-get install aspnetcore-runtime-2.1 dotnet-sdk-2.1
+    sudo apt-get install -y aspnetcore-runtime-2.1 dotnet-sdk-2.1
 elif [ $DISTRO = centos ]
 then
     sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm

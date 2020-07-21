@@ -5,10 +5,14 @@ then
 	conda_home=$1
 	conda_preffix=$2
 	conda_env=$3
+	snpeff_version=$4
+	snpsift_version=$5
 else
 	conda_home=/root/conda
 	conda_preffix=/root/conda
 	conda_env=base
+	snpeff_version=4.3.1t
+	snpsift_version=4.3.1t
 fi
 ## Install some modules with conda
 #This includes R (rstudio) and biopython
@@ -23,11 +27,7 @@ source ${conda_home}/bin/activate ${conda_env}
 ## note : picard gets updated to match jdk version. Thus picard and jdk version should be pinned, at least by picard version is hardcoded in a configuration file
 sudo ${conda_home}/bin/pip install --upgrade pip
 sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0 openpyxl edlib
-#sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard=2.18.15 snpeff snpsift r-ggplot2 rstudio r-essentials r-mass r-scales r-extrafont r-plyr
-sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard snpeff snpsift
-#sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda rstudio
-#sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c cyclus java-jdk=8.45.14
+sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard snpeff=${snpeff_version} snpsift=${snpsift_version}
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c conda-forge r-ggplot2 r-essentials r-mass r-scales r-extrafont r-plyr r-gridextra r-naturalsort r-tidyverse r-stringi pyicu
 sudo ${conda_home}/bin/conda create -y -n python37 python=3.7 cython
-#sudo ${conda_home}/bin/conda install -y -n python37 cython
 sudo ${conda_home}/envs/python37/bin/pip install edlib
