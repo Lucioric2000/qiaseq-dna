@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import sys
 import multiprocessing
 # our modules
@@ -38,11 +38,11 @@ def run_tumor_normal(readSet,paramFile,vc):
     ''' Wrapper around run() for tumor-normal analysis
     '''
     # 2 read set names which are space delimited
-    readSets = filter(None,readSet.split(" "))
+    readSets = [_f for _f in readSet.split(" ") if _f]
     assert len(readSets) == 2, "Tumor-Normal Analysis requires exactly 2 read sets !"
  
     # read parameter file
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.SafeConfigParser()
     parser.optionxform = str
     parser.read(paramFile)
  
@@ -92,7 +92,7 @@ def run_tumor_normal(readSet,paramFile,vc):
 if __name__ == "__main__":
 
     if len(sys.argv) > 6 :
-        print "\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n"
+        print("\nRun as : python run_qiaseq_dna.py <param_file> <v1/v2> <single/tumor-normal> <readSet(s)>\n")
         sys.exit(-1)
   
     paramFile = sys.argv[1]

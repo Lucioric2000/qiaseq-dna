@@ -201,7 +201,7 @@ def filter(cfg,bamFileIn,bamFileOut):
    
         # crash if read is not paired
         if not read.is_paired:
-            print(read.qname)
+            print((read.qname))
             raise Exception("read not paired!")
          
         # this should be R1      
@@ -209,7 +209,7 @@ def filter(cfg,bamFileIn,bamFileOut):
         
         # get mate, assuming mate is the next record in the BAM file
         while True:
-            read = bamIn.next()
+            read = next(bamIn)
             if not read.is_secondary and not read.is_supplementary:
                 break
                 
@@ -218,7 +218,7 @@ def filter(cfg,bamFileIn,bamFileOut):
         
         # debug check
         if read1.qname != read2.qname:
-            print(read1.qname, read2.qname)
+            print((read1.qname, read2.qname))
             raise Exception("read mate is not next in BAM record order!")
             
         # debug check 
@@ -283,11 +283,11 @@ def filter(cfg,bamFileIn,bamFileOut):
         os.remove(bamFileIn)
      
     # report drop totals
-    print("{} read fragments dropped, primer side read not mapped".format(readPairCounts[NUM_PRIMER_SIDE_NOT_MAPPED]))
-    print("{} read fragments dropped, random side read not mapped".format(readPairCounts[NUM_RANDOM_SIDE_NOT_MAPPED]))
-    print("{} read fragments dropped, R1 and R2 not mapped to same locus".format(readPairCounts[NUM_R1_R2_NOT_AT_SAME_LOCUS]))
-    print("{} read fragments dropped, FF or RR mapping orientation".format(readPairCounts[NUM_R1_R2_SAME_ORIENTATION]))
-    print("{} read fragments dropped, split alignment".format(readPairCounts[NUM_SPLIT_ALIGNMENT]))
-    print("{} read fragments dropped, low mapping quality MAPQ < 17".format(readPairCounts[NUM_LOW_MAPQ]))
-    print("{} read fragments dropped, less than 25 bp aligned to genome".format(readPairCounts[NUM_LT_25BP_ALIGNED]))
-    print("{} read fragments written".format(readPairCounts[NUM_WRITTEN_OUT]))
+    print(("{} read fragments dropped, primer side read not mapped".format(readPairCounts[NUM_PRIMER_SIDE_NOT_MAPPED])))
+    print(("{} read fragments dropped, random side read not mapped".format(readPairCounts[NUM_RANDOM_SIDE_NOT_MAPPED])))
+    print(("{} read fragments dropped, R1 and R2 not mapped to same locus".format(readPairCounts[NUM_R1_R2_NOT_AT_SAME_LOCUS])))
+    print(("{} read fragments dropped, FF or RR mapping orientation".format(readPairCounts[NUM_R1_R2_SAME_ORIENTATION])))
+    print(("{} read fragments dropped, split alignment".format(readPairCounts[NUM_SPLIT_ALIGNMENT])))
+    print(("{} read fragments dropped, low mapping quality MAPQ < 17".format(readPairCounts[NUM_LOW_MAPQ])))
+    print(("{} read fragments dropped, less than 25 bp aligned to genome".format(readPairCounts[NUM_LT_25BP_ALIGNED])))
+    print(("{} read fragments written".format(readPairCounts[NUM_WRITTEN_OUT])))

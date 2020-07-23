@@ -1,7 +1,7 @@
 import editdist
 import sys
 MAX_BC_LEN = 50
-mtx = [[0] *(MAX_BC_LEN+1) for idx in xrange(MAX_BC_LEN+1)]
+mtx = [[0] *(MAX_BC_LEN+1) for idx in range(MAX_BC_LEN+1)]
 
 #---------------------------------------------------------------------------------------
 # fast check to determine if a barcodeB can be merged with barcodeA
@@ -84,7 +84,7 @@ def cluster(inPairs, bcLen, minRealNum = 3, minRealFrac = 0.1, minMergeFactor = 
     # iteration 1: mark barcodes as real or merge them with other barcodes if they are within  1 bp of a real barcode
     prefixHash = {}
     suffixHash = {}
-    sortedBarcodeList = sorted(uniqBCCnts.iteritems(), key=lambda x: x[1] , reverse=True)
+    sortedBarcodeList = sorted(iter(uniqBCCnts.items()), key=lambda x: x[1] , reverse=True)
     for (bcA, bcACnt) in sortedBarcodeList:
         prefix = bcA[:prefixLen]
         suffix = bcA[0-prefixLen:]
@@ -205,7 +205,7 @@ def cluster(inPairs, bcLen, minRealNum = 3, minRealFrac = 0.1, minMergeFactor = 
 
     # reformat ouput, and hack around a bug in the algorithm above
     mts = {}
-    for (mt, readIds) in readDict.iteritems():
+    for (mt, readIds) in readDict.items():
         numReads = len(readIds)
         for readId in readIds:
             if readId in mts:  # ERROR! - read assigned to more than one MT!!!!

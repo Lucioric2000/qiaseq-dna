@@ -1,4 +1,4 @@
-import utils
+from . import utils
 
 ## To do :
 ## 1. Move base metric values to a config file

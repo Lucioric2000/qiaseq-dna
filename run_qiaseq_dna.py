@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-from __future__ import print_function
-import ConfigParser
+
+import configparser
 import sys, os, argparse, traceback, socket, warnings
 import multiprocessing
 import shutil
@@ -128,11 +128,11 @@ def run_tumor_normal(readSet,paramFile,vc,outputPath):
    ''' Wrapper around run() for tumor-normal analysis
    '''
    # 2 read set names which are space delimited
-   readSets = filter(None,readSet.split(" "))
+   readSets = [_f for _f in readSet.split(" ") if _f]
    assert len(readSets) == 2, "Tumor-Normal Analysis requires exactly 2 read sets !"
 
    # read parameter file
-   parser = ConfigParser.SafeConfigParser()
+   parser = configparser.SafeConfigParser()
    parser.optionxform = str
    parser.read(paramFile)
 
@@ -266,11 +266,11 @@ def run_tumor_normal(readSet, paramFile, vc):
     ''' Wrapper for tumor-normal analysis
     '''
     # 2 read set names which are space delimited
-    readSets = filter(None, readSet.split(" "))
+    readSets = [_f for _f in readSet.split(" ") if _f]
     assert len(readSets) == 2, "Tumor-Normal Analysis requires exactly 2 read sets !"
  
     # read parameter file
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.SafeConfigParser()
     parser.optionxform = str
     parser.read(paramFile)
  
@@ -326,7 +326,7 @@ def run_tumor_normal(readSet, paramFile, vc):
 if __name__ == "__main__":
 
     args = core.run_config.parse_command_line_arguments()#This function handles the command line parsing and validtion, and, in its case, the prinitng of the USAGE screen
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.SafeConfigParser()
     parser.optionxform = str
     parser.read(args.paramFile)
     miscfileparts = os.path.split(misc.__file__)

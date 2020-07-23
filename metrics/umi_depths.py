@@ -255,7 +255,7 @@ def getLodEstimates(cfg,fileoutSummary,bedgraphDepths):
         mtSum += bp * mtDepth
     umiDepthMean = int(round(1.00 * mtSum / bpSum))
     cfg.umiDepthMean = umiDepthMean
-    print("umi_depths: mean UMI depth over target region:", umiDepthMean)
+    print(("umi_depths: mean UMI depth over target region:", umiDepthMean))
  
     # get path to this script - R script in same dir
     scriptName = os.path.abspath(__file__)
@@ -352,7 +352,7 @@ def makeUmiDepthBedgraph(cfg,readSupportMin,trackName):
             continue
    
         # covert to int
-        pLoc5, read1L, read1R, read2L, read2R  = map(int,(pLoc5, read1L, read1R, read2L, read2R))
+        pLoc5, read1L, read1R, read2L, read2R  = list(map(int,(pLoc5, read1L, read1R, read2L, read2R)))
         
         # take off the primer region
         if int(pStrand) == 1:

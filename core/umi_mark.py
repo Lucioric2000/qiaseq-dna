@@ -3,7 +3,7 @@ import os
 import subprocess
 
 # our modules
-import umi_cluster
+from . import umi_cluster
 
 # globals
 WINDOW_SIZE = 6

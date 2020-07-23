@@ -6,7 +6,7 @@ import itertools
 import edlib
 import cutadapt.adapters
 import time
-import cPickle as pickle
+import pickle as pickle
 
 # our modules
 from core.umi_filter import reverseComplement
@@ -27,7 +27,7 @@ def cluster_primer_seqs(primer_file):
        """ i=0; while read chrom pos strand primer; do echo ">"$i; echo $primer|tr -d '\r'; """
        """ i=$(($i+1)); done < {primerfile} > {primerfile}.fasta; """.format(primerfile=primer_file)
        )
-    print cmd1
+    print(cmd1)
     subprocess.check_call(cmd1,shell=True)
     # run cd-hit
     cmd2 = "/srv/qgen/bin/downloads/cd-hit-v4.6.8-2017-1208/cd-hit-est -i {primerfile}.fasta -o {primerfile}.clusters.temp".format(
@@ -287,10 +287,10 @@ def main(R1_fastq,R2_fastq,R1_fastq_out,R2_fastq_out,primer_file,primer_file_clu
 
             num_R1+=1
 
-    print "Total R1 Reads: {}".format(num_R1)
-    print "R1 Reads Trimmed: {}".format(trimmed_R1)
-    print "Total R2 Reads: {}".format(num_R1)
-    print "R2 Reads Trimmed: {}".format(trimmed_R2)
+    print("Total R1 Reads: {}".format(num_R1))
+    print("R1 Reads Trimmed: {}".format(trimmed_R1))
+    print("Total R2 Reads: {}".format(num_R1))
+    print("R2 Reads Trimmed: {}".format(trimmed_R2))
     if not update_read_id:
         OUT3.close()
 

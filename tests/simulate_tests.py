@@ -1,5 +1,5 @@
-import test_sm_counter
-import utils
+from . import test_sm_counter
+from . import utils
 import os
 import sys
 
@@ -22,17 +22,17 @@ import sys
 
 
 ########## smCounter ##########
-print "Starting to run tests.......\n------------------"
+print("Starting to run tests.......\n------------------")
 ## Setup directory structure
 if sys.argv[1].lower() == "true":
     os.system("mkdir -p /mnt/qiaseq-run/test_sm_counter/")
     os.chdir("/mnt/qiaseq-run/test_sm_counter/")
     os.system("cp /srv/qgen/code/qiaseq-dna/run_sm_counter_v1.params.txt ./")
-    print "Running sm_counter pipeline\n"
+    print("Running sm_counter pipeline\n")
     test_sm_counter.run_pipeline()
 # Run tests
 test_sm_counter.validate_umi_depth_metrics("NEB_S2.umi_depths.summary.txt")
 test_sm_counter.validate_umi_read_frags_metrics("NEB_S2.umi_frags.summary.txt")
 test_sm_counter.validate_umi_filter_metrics("NEB_S2.umi_filter.summary.txt")
 test_sm_counter.validate_variant_calling_metrics("NEB_S2.vcf_complex.summary.txt")
-print "Passed all sm_counter tests\n------------------"
+print("Passed all sm_counter tests\n------------------")

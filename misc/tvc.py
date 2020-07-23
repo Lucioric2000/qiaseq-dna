@@ -8,7 +8,7 @@ import shutil
 import pysam
 
 # our modules
-import bed
+from . import bed
 
 #----------------------------------------------------------------------------------------------------------
 # main TVC function - prepare primer-trimmed BAM and call TVC
@@ -42,7 +42,7 @@ def run(cfg):
             read_id, umi, umi_qual = line.strip('\n').split('\t')
             umi_dict[read_id] = umi
 
-    print "\nDone creating readID -> UMI  dict\n"
+    print("\nDone creating readID -> UMI  dict\n")
 
     # merge 5' trim, 3' trim, and raw read flow tags
     for line in open(readSet + ".cutadapt.5.R1.txt","r"):
@@ -54,7 +54,7 @@ def run(cfg):
             line = fileIn3.readline()
             vals3 = line.strip().split("\t")
             readId3 = vals3[0]
-            read = bam.next()
+            read = next(bam)
             if read.query_name != readId3:
                 raise Exception("3' cutadapt trim info file not in same order as raw read file")
             if readId3 == readId:
@@ -305,7 +305,7 @@ def run(cfg):
      + " --indel-strand-bias 1" \
      + " --indel-strand-bias-pval 0" \
      + " > " + readSet + ".tvc.log 2>&1"
-    print("tvc: command line is " + cmd)
+    print(("tvc: command line is " + cmd))
     subprocess.check_call(cmd, shell=True)
     print("tvc: done running TVC")
 
@@ -406,7 +406,7 @@ def smCounterFilter(cfg,vc):
             chrom, pos, id, ref, alt, qual,filter,info,format,sampleId = line.strip().split("\t")
             key = (chrom, pos, ref, alt)
             tvcPrimitives.add(key)
-    print("tvc: TVC primitive variants: {}".format(len(tvcPrimitives)))
+    print(("tvc: TVC primitive variants: {}".format(len(tvcPrimitives))))
 
    
     # loop over smCounter variants, for each check if all primitives are in the TVC primitives hash
@@ -548,7 +548,7 @@ def smCounterFilter(cfg,vc):
             else:
                 fileOut3.write(line2)
                 numVariantsFiltered += 1
-                print("tvc: filtering smCounter variant: " + line.strip())
+                print(("tvc: filtering smCounter variant: " + line.strip()))
 
     # close files
     fileIn2.close()
@@ -565,8 +565,8 @@ def smCounterFilter(cfg,vc):
         shutil.move(fileNameSrc, fileNameDes)
 
     # done
-    print("tvc: # variants filtered: {}".format(numVariantsFiltered))
-    print("tvc: # variants retained: {}".format(numVariantsRetained))
+    print(("tvc: # variants filtered: {}".format(numVariantsFiltered)))
+    print(("tvc: # variants retained: {}".format(numVariantsRetained)))
     print("tvc: done smCounterFilter")
     return numVariantsRetained
 

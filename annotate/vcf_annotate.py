@@ -127,11 +127,11 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
         for idx in range(len(tagsNeeded[vc])):
             val = vals[idx]
             if val.find("=") == -1:
-                print(idx, val, line)
+                print((idx, val, line))
                 raise Exception("bad INFO tag parsing")
             (tagName, tagVal) = val.split("=")
             if tagName != tagsNeeded[vc][idx]:
-                print(idx, val, line)
+                print((idx, val, line))
                 raise Exception("VCF header INFO column tags not in expected sort order!")
             outvec.append(tagVal)
    
@@ -163,7 +163,7 @@ def run(cfg, vcfFileIn, vcfFileOut,vc, tumorNormal):
                
         # output row
         if len(outvec) != len(colNames):
-            print(len(outvec), len(colNames), line)
+            print((len(outvec), len(colNames), line))
             raise Exception("Unexpected INFO tag count")
         fileout.write("\t".join(outvec))
         fileout.write("\n")

@@ -4,7 +4,7 @@ import subprocess
 import os
 
 # our modules
-import primer_trim_ion
+from . import primer_trim_ion
 
 #-------------------------------------------------------------------------------------
 def trimIon(filePrefix,cutadaptDir,tagNameUmiSeq):
@@ -139,16 +139,16 @@ def trimIon(filePrefix,cutadaptDir,tagNameUmiSeq):
 #-------------------------------------------------------------------------------------
 def run(cutadaptDir,tagNameUmiSeq,tagNamePrimer,tagNamePrimerErr,primer3Bases,filePrefix,primerFile,seqtype):
 
-    print "Trimming synthetic regions , i.e. Adapters, UMI\n"
+    print("Trimming synthetic regions , i.e. Adapters, UMI\n")
     fileIn1,fileIn2 = trimIon(filePrefix,cutadaptDir,tagNameUmiSeq)
-    print "Trimming Primers\n"
+    print("Trimming Primers\n")
     fileOut1 = filePrefix + ".trimmed.R1.fastq"
     fileOut2 = filePrefix + ".trimmed.R2.fastq"
     primer_trim_ion.main(
         fileIn2,fileIn1,fileOut2,fileOut1,primerFile,primerFile+'.clusters',
         int(primer3Bases),tagNamePrimer,tagNamePrimerErr,update_read_id=False,
         out_tag_file=filePrefix+".primer.tag.txt",load_cache=False,cache_file=None) # swapped R1 and R2
-    print "Finished with trimming\n"    
+    print("Finished with trimming\n")    
     # delete unneeded temp files
     for i in range(0,3):
         for read in ('R1','R2'):

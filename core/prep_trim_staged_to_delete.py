@@ -9,13 +9,13 @@ def runShellCommand(cmd):
    try:
       log = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
       error = False
-   except subprocess.CalledProcessError, ex:
+   except subprocess.CalledProcessError as ex:
       log = ex.output
       error = True
       
    # print command log output
    for line in log.split("\n"):
-      print("prep_trim: " + line.strip())
+      print(("prep_trim: " + line.strip()))
    
    # re-raise exception now that error detail has been printed
    if error:
@@ -121,7 +121,7 @@ def run(cutadaptDir,umiTagName,filePrefix):
    # delete unneeded temp files
    os.remove(filePrefix + ".temp0.R1.fastq")
    os.remove(filePrefix + ".temp0.R2.fastq")
-   print("worked with filePrefix",filePrefix,filePrefix + ".temp1.R1.fastq",filePrefix + ".temp1.R2.fastq")
+   print(("worked with filePrefix",filePrefix,filePrefix + ".temp1.R1.fastq",filePrefix + ".temp1.R2.fastq"))
 
    # rename the output files - overwrite the input files!
    os.rename(filePrefix + ".temp1.R1.fastq", filePrefix + ".R1.fastq")

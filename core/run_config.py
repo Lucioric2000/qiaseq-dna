@@ -1,5 +1,5 @@
-from __future__ import print_function
-import ConfigParser, os, argparse, sys, traceback
+
+import configparser, os, argparse, sys, traceback
 from multiprocessing.dummy import cpu_count as cpu_count
 
 class ArgumentFileParserAction(argparse.Action):
@@ -12,7 +12,7 @@ class ArgumentFileParserAction(argparse.Action):
         print ('action called: %r %r %r' % (namespace, values, option_string))
         #setattr(namespace, self.dest, values)
         # read parameter file
-        parser = ConfigParser.SafeConfigParser()
+        parser = configparser.SafeConfigParser()
         parser.optionxform = str
         parser.read(paramFile)
 
@@ -64,7 +64,7 @@ class ConfigObj(object):
                 os.makedirs(outputPath)
             return os.path.join(outputPath,filename)
     def print_data(self,readsetbasename):
-        for (paramName,paramVal) in self.__dict__.items():
+        for (paramName,paramVal) in list(self.__dict__.items()):
             print("Parameter {0}=={1}".format(paramName,paramVal))
 
 
@@ -90,7 +90,7 @@ def parse_command_line_arguments():
 def run(readSet,paramFile,outputPath):
 
     # read parameter file
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.SafeConfigParser()
     parser.optionxform = str
     parser.read(paramFile)
 

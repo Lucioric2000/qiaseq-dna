@@ -1,4 +1,4 @@
-import ConfigParser
+import configparser
 import os
 import sys
 
@@ -37,7 +37,7 @@ def run(cfg, paramFile, vc):
     (path,readSet) = os.path.split(cfg.readSet)
 
     # get standard smCounter parameters from the main run-params.txt file
-    parser = ConfigParser.SafeConfigParser()
+    parser = configparser.SafeConfigParser()
     parser.optionxform = str
     parser.read(paramFile)
     cfgSmCounter = {}

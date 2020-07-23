@@ -103,7 +103,7 @@ def run(cfg,bamFileIn):
         # hash primer sequence by site as key
         primerSeq[key] = primer      
            
-    print("# of primers:", len(primerSeq))
+    print(("# of primers:", len(primerSeq)))
     
     # open output files
     fileout         = open(filePrefixOut + ".alignments.txt", "w")
@@ -123,7 +123,7 @@ def run(cfg,bamFileIn):
    
         # crash if read is not paired
         if not read.is_paired:
-            print(read.qname)
+            print((read.qname))
             raise Exception("read not paired!")
          
         # this should be R1      
@@ -131,7 +131,7 @@ def run(cfg,bamFileIn):
         
         # get mate, assuming mate is the next record in the BAM file
         while True:
-            read = bam.next()
+            read = next(bam)
             if not read.is_secondary and not read.is_supplementary:
                 break
                 
@@ -140,7 +140,7 @@ def run(cfg,bamFileIn):
         
         # debug check
         if read1.qname != read2.qname:
-            print(read1.qname, read2.qname)
+            print((read1.qname, read2.qname))
             raise Exception("read mate is not next in BAM record order!")
             
         # debug check 
@@ -307,7 +307,7 @@ def run(cfg,bamFileIn):
     
     # sort the priming site read depths by locus
     primingDepths = []
-    for (key, numReads) in primingReadDepths.iteritems():
+    for (key, numReads) in primingReadDepths.items():
         (alignChrom, alignStrand, alignLoc, primer) = key
         primingDepths.append((alignChrom, alignStrand, alignLoc, primer, numReads))
     primingDepths.sort()

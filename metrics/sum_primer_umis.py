@@ -75,7 +75,7 @@ def run(cfg):
  
     # for each primer, get read per MT metrics
     mtListAllPrimers = []
-    for (key, val) in primers.iteritems():
+    for (key, val) in primers.items():
     
         # unpack key
         (primer, chrom, strand, loc5) = key

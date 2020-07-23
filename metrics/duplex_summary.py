@@ -76,7 +76,7 @@ def run(cfg):
             continue
         
         total_reads_for_this_umi = 0
-        for duplex, num_reads in duplex_by_umi[umi].iteritems():
+        for duplex, num_reads in duplex_by_umi[umi].items():
             if duplex == 'NN':
                 metric_vals[NUM_READS_NN] += 1
                 continue # skip NN reads

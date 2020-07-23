@@ -138,7 +138,7 @@ def clipRead(read, aligmentReoriented, cigar, basesGenomeNeeded):
         # debug check on valid cigar string
         numCigarBases = sum((x[1] for x in read.cigar if x[0] != 2))
         if numCigarBases != read.query_length:
-            print(read.qname,read.cigarstring, cigar, read.query_length, aligmentReoriented, read.is_read1, basesGenomeNeeded, basesGenome)
+            print((read.qname,read.cigarstring, cigar, read.query_length, aligmentReoriented, read.is_read1, basesGenomeNeeded, basesGenome))
             raise Exception("new cigar does not match read length!")
             
         # done
@@ -198,9 +198,9 @@ def run(cfg, bamFileIn, bamFileOut, resampleOnly):
             raise Exception("read not paired! " + read1.qname)
             
         # get mate, assuming mate is the next record in the BAM file - alignments assume to be filtered upstream
-        read2 = bamIn.next()
+        read2 = next(bamIn)
         if read1.qname != read2.qname:
-            print(read1.qname, read2.qname)
+            print((read1.qname, read2.qname))
             raise Exception("read mate is not next in BAM record order!")
             
         # switch variable names to match actual R1 and R2
@@ -212,7 +212,7 @@ def run(cfg, bamFileIn, bamFileOut, resampleOnly):
         # report progress
         numReadPairs += 1
         if numReadPairs % 1000000 == 0:
-            print("# read pairs processed: " + "{0:,}".format(numReadPairs))
+            print(("# read pairs processed: " + "{0:,}".format(numReadPairs)))
    
         # check for internal-resample-only request
         if resampleOnly and read1.get_tag("re") == 0:
@@ -320,9 +320,9 @@ def run(cfg, bamFileIn, bamFileOut, resampleOnly):
     bamOut.close()
  
     # report debug count
-    print("# read pairs total", numReadPairs)
-    print("# read pairs dropped because 100% soft clipped:", numReadPairsDropped)
-    print("# read pairs with R1 trimmed: {}".format(numReadPairsTrimmed))
+    print(("# read pairs total", numReadPairs))
+    print(("# read pairs dropped because 100% soft clipped:", numReadPairsDropped))
+    print(("# read pairs with R1 trimmed: {}".format(numReadPairsTrimmed)))
     
     # delete input file if local
     if deleteLocalFiles and len(os.path.dirname(bamFileIn)) == 0:

@@ -25,10 +25,11 @@ source ${conda_home}/bin/activate ${conda_env}
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version. Thus picard and jdk version should be pinned, at least by picard version is hardcoded in a configuration file
+sudo ${conda_home}/bin/pip install cython edlib
 sudo ${conda_home}/bin/pip install --upgrade pip
 sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0 openpyxl edlib
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c bioconda perl bwa pysam samtools biopython scipy MySQL-python bedtools htslib cutadapt picard snpeff=${snpeff_version} snpsift=${snpsift_version}
 sudo ${conda_home}/bin/conda install -y -n ${conda_env} -c conda-forge r-ggplot2 r-essentials r-mass r-scales r-extrafont r-plyr r-gridextra r-naturalsort r-tidyverse r-stringi pyicu
-sudo ${conda_home}/bin/conda create -y -n python37 python=3.7 cython samtools
-sudo ${conda_home}/bin/conda install -y -n python37 -c bioconda samtools
-sudo ${conda_home}/envs/python37/bin/pip install edlib
+#sudo ${conda_home}/bin/conda create -y -n python37 python=3.7 cython samtools
+#sudo ${conda_home}/bin/conda install -y -n python37 -c bioconda samtools
+#sudo ${conda_home}/envs/python37/bin/pip install edlib

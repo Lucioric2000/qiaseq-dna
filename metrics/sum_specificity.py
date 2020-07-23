@@ -35,7 +35,7 @@ def run(cfg):
                 
     # re-organize off-target site depths by primer
     stacksOffT = {}
-    for (key, numReads) in siteDepthsOffT.iteritems():
+    for (key, numReads) in siteDepthsOffT.items():
         (primer, alignChrom, alignStrand, alignLoc) = key
         if primer in stacksOffT:
             vec = stacksOffT[primer]
@@ -45,7 +45,7 @@ def run(cfg):
         vec.append((numReads, alignChrom, alignLoc, alignStrand))
            
     # descending read depth sort off-target sites for each primer; also extend vector to minimum of 10
-    for primer in stacksOffT.iterkeys():
+    for primer in stacksOffT.keys():
         vec = stacksOffT[primer]
         vec.sort(reverse=True)
         if len(vec) <= 10:

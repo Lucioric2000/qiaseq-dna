@@ -86,7 +86,7 @@ def addBamTags(bamIn,bamOut,readSet,tagNameUmiSeq,tagNamePrimer,tagNamePrimerErr
             read_id, primer, primer_err = line.strip('\n').split('\t')
             umi_dict[read_id][1] = primer
             umi_dict[read_id][2] = primer_err
-    print "\nDone creating readID -> (umi,primer,primer_err)  dict\n"            
+    print("\nDone creating readID -> (umi,primer,primer_err)  dict\n")            
 
     with pysam.AlignmentFile(bamIn,"rb") as IN, pysam.AlignmentFile(bamOut,"wb", template=IN) as OUT:
         for read1 in IN:

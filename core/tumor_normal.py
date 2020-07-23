@@ -267,7 +267,7 @@ def benjaminiHotchbergCorrection(pvals):
     temp = np.array(pvals)
     sorted_indices = np.argsort(temp)
     m = len(sorted_indices) # number of tests
-    rank = np.array(range(1,m+1))
+    rank = np.array(list(range(1,m+1)))
     tempPAdjusted = m*temp[sorted_indices]/rank
     ## final adjustment
     ## we make sure that if a smaller q-value
@@ -414,7 +414,7 @@ def tumorNormalVarFilter(cfg, normal, tumor):
                 tumorAllVars[key].oddsRatio = oddsRatio
 
     # filter entries with no pvals
-    tumorVarsFiltered  = {k:v for k,v in tumorAllVars.items() if v.pval is not None} # - variants flagged as LOH not here !
+    tumorVarsFiltered  = {k:v for k,v in list(tumorAllVars.items()) if v.pval is not None} # - variants flagged as LOH not here !
 
     # store ordered pvals and variants
     tumorPvals   = []
@@ -439,7 +439,7 @@ def tumorNormalVarFilter(cfg, normal, tumor):
             normalAllVars[key].vmf, pValCutoff)
 
     # filter again - this time keep all variants which have a varclass, i.e. flagged as either LOH/LOH_HomRef/Germline_Risk/Somatic
-    tumorVarsFiltered  = {k:v for k,v in tumorAllVars.items() if v.varclass is not None}
+    tumorVarsFiltered  = {k:v for k,v in list(tumorAllVars.items()) if v.varclass is not None}
 
     # parse and update all.txt file
     tempFile1 = readSetTumor + ".smCounter.all.temp.txt"
@@ -483,7 +483,7 @@ def runCopyNumberEstimates(cfg):
             if not line.startswith("read set|"):
                 vals = line.strip().split("|")
                 (readSet, primer, strand, chrom, loc5, loc3, umiCount) = vals[0:7]
-                (strand, loc5, umiCount) = map(int,(strand, loc5, umiCount))
+                (strand, loc5, umiCount) = list(map(int,(strand, loc5, umiCount)))
                 key = (chrom,strand,loc5,primer)
                 umiCounts.append((key,umiCount))
                 umiCountsTotal += umiCount
@@ -507,7 +507,7 @@ def runCopyNumberEstimates(cfg):
     fileout = open(umiFileReference, "w")
 
     # for each primer, get median MT depth across all reference read sets and write to disk
-    for key, vec in umiCountsAll.iteritems():
+    for key, vec in umiCountsAll.items():
         # get median MT depth for this primer
         idx = len(vec) / 2
         if len(vec) % 2 == 1: # odd length
@@ -538,7 +538,7 @@ def runCopyNumberEstimates(cfg):
             continue
         vals = line.strip().split("|")
         (readSet_, primer, strand, chrom, loc5, loc3, mtCount) = vals[0:7]
-        (strand, loc5, mtCount) = map(int,(strand, loc5, mtCount))
+        (strand, loc5, mtCount) = list(map(int,(strand, loc5, mtCount)))
         refGenomeBase = primer[0]
         if strand == 1:
             refGenomeBase = refGenomeBase.translate(dnaComplementTranslation)

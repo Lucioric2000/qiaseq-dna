@@ -56,10 +56,10 @@ nirvana:
 conda_install:# clean
 	#Install the Miniconda Python pachages manager
 	echo "Next, the Miniconda package will be downloaded and installed at the folder ${conda_home}."
-	wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh
-	chmod +x Miniconda2-latest-Linux-x86_64.sh
-	sudo bash Miniconda2-latest-Linux-x86_64.sh -p ${conda_home} -u -b
-	rm Miniconda2-latest-Linux-x86_64.sh
+	wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+	chmod +x Miniconda3-latest-Linux-x86_64.sh
+	sudo bash Miniconda3-latest-Linux-x86_64.sh -p ${conda_home} -u -b
+	rm Miniconda3-latest-Linux-x86_64.sh
 	${conda_home}/bin/conda init bash
 	#Make the updated shell path available in this session:
 	#source ~/.bashrc
@@ -159,7 +159,7 @@ testfiles:
 genomes:
 	#Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 	#a successful bwa run below
-	bash -c "./genome.bash ${qiagen_parent_folder} ${conda_home} python37 ${GENOME_BUILD_ALT_NAME}"
+	bash -c "./genome.bash ${qiagen_parent_folder} ${conda_home} base ${GENOME_BUILD_ALT_NAME}"
 
 #help and debug:
 versions:

@@ -6,7 +6,7 @@ import subprocess
 from multiprocessing.dummy import Pool as ThreadPool
 
 # our modules
-import primer_trim_ion
+from . import primer_trim_ion
 
 #-------------------------------------------------------------------------------------
 def runShellCommand(cmd):
@@ -14,13 +14,13 @@ def runShellCommand(cmd):
     try:
         log = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
         error = False
-    except subprocess.CalledProcessError, ex:
+    except subprocess.CalledProcessError as ex:
         log = ex.output
         error = True
         
     # print command log output
     for line in log.split("\n"):
-        print("prep_trim: " + line.strip())
+        print(("prep_trim: " + line.strip()))
      
     # re-raise exception now that error detail has been printed
     if error:
