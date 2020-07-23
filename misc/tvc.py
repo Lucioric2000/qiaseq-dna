@@ -1,5 +1,5 @@
 import subprocess
-import string
+#import string
 import os
 import array
 import shutil
@@ -132,7 +132,7 @@ def run(cfg):
     subprocess.check_call(cmd, shell=True)
 
     # set up reverse comlement
-    dnaComplementTranslation = string.maketrans("ATGC", "TACG")
+    dnaComplementTranslation = str.maketrans("ATGC", "TACG")
 
     # open readId-sorted main BAM file, build header for TVC output bam
     bamIn = pysam.AlignmentFile(readSet + ".tvc.temp.bam", "rb")

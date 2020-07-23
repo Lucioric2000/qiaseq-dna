@@ -1,4 +1,5 @@
-import editdist
+#import editdist
+import Levenshtein
 import sys
 MAX_BC_LEN = 50
 mtx = [[0] *(MAX_BC_LEN+1) for idx in range(MAX_BC_LEN+1)]
@@ -149,7 +150,7 @@ def cluster(inPairs, bcLen, minRealNum = 3, minRealFrac = 0.1, minMergeFactor = 
                     continue
                 if bcBCnt < minMergeFactor * bcACnt:
                     break
-                editDistance = editdist.distance(bcB, bcA)
+                editDistance = Levenshtein.distance(bcB, bcA)
                 if editDistance <= 2:
                     if bcA not in level2Parent:
                         level2Parent[bcA] = set()

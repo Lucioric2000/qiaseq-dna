@@ -6,7 +6,7 @@ from collections import defaultdict
 
 # 3rd party modules
 import pysam
-import editdist
+#import editdist
 
 # constants for read pair accounting
 NUM_PRIMER_SIDE_NOT_MAPPED = 0
@@ -29,7 +29,7 @@ NUM_METRICS_TOTAL = 15 - 2
 #---------------------------------------------------------------------
 # reverse complement a seq (warning: will not work with Python 3)
 #---------------------------------------------------------------------
-dnaComplementTranslation = string.maketrans("ATGC", "TACG")
+dnaComplementTranslation = str.maketrans("ATGC", "TACG")
 def reverseComplement(seq):
     seq = seq[::-1]
     return seq.translate(dnaComplementTranslation)

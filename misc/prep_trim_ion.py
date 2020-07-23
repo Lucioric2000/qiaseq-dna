@@ -113,7 +113,7 @@ def trimIon(filePrefix,cutadaptDir,tagNameUmiSeq):
     fileout.close()
 
     # set up reverse comlement
-    dnaComplementTranslation = string.maketrans("ATGC", "TACG")
+    dnaComplementTranslation = str.maketrans("ATGC", "TACG")
 
     # make fake R2 (primer side) file
     fileout = open(filePrefix + ".temp2.R2.fastq", "w")

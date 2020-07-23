@@ -17,8 +17,8 @@ def runReadTrimmer(cfg):
         os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
         'read-trimmer/trimmer/run.py')
 
-    #cmd = "python3 {trimmer} " \
-    cmd = "PYTHONPATH= /root/conda/envs/python37/bin/python {trimmer} " \
+    #cmd = "PYTHONPATH= /root/conda/envs/python37/bin/python {trimmer} " \
+    cmd = "python {trimmer} " \
           "--r1 {R1} --r2 {R2} --primer-file {primer} " \
           "--out-metrics {summary} --out-r1 {outR1} --out-r2 {outR2} " \
           "--check-primer-side --primer3-bases-R1 {primer3R1} " \

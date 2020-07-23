@@ -1,6 +1,6 @@
 
 import configparser, os, argparse, sys, traceback
-from multiprocessing.dummy import cpu_count as cpu_count
+from multiprocessing import cpu_count as cpu_count
 
 class ArgumentFileParserAction(argparse.Action):
     def __init__(self, option_strings, dest, nargs=None, **kwargs):

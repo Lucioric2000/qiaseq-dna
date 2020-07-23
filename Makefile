@@ -9,7 +9,7 @@ DISTRO := $(shell bash -c "yum --help&>/dev/null && echo centos || echo ubuntu")
 GENOME_BUILD=GRCh37.75
 GENOME_BUILD_ALT_NAME=hg19
 #4.3.1t-3 4_3
-SNPEFF_VERSION=4.3.1t-3
+SNPEFF_VERSION=4.3.1t-0
 SNPEFF_VERSION_SHORT_STRING=4_3 
 SNPSIFT_VERSION=4.3.1t-2
 SNPEFF_VERSION_WO_BUILD=4.3.1t
@@ -38,6 +38,8 @@ toqiaseq: archive
 toroot: archive
 	sudo cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(ROOT)/
 	sudo chmod +x $(ROOT)/install_$(SOURCE)-v$(VERSION).bash
+takeback:
+	sudo cp -R ${qiagen_parent_folder}/${SOURCE} ${qiagen_code_parent_folder}
 update:
 	mkdir -p $(qiagen_parent_folder)/qiaseq-dna
 	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/

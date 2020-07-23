@@ -6,7 +6,7 @@ import math
 import multiprocessing
 import numpy as np
 import shutil
-import string
+#import string
 import scipy.stats
 import subprocess
 import sys
@@ -499,7 +499,7 @@ def runCopyNumberEstimates(cfg):
             vec.append(int(round(1000.00 * umiCount / meanUmiDepth)))
 
     # need to complement first base of negative strand primers
-    dnaComplementTranslation = string.maketrans("ATGC", "TACG")
+    dnaComplementTranslation = str.maketrans("ATGC", "TACG")
 
     # open output file for quandico input
     readSet = cfg.readSet

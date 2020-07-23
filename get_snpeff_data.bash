@@ -17,5 +17,5 @@ sudo rm -rf ${snpeff_folder}/data/
 sudo chmod 777 -R ${snpeff_folder}
 cd ${snpeff_folder}
 sudo unzip snpEff_v${snpeff_version_short}_${genome_version}.zip
-sudo ${conda_home}/jre/bin/java -jar ${snpeff_folder}/snpEff.jar download ${genome_version}
+sudo ${conda_home}/bin/java -jar ${snpeff_folder}/snpEff.jar download ${genome_version}
 #example: ./get_snpeff_data.bash /root/conda 4.3.1t-1 4_3 GRCh37.75

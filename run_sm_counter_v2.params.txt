@@ -3,7 +3,7 @@
 cutadaptDir = /root/conda/bin/
 bwaDir      = /root/conda/bin/
 samtoolsDir = /root/conda/bin/
-javaExe     = /root/conda/jre/bin/java
+javaExe     = /root/conda/bin/java
 
 # ssw for fast Smith-Waterman
 sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
