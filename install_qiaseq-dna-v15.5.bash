@@ -30,6 +30,7 @@ else
     sudo tar -xvzf ${qseq_folder_title}-${version}.tar.gz
     if [ -e ${qseq_folder}-old ]; then sudo rm -rf ${qseq_folder}-old; fi
     if [ -e ${qseq_folder} ]; then mv -Tf ${qseq_folder} ${qseq_folder}-old; fi
+    mkdir -p ${parent_folder}
     sudo mv -T ${qseq_folder_title}-${version} ${qseq_folder}
     sudo chown ${USER}:${USER} -R ${qseq_folder}
     cd "${qseq_folder}" && install $@

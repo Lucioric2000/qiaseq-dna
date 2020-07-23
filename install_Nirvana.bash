@@ -11,6 +11,7 @@
 #. NET Core install:
 
 DISTRO=$(yum --help&>/dev/null && echo centos || echo ubuntu)
+DOTNET_VERSION=3.1
 
 if [ $DISTRO = ubuntu ]
 then
@@ -18,12 +19,12 @@ then
     sudo dpkg -i packages-microsoft-prod.deb
     sudo apt-get install -y apt-transport-https
     sudo apt-get update
-    sudo apt-get install -y aspnetcore-runtime-2.1 dotnet-sdk-2.1
+    sudo apt-get install -y aspnetcore-runtime-${DOTNET_VERSION} dotnet-sdk-${DOTNET_VERSION}
 elif [ $DISTRO = centos ]
 then
     sudo rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm
     sudo yum update
-    sudo yum install aspnetcore-runtime-2.1 dotnet-sdk-2.1
+    sudo yum install aspnetcore-runtime-${DOTNET_VERSION} dotnet-sdk-${DOTNET_VERSION}
 fi
 # Nirvana install
 

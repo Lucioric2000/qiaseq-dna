@@ -24,10 +24,10 @@ version:
 	@echo $(VERSION)
 libraries_centos:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python2-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
-	sudo pip3 install edlib
+	#sudo pip3 install edlib
 libraries_ubuntu:
 	sudo apt-get install -y git unzip wget gcc build-essential bzip2 python2-dev nano perl curl python3 cpanminus python3-pip python3-dev #expat-dev openssl-dev perl-dev perl-App-cpanminus python3-libs python3-tools
-	sudo pip3 install edlib
+	#sudo pip3 install edlib
 toqgz: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
 toqiaseq: archive
@@ -60,7 +60,7 @@ conda_install:# clean
 	chmod +x Miniconda2-latest-Linux-x86_64.sh
 	sudo bash Miniconda2-latest-Linux-x86_64.sh -p ${conda_home} -u -b
 	rm Miniconda2-latest-Linux-x86_64.sh
-	${conda_home}/bin/conda init
+	${conda_home}/bin/conda init bash
 	#Make the updated shell path available in this session:
 	#source ~/.bashrc
 	#source ${conda_home}/bin/activate ${conda_env}
@@ -118,8 +118,6 @@ thirdparty_tools:
 	https://storage.googleapis.com/qiaseq-dna/lib/TorrentSuite/tvc \
 	-P ${qiagen_parent_folder}/bin/TorrentSuite/
 	chmod 775 ${qiagen_parent_folder}/bin/TorrentSuite/tmap ${qiagen_parent_folder}/bin/TorrentSuite/tvc
-	#Install Perl modules
-	./install_perl_modules.bash ${conda_home} ${conda_home} ${conda_env}
 
 #Data files:
 data_files: annotations examples testfiles genomes
@@ -161,16 +159,7 @@ testfiles:
 genomes:
 	#Index the genome fasta file, using samtools and bwa, only if does not exists a file with a md5 hash identical to a hash annotated in a file generated after
 	#a successful bwa run below
-	## Download genome files
-	mkdir -p ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}
-	#ls ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
-	md5sum -c ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || ( \
-	wget https://storage.googleapis.com/qiaseq-dna/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.dict \
-	https://storage.googleapis.com/qiaseq-dna/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa -P ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ && \
-	#cd ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME} && gunzip ucsc.${GENOME_BUILD_ALT_NAME}.fa.gz && \
-	${conda_home}/bin/samtools faidx ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa && \
-	${conda_home}/bin/bwa index ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa && \
-	md5sum -b ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac > ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 )
+	bash -c "./genome.bash ${qiagen_parent_folder} ${conda_home} python37 ${GENOME_BUILD_ALT_NAME}"
 
 #help and debug:
 versions:
