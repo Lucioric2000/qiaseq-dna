@@ -18,7 +18,6 @@ mkdir -p ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME}
 #md5sum -c ${qiagen_parent_folder}/data/genome/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 ls ${qiagen_parent_folder}/data/genome/ucsc.${GENOME_BUILD_ALT_NAME}.fa.pac.md5 &>/dev/null && echo found bwa results file with the expected hash || (
 ## Download genome files
-    source ${conda_home}/bin/activate python37
     cd ${qiagen_parent_folder}/data/genome/${GENOME_BUILD_ALT_NAME} && \
         wget https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.${GENOME_BUILD_ALT_NAME}.dict \
             https://storage.googleapis.com/qiaseq-dna/data/genome/ucsc.${GENOME_BUILD_ALT_NAME}.fa.gz && \

@@ -11,6 +11,6 @@ RUN yum -y update && yum -y install sudo
 ADD ${installer} ${installerloc}/
 ADD $tarfile ${installerloc}/
 RUN chmod +x ${installerloc}/${installer}
-RUN cd ${installerloc}; ./${installer}
+RUN cd ${installerloc} && ./${installer}
 
 
