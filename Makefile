@@ -9,7 +9,7 @@ DISTRO := $(shell bash -c "yum --help&>/dev/null && echo centos || echo ubuntu")
 GENOME_BUILD=GRCh37.75
 GENOME_BUILD_ALT_NAME=hg19
 #4.3.1t-3 4_3
-SNPEFF_VERSION=4.3.1t-3
+SNPEFF_VERSION=4.3.1t-0
 SNPEFF_VERSION_SHORT_STRING=4_3 
 SNPSIFT_VERSION=4.3.1t-2
 SNPEFF_VERSION_WO_BUILD=4.3.1t
@@ -24,10 +24,12 @@ version:
 	@echo $(VERSION)
 libraries_centos:
 	sudo yum -y install git unzip cpan wget gcc gcc-c++ bzip2 python2-devel nano expat-devel openssl-devel perl perl-CPAN perl-devel curl perl-App-cpanminus python3 python3-pip python3-libs python3-tools python3-devel
-	#sudo pip3 install edlib
+	sudo mkdir -p /usr/lib/x86_64-linux-gnu
+	sudo cp libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
 libraries_ubuntu:
 	sudo apt-get install -y git unzip wget gcc build-essential bzip2 python2-dev nano perl curl python3 cpanminus python3-pip python3-dev #expat-dev openssl-dev perl-dev perl-App-cpanminus python3-libs python3-tools
-	#sudo pip3 install edlib
+	sudo mkdir -p /usr/lib/x86_64-linux-gnu
+	sudo cp libcrypto.so.1.0.0 /usr/lib/x86_64-linux-gnu/libcrypto.so.1.0.0
 toqgz: archive
 	cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(qiagen_parent_folder)
 toqiaseq: archive
@@ -38,6 +40,8 @@ toqiaseq: archive
 toroot: archive
 	sudo cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(ROOT)/
 	sudo chmod +x $(ROOT)/install_$(SOURCE)-v$(VERSION).bash
+takeback:
+	sudo rsync -tPrc ${qiagen_parent_folder}/${SOURCE} ${qiagen_code_parent_folder} --exclude="out*"
 update:
 	mkdir -p $(qiagen_parent_folder)/qiaseq-dna
 	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/
