@@ -39,7 +39,8 @@ toroot: archive
 	sudo cp ./$(SOURCE)-$(VERSION).tar.gz ./install_$(SOURCE)-v$(VERSION).bash $(ROOT)/
 	sudo chmod +x $(ROOT)/install_$(SOURCE)-v$(VERSION).bash
 takeback:
-	sudo cp -R ${qiagen_parent_folder}/${SOURCE} ${qiagen_code_parent_folder}
+	#sudo cp -R ${qiagen_parent_folder}/${SOURCE} ${qiagen_code_parent_folder}
+	sudo rsync -tPrc ${qiagen_parent_folder}/${SOURCE} ${qiagen_code_parent_folder} --exclude="out*"
 update:
 	mkdir -p $(qiagen_parent_folder)/qiaseq-dna
 	cp -rf $(qiagen_parent_folder)/code/qiaseq-dna/* $(qiagen_parent_folder)/qiaseq-dna/

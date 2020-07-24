@@ -51,7 +51,7 @@ def isSimilar(bcA, bcB, bcLen, allowNs = True):
 def cluster(inPairs, bcLen, minRealNum = 3, minRealFrac = 0.1, minMergeFactor = 6):
     uniqueIDs = {}
     totalCnt = 0
-    prefixLen = bcLen/2
+    prefixLen = int(bcLen/2)
     misMatchCnt = [0] * (bcLen+1)
     distCnt = [0,0,0,0]
 

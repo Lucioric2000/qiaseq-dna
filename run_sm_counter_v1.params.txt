@@ -44,11 +44,11 @@ vcfComplexGapMax = 3
 
 # variant annotation
 #snpeff-4.3.1t-3 now instead of snpeff-4.2-0
-snpEffPath   = /root/conda/share/snpeff-4.3.1t-3/
-snpEffConfig = /root/conda/share/snpeff-4.3.1t-3/snpEff.config
-snpSiftPath   = /root/conda/share/snpsift-4.3.1t-1/
-snpSiftConfig = /root/conda/share/snpsift-4.3.1t-1/snpEff.config
-snpEffData   = /root/conda/share/snpeff-4.3.1t-3/data/
+snpEffPath   = /root/conda/share/snpeff-4.3.1t-0/
+snpEffConfig = /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+snpSiftPath   = /root/conda/share/snpsift-4.3.1t-2/
+snpSiftConfig = /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+snpEffData   = /root/conda/share/snpeff-4.3.1t-0/data/
 dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
 cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
 clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz

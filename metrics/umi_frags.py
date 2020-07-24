@@ -89,7 +89,7 @@ def run(cfg):
     for fragLen, numReads in moleculeData:
     
         # get frag len bin
-        fragLenBin = min(fragLen / 20, FRAG_BINS - 1)
+        fragLenBin = min(int(fragLen / 20), FRAG_BINS - 1)
         
         # flush data if next bin found
         if fragLenBin > fragLenBinCurrent:
