@@ -25,6 +25,7 @@ source ${conda_home}/bin/activate ${conda_env}
 # Picard 1.97 was not found in the default conda ditribution
 ################ Update openjdk ################
 ## note : picard gets updated to match jdk version. Thus picard and jdk version should be pinned, at least by picard version is hardcoded in a configuration file
+sudo ${conda_home}/bin/conda install -y -n ${conda_env} python=3.7
 sudo ${conda_home}/bin/pip install cython edlib python-Levenshtein
 sudo ${conda_home}/bin/pip install --upgrade pip
 sudo ${conda_home}/bin/pip install statistics msgpack-python python_http_client==1.2.3 smtpapi==0.3.1 PyHamcrest==1.9.0 openpyxl edlib
