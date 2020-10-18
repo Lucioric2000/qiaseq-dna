@@ -1,0 +1,1603 @@
+run_qiaseq_dna.py:329: DeprecationWarning: The SafeConfigParser class has been renamed to ConfigParser in Python 3.2. This alias will be removed in future versions. Use ConfigParser directly instead.
+  parser = configparser.SafeConfigParser()
+2020-07-24 04:11:10.454 sys.argv:
+2020-07-24 04:11:10.455 ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+2020-07-24 04:11:10.455 pid:
+2020-07-24 04:11:10.455 442553
+2020-07-24 04:11:10.455 started_log at 2020-07-24 04:11:10.454425
+2020-07-24 04:11:10.455 Parameter outputPath==/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1
+2020-07-24 04:11:10.455 Parameter cutadaptDir==/root/conda/bin/
+2020-07-24 04:11:10.455 Parameter bwaDir==/root/conda/bin/
+2020-07-24 04:11:10.455 Parameter samtoolsDir==/root/conda/bin/
+2020-07-24 04:11:10.455 Parameter javaExe==/root/conda/bin/java
+2020-07-24 04:11:10.455 Parameter sswPyFile==/srv/qgen/bin/ssw/src/ssw_wrap.py
+2020-07-24 04:11:10.455 Parameter torrentBinDir==/srv/qgen/bin/TorrentSuite/
+2020-07-24 04:11:10.455 Parameter vcflibDir==/srv/qgen/bin/vcflib/bin/
+2020-07-24 04:11:10.455 Parameter quandicoDir==copy_number/
+2020-07-24 04:11:10.455 Parameter numCores==4
+2020-07-24 04:11:10.455 Parameter deleteLocalFiles==False
+2020-07-24 04:11:10.455 Parameter samtoolsMem==2500M
+2020-07-24 04:11:10.456 Parameter outputDetail==True
+2020-07-24 04:11:10.456 Parameter trimScript==core/prep_trim.py
+2020-07-24 04:11:10.456 Parameter primer3Bases==8
+2020-07-24 04:11:10.456 Parameter genomeFile==/srv/qgen/data/genome/hg19/ucsc.hg19.fa
+2020-07-24 04:11:10.456 Parameter endogenousLenMin==15
+2020-07-24 04:11:10.456 Parameter tagNameUmiSeq==mi
+2020-07-24 04:11:10.456 Parameter tagNameUmi==Mi
+2020-07-24 04:11:10.456 Parameter tagNameDuplex==Du
+2020-07-24 04:11:10.456 Parameter tagNamePrimer==pr
+2020-07-24 04:11:10.456 Parameter tagNamePrimerErr==pe
+2020-07-24 04:11:10.456 Parameter tagNameResample==re
+2020-07-24 04:11:10.456 Parameter vcfComplexGapMax==3
+2020-07-24 04:11:10.456 Parameter snpEffPath==/root/conda/share/snpeff-4.3.1t-0/
+2020-07-24 04:11:10.456 Parameter snpEffConfig==/root/conda/share/snpeff-4.3.1t-0/snpEff.config
+2020-07-24 04:11:10.456 Parameter snpSiftPath==/root/conda/share/snpsift-4.3.1t-2/
+2020-07-24 04:11:10.457 Parameter snpSiftConfig==/root/conda/share/snpsift-4.3.1t-2/snpEff.config
+2020-07-24 04:11:10.457 Parameter snpEffData==/root/conda/share/snpeff-4.3.1t-0/data/
+2020-07-24 04:11:10.457 Parameter dbSnpFile==/srv/qgen/data/annotation/common_all_20160601.vcf.gz
+2020-07-24 04:11:10.457 Parameter cosmicFile==/srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+2020-07-24 04:11:10.457 Parameter clinVarFile==/srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+2020-07-24 04:11:10.457 Parameter umiCutoff==10
+2020-07-24 04:11:10.457 Parameter pValCutoff==0.1
+2020-07-24 04:11:10.457 Parameter tumorPurity==0.90
+2020-07-24 04:11:10.457 Parameter minBQ==25
+2020-07-24 04:11:10.457 Parameter minMQ==50
+2020-07-24 04:11:10.457 Parameter hpLen==8
+2020-07-24 04:11:10.457 Parameter mismatchThr==6.0
+2020-07-24 04:11:10.457 Parameter consThr==0.8
+2020-07-24 04:11:10.457 Parameter minAltUMI==3
+2020-07-24 04:11:10.457 Parameter maxAltAllele==2
+2020-07-24 04:11:10.457 Parameter primerDist==2
+2020-07-24 04:11:10.457 Parameter repBed==/srv/qgen/data/annotation/simpleRepeat.full.bed
+2020-07-24 04:11:10.457 Parameter srBed==/srv/qgen/data/annotation/SR_LC_SL.full.bed
+2020-07-24 04:11:10.457 Parameter readFile1==/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+2020-07-24 04:11:10.457 Parameter readFile2==/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+2020-07-24 04:11:10.458 Parameter instrument==MiSeq
+2020-07-24 04:11:10.458 Parameter primerFile==/srv/qgen/example/DHS-101Z.primers.txt
+2020-07-24 04:11:10.458 Parameter roiBedFile==/srv/qgen/example/DHS-101Z.roi.bed
+2020-07-24 04:11:10.458 Parameter platform==Illumina
+2020-07-24 04:11:10.458 Parameter runCNV==True
+2020-07-24 04:11:10.458 Parameter sampleType==Single
+2020-07-24 04:11:10.458 Parameter duplex==False
+2020-07-24 04:11:10.458 Parameter readSet==/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2
+2020-07-24 04:11:10.458 Parameter multimodal==False
+2020-07-24 04:11:10.458 lastfiletobegenerated
+2020-07-24 04:11:10.458 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.vcf_complex.summary.txt
+2020-07-24 04:11:10.458 prep: starting read prep - trimming ends and UMI extraction
+2020-07-24 04:15:13.970 cmd:
+2020-07-24 04:15:13.973 python /srv/qgen/qiaseq-dna/read-trimmer/trimmer/run.py --r1 /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz --r2 /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz --primer-file /srv/qgen/example/DHS-101Z.primers.txt --out-metrics /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.detail.summary.txt --out-r1 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R1.fastq --out-r2 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R2.fastq --check-primer-side --primer3-bases-R1 8 --primer3-bases-R2 8 --ncpu 4 --primer-col 3 --seqtype dna --umi-len 12 --common-seq-len 11 --min-primer-side-len 25 --min-umi-side-len 1 --tagname-primer pr --tagname-primer-error pe --tagname-umi mi
+2020-07-24 04:15:13.973 so:
+2020-07-24 04:15:13.973 b"\n--------------------\n\nCreated Primer Datastruct\n\nChecked first 47266 reads for custom sequencing adapter.\n\nRunning program with args : Namespace(check_primer_side=True, common_seq_len=11, custom_seq_adapter=b'AATGTACAGTATTGCGTTTTG, CCAGTACAGTATTGCGTTTTG', drop_alt_seqtype=False, drop_no_primer_reads=False, field_separator=b'\\n', include_common_seq_tag=False, is_duplex=False, is_multimodal=False, is_nextseq=False, is_phased_adapters=False, is_r2_primer_side=False, is_umi_side_adapter_readable=False, max_mismatch_rate_overlap=0.12, max_mismatch_rate_primer=0.12, min_primer_side_len=25, min_umi_side_len=1, ncpu=4, no_tagnames=False, out_metrics='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.detail.summary.txt', out_r1='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R1.fastq', out_r2='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R2.fastq', overlap_check_len=25, poly_tail_primer_side='none', poly_tail_umi_side='none', primer3_bases_R1=8, primer3_bases_R2=8, primer_col=3, primer_file='/srv/qgen/example/DHS-101Z.primers.txt', r1='/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz', r2='/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz', seqtype='dna', tag_separator=b'\\t', tagname_duplex=b'Du', tagname_multimodal=b'MM', tagname_primer=b'pr', tagname_primer_error=b'pe', tagname_umi=b'mi', thousand_comma=False, trim_custom_seq_adapter=False, trim_polyT_5prime_umi_side=False, umi_filter_max_Ns=1, umi_filter_max_lowQ_bases=1, umi_filter_min_bq=20, umi_len=12, umi_len_alt=None)\n\nProcessed : 23632 reads\nProcessed : 47265 reads\nProcessed : 70853 reads\nProcessed : 94444 reads\nProcessed : 118024 reads\nProcessed : 141643 reads\nProcessed : 165283 reads\nProcessed : 188870 reads\nProcessed : 212450 reads\nProcessed : 236032 reads\nProcessed : 259617 reads\nProcessed : 283207 reads\nProcessed : 306834 reads\nProcessed : 330421 reads\nProcessed : 354067 reads\nProcessed : 377664 reads\nProcessed : 401245 reads\nProcessed : 424888 reads\nProcessed : 448478 reads\nProcessed : 472091 reads\nProcessed : 495669 reads\nProcessed : 519259 reads\nProcessed : 542864 reads\nProcessed : 566451 reads\nProcessed : 590054 reads\nProcessed : 613694 reads\nProcessed : 637300 reads\nProcessed : 660924 reads\nProcessed : 684503 reads\nProcessed : 708132 reads\nProcessed : 731709 reads\nProcessed : 755298 reads\nProcessed : 778880 reads\nProcessed : 802466 reads\nProcessed : 826115 reads\nProcessed : 849710 reads\nProcessed : 873368 reads\nProcessed : 896938 reads\nProcessed : 920544 reads\nProcessed : 944127 reads\nProcessed : 967695 reads\nProcessed : 991278 reads\nProcessed : 1014845 reads\nProcessed : 1038465 reads\nProcessed : 1062045 reads\nProcessed : 1085624 reads\nProcessed : 1109211 reads\nProcessed : 1132851 reads\nProcessed : 1156424 reads\nProcessed : 1180025 reads\nProcessed : 1203678 reads\nProcessed : 1227263 reads\nProcessed : 1250849 reads\nProcessed : 1274436 reads\nProcessed : 1298034 reads\nProcessed : 1321658 reads\nProcessed : 1345308 reads\nProcessed : 1368895 reads\nProcessed : 1392493 reads\nProcessed : 1416085 reads\nProcessed : 1439663 reads\nProcessed : 1463300 reads\nProcessed : 1486876 reads\nProcessed : 1510483 reads\nProcessed : 1534058 reads\nProcessed : 1557641 reads\nProcessed : 1581237 reads\nProcessed : 1604876 reads\nProcessed : 1628452 reads\nProcessed : 1652094 reads\nProcessed : 1675675 reads\nProcessed : 1699261 reads\nProcessed : 1722902 reads\nProcessed : 1746492 reads\nProcessed : 1770123 reads\nProcessed : 1793687 reads\nProcessed : 1817263 reads\nProcessed : 1840841 reads\nProcessed : 1864431 reads\nProcessed : 1888031 reads\nProcessed : 1911613 reads\nProcessed : 1935220 reads\nProcessed : 1958790 reads\nProcessed : 1982437 reads\nProcessed : 2006026 reads\nProcessed : 2029650 reads\nProcessed : 2053245 reads\nProcessed : 2076829 reads\nProcessed : 2100398 reads\nProcessed : 2123965 reads\nProcessed : 2147549 reads\nProcessed : 2171124 reads\nProcessed : 2194721 reads\nProcessed : 2218283 reads\nProcessed : 2241922 reads\nProcessed : 2265496 reads\nProcessed : 2289065 reads\nProcessed : 2312703 reads\nProcessed : 2336303 reads\nProcessed : 2359872 reads\nProcessed : 2383454 reads\nProcessed : 2407020 reads\nProcessed : 2430583 reads\nProcessed : 2454165 reads\nProcessed : 2477733 reads\nProcessed : 2501360 reads\nProcessed : 2524946 reads\nProcessed : 2548513 reads\nProcessed : 2572096 reads\nProcessed : 2595675 reads\nProcessed : 2619318 reads\nProcessed : 2642897 reads\nProcessed : 2666460 reads\nProcessed : 2690041 reads\nProcessed : 2713614 reads\nProcessed : 2737235 reads\nProcessed : 2760810 reads\nProcessed : 2784382 reads\nProcessed : 2807930 reads\nProcessed : 2831510 reads\nProcessed : 2855077 reads\nProcessed : 2878696 reads\nProcessed : 2902291 reads\nProcessed : 2925863 reads\nProcessed : 2949444 reads\nProcessed : 2973051 reads\nProcessed : 2996619 reads\nProcessed : 3020255 reads\nProcessed : 3043837 reads\nProcessed : 3067401 reads\nProcessed : 3090970 reads\nProcessed : 3114535 reads\nProcessed : 3138120 reads\nProcessed : 3161754 reads\nProcessed : 3185329 reads\nProcessed : 3208898 reads\nProcessed : 3232458 reads\nProcessed : 3256075 reads\nProcessed : 3279704 reads\nProcessed : 3303274 reads\nProcessed : 3326842 reads\nProcessed : 3350468 reads\nProcessed : 3374036 reads\nProcessed : 3397629 reads\nProcessed : 3421179 reads\nProcessed : 3444751 reads\nProcessed : 3468341 reads\nProcessed : 3491911 reads\nProcessed : 3515513 reads\nProcessed : 3539139 reads\nProcessed : 3562713 reads\nProcessed : 3586285 reads\nProcessed : 3609857 reads\nProcessed : 3633486 reads\nProcessed : 3657056 reads\nProcessed : 3680653 reads\nProcessed : 3704217 reads\nProcessed : 3727782 reads\nProcessed : 3751352 reads\nProcessed : 3774933 reads\nProcessed : 3798502 reads\nProcessed : 3822133 reads\nProcessed : 3845722 reads\nProcessed : 3869297 reads\nProcessed : 3888167 reads\nProcessed : 3911743 reads\nProcessed : 3935302 reads\n"
+2020-07-24 04:15:13.973 se:
+2020-07-24 04:15:13.973 b''
+2020-07-24 04:15:14.186 prep: done
+2020-07-24 04:15:14.186 align: starting read alignment
+2020-07-24 04:15:14.186 Executing bwa and samtools commands:
+2020-07-24 04:15:14.187 /root/conda/bin/bwa mem -C -t 4 /srv/qgen/data/genome/hg19/ucsc.hg19.fa /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R1.fastq /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.prep.R2.fastq 2>/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.align.bwa.log | /root/conda/bin/samtools view -S -1 -@ 4 -  1> /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.align.bam 2> /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.align.samtools.log
+2020-07-24 04:15:14.187 in
+2020-07-24 04:15:14.187 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1
+2020-07-24 04:15:14.187 with configuration
+2020-07-24 04:15:14.187 <ConfigObj {'outputPath': '/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1', 'cutadaptDir': '/root/conda/bin/', 'bwaDir': '/root/conda/bin/', 'samtoolsDir': '/root/conda/bin/', 'javaExe': '/root/conda/bin/java', 'sswPyFile': '/srv/qgen/bin/ssw/src/ssw_wrap.py', 'torrentBinDir': '/srv/qgen/bin/TorrentSuite/', 'vcflibDir': '/srv/qgen/bin/vcflib/bin/', 'quandicoDir': 'copy_number/', 'numCores': '4', 'deleteLocalFiles': False, 'samtoolsMem': '2500M', 'outputDetail': True, 'trimScript': 'core/prep_trim.py', 'primer3Bases': '8', 'genomeFile': '/srv/qgen/data/genome/hg19/ucsc.hg19.fa', 'endogenousLenMin': '15', 'tagNameUmiSeq': 'mi', 'tagNameUmi': 'Mi', 'tagNameDuplex': 'Du', 'tagNamePrimer': 'pr', 'tagNamePrimerErr': 'pe', 'tagNameResample': 're', 'vcfComplexGapMax': '3', 'snpEffPath': '/root/conda/share/snpeff-4.3.1t-0/', 'snpEffConfig': '/root/conda/share/snpeff-4.3.1t-0/snpEff.config', 'snpSiftPath': '/root/conda/share/snpsift-4.3.1t-2/', 'snpSiftConfig': '/root/conda/share/snpsift-4.3.1t-2/snpEff.config', 'snpEffData': '/root/conda/share/snpeff-4.3.1t-0/data/', 'dbSnpFile': '/srv/qgen/data/annotation/common_all_20160601.vcf.gz', 'cosmicFile': '/srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz', 'clinVarFile': '/srv/qgen/data/annotation/clinvar_20160531.vcf.gz', 'umiCutoff': '10', 'pValCutoff': '0.1', 'tumorPurity': '0.90', 'minBQ': '25', 'minMQ': '50', 'hpLen': '8', 'mismatchThr': '6.0', 'consThr': '0.8', 'minAltUMI': '3', 'maxAltAllele': '2', 'primerDist': '2', 'repBed': '/srv/qgen/data/annotation/simpleRepeat.full.bed', 'srBed': '/srv/qgen/data/annotation/SR_LC_SL.full.bed', 'readFile1': '/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz', 'readFile2': '/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz', 'instrument': 'MiSeq', 'primerFile': '/srv/qgen/example/DHS-101Z.primers.txt', 'roiBedFile': '/srv/qgen/example/DHS-101Z.roi.bed', 'platform': 'Illumina', 'runCNV': 'True', 'sampleType': 'Single', 'duplex': False, 'readSet': '/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2', 'multimodal': False}>
+2020-07-24 04:28:25.044 align: done aligning reads to genome, bam file: /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.align.bam
+2020-07-24 04:28:25.187 umi_filter: starting...
+2020-07-24 04:28:25.857 ('# of primers:', 651)
+2020-07-24 04:34:07.742 umi_filter: done
+2020-07-24 04:34:07.752 umi_mark starting...
+2020-07-24 04:35:28.540 umi_mark: done sorting read alignments by random fragmentation position
+2020-07-24 04:36:41.968 umi_mark: done
+2020-07-24 04:36:41.968 umi_frags starting...
+2020-07-24 04:36:50.741 umi_depths starting...
+2020-07-24 04:37:42.020 umi_depths: done sorting UMI read alignment file by random fragmentation position
+2020-07-24 04:38:28.236 umi_depths: done making depth bedgraphs
+2020-07-24 04:38:28.658 umi_depths: done making UMI depth bedgraph over ROI only, and computing depth uniformity
+2020-07-24 04:38:28.898 umi_depths: done making UMI depth bedgraph over ROI only, and computing depth uniformity
+2020-07-24 04:38:28.900 umi_depths: done writing regions below 20% of mean UMI depth
+2020-07-24 04:38:28.903 umi_merge starting...
+2020-07-24 04:39:40.799 umi_merge: done sorting molecule-marked alignments text file by read id
+2020-07-24 04:41:38.129 umi_merge: done converting input BAM to SAM
+2020-07-24 04:43:04.793 umi_merge: done sorting SAM by read id
+2020-07-24 04:45:35.241 umi_merge: done merging unique molecule tag to sam file
+2020-07-24 04:46:27.507 umi_merge: done converting SAM to BAM
+2020-07-24 04:46:28.060 primer_clip starting...
+2020-07-24 04:47:01.086 # read pairs processed: 1,000,000
+2020-07-24 04:47:34.684 # read pairs processed: 2,000,000
+2020-07-24 04:48:18.907 # read pairs processed: 3,000,000
+2020-07-24 04:48:33.382 ('# read pairs total', 3389368)
+2020-07-24 04:48:33.383 ('# read pairs dropped because 100% soft clipped:', 0)
+2020-07-24 04:48:33.383 # read pairs with R1 trimmed: 0
+2020-07-24 04:48:33.383 sum_primer_umis starting...
+2020-07-24 04:48:36.078 sum_specificity starting...
+2020-07-24 04:50:24.384 sum_uniformity_primer starting...
+2020-07-24 04:52:39.618 started smCounterv2 2020-07-24 04:52:39.617932
+2020-07-24 04:52:40.308 smc2_arg
+2020-07-24 04:52:40.308 runPath
+2020-07-24 04:52:40.309 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.309 bedTarget
+2020-07-24 04:52:40.309 /srv/qgen/example/DHS-101Z.roi.bed
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.309 bamFile
+2020-07-24 04:52:40.309 NEB_S2.bam
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.309 outPrefix
+2020-07-24 04:52:40.309 NEB_S2
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.309 nCPU
+2020-07-24 04:52:40.309 4
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.309 minBQ
+2020-07-24 04:52:40.309 25
+2020-07-24 04:52:40.309 smc2_arg
+2020-07-24 04:52:40.310 minMQ
+2020-07-24 04:52:40.310 50
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.310 hpLen
+2020-07-24 04:52:40.310 8
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.310 mismatchThr
+2020-07-24 04:52:40.310 6.0
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.310 primerDist
+2020-07-24 04:52:40.310 2
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.310 consThr
+2020-07-24 04:52:40.310 0.8
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.310 rpu
+2020-07-24 04:52:40.310 0.0
+2020-07-24 04:52:40.310 smc2_arg
+2020-07-24 04:52:40.311 isRna
+2020-07-24 04:52:40.311 False
+2020-07-24 04:52:40.311 smc2_arg
+2020-07-24 04:52:40.311 primerSide
+2020-07-24 04:52:40.311 1
+2020-07-24 04:52:40.311 smc2_arg
+2020-07-24 04:52:40.311 umiTag
+2020-07-24 04:52:40.311 Mi
+2020-07-24 04:52:40.311 smc2_arg
+2020-07-24 04:52:40.311 primerTag
+2020-07-24 04:52:40.311 pr
+2020-07-24 04:52:40.311 smc2_arg
+2020-07-24 04:52:40.311 mqTag
+2020-07-24 04:52:40.311 MQ
+2020-07-24 04:52:40.311 smc2_arg
+2020-07-24 04:52:40.311 tagSeparator
+2020-07-24 04:52:40.311 -
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 minAltUMI
+2020-07-24 04:52:40.312 3
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 maxAltAllele
+2020-07-24 04:52:40.312 2
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 refGenome
+2020-07-24 04:52:40.312 /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 repBed
+2020-07-24 04:52:40.312 /srv/qgen/data/annotation/simpleRepeat.full.bed
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 srBed
+2020-07-24 04:52:40.312 /srv/qgen/data/annotation/SR_LC_SL.full.bed
+2020-07-24 04:52:40.312 smc2_arg
+2020-07-24 04:52:40.312 ds
+2020-07-24 04:52:40.312 10000
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 bamType
+2020-07-24 04:52:40.313 raw
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 inputVCF
+2020-07-24 04:52:40.313 None
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 sinBkgErrorDist
+2020-07-24 04:52:40.313 /srv/qgen/data/annotation/bkg.error.v2.RData
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 isDuplex
+2020-07-24 04:52:40.313 False
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 duplexTag
+2020-07-24 04:52:40.313 None
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.313 minRpu
+2020-07-24 04:52:40.313 2
+2020-07-24 04:52:40.313 smc2_arg
+2020-07-24 04:52:40.314 dupBkgErrorDist
+2020-07-24 04:52:40.314 /srv/qgen/data/annotation/duplex.bkg.error.ga.RData
+2020-07-24 04:53:08.686 rpu = 7.8, computed by smCounter2
+2020-07-24 04:53:08.781 runtime	interval
+sys.argv: ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+command: /root/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2
+pid: 442553
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.run_log.2020.07.24_04.11.10.txt
+started_log0 at 2020-07-24 04:11:10.454425
+0:01:00.248391	chr1:115252180-115252359
+2020-07-24 04:54:14.013 0:01:00.248391	chr1:115252180-115252359
+0:00:46.541353	chr1:115256411-115256609
+2020-07-24 04:55:00.576 0:00:46.541353	chr1:115256411-115256609
+0:00:32.249355	chr1:115258661-115258808
+2020-07-24 04:55:32.841 0:00:32.249355	chr1:115258661-115258808
+0:00:05.884600	chr10:43609061-43609082
+2020-07-24 04:55:38.740 0:00:05.884600	chr10:43609061-43609082
+0:00:07.091398	chr10:43609086-43609114
+2020-07-24 04:55:45.838 0:00:07.091398	chr10:43609086-43609114
+0:00:10.715478	chr10:43609926-43609961
+2020-07-24 04:55:56.559 0:00:10.715478	chr10:43609926-43609961
+0:00:07.618374	chr10:43613830-43613851
+2020-07-24 04:56:04.185 0:00:07.618374	chr10:43613830-43613851
+0:00:07.985745	chr10:43613895-43613919
+2020-07-24 04:56:12.179 0:00:07.985745	chr10:43613895-43613919
+0:00:07.056118	chr10:43615558-43615579
+2020-07-24 04:56:19.243 0:00:07.056118	chr10:43615558-43615579
+0:00:07.452098	chr10:43615583-43615604
+2020-07-24 04:56:26.704 0:00:07.452098	chr10:43615583-43615604
+0:00:04.084598	chr10:43617406-43617427
+2020-07-24 04:56:30.797 0:00:04.084598	chr10:43617406-43617427
+0:00:02.296168	chr12:25360214-25360234
+2020-07-24 04:56:33.097 0:00:02.296168	chr12:25360214-25360234
+0:00:03.797576	chr12:25362795-25362815
+2020-07-24 04:56:36.897 0:00:03.797576	chr12:25362795-25362815
+0:00:54.543853	chr12:25378538-25378717
+2020-07-24 04:57:31.490 0:00:54.543853	chr12:25378538-25378717
+0:00:46.252281	chr12:25380158-25380356
+2020-07-24 04:58:17.761 0:00:46.252281	chr12:25380158-25380356
+0:00:40.326630	chr12:25398198-25398339
+2020-07-24 04:58:58.104 0:00:40.326630	chr12:25398198-25398339
+0:00:04.976954	chr12:56477621-56477641
+2020-07-24 04:59:03.097 0:00:04.976954	chr12:56477621-56477641
+0:00:04.860419	chr12:56478844-56478864
+2020-07-24 04:59:07.965 0:00:04.860419	chr12:56478844-56478864
+0:00:05.364497	chr12:56481912-56481932
+2020-07-24 04:59:13.335 0:00:05.364497	chr12:56481912-56481932
+0:00:05.565044	chr12:56482331-56482351
+2020-07-24 04:59:18.906 0:00:05.565044	chr12:56482331-56482351
+0:00:06.455052	chr12:56482527-56482547
+2020-07-24 04:59:25.469 0:00:06.455052	chr12:56482527-56482547
+0:00:04.266346	chr12:56487191-56487211
+2020-07-24 04:59:29.742 0:00:04.266346	chr12:56487191-56487211
+0:00:06.444840	chr12:56492623-56492643
+2020-07-24 04:59:36.216 0:00:06.444840	chr12:56492623-56492643
+0:00:06.216639	chr12:56494988-56495008
+2020-07-24 04:59:42.439 0:00:06.216639	chr12:56494988-56495008
+0:00:05.247134	chr14:105246541-105246562
+2020-07-24 04:59:47.693 0:00:05.247134	chr14:105246541-105246562
+0:00:06.923540	chr15:90631828-90631849
+2020-07-24 04:59:54.623 0:00:06.923540	chr15:90631828-90631849
+0:00:06.211300	chr15:90631924-90631945
+2020-07-24 05:00:00.844 0:00:06.211300	chr15:90631924-90631945
+0:00:24.453827	chr17:7572917-7573018
+2020-07-24 05:00:25.307 0:00:24.453827	chr17:7572917-7573018
+0:00:25.301340	chr17:7573917-7574043
+2020-07-24 05:00:50.624 0:00:25.301340	chr17:7573917-7574043
+0:00:28.999962	chr17:7576527-7576594
+2020-07-24 05:01:19.635 0:00:28.999962	chr17:7576527-7576594
+0:00:17.004533	chr17:7576615-7576667
+2020-07-24 05:01:36.655 0:00:17.004533	chr17:7576615-7576667
+0:00:30.943179	chr17:7576843-7576936
+2020-07-24 05:02:07.610 0:00:30.943179	chr17:7576843-7576936
+0:00:49.957828	chr17:7577009-7577165
+2020-07-24 05:02:57.580 0:00:49.957828	chr17:7577009-7577165
+0:00:26.561640	chr17:7577489-7577618
+2020-07-24 05:03:24.162 0:00:26.561640	chr17:7577489-7577618
+0:00:39.467031	chr17:7578167-7578299
+2020-07-24 05:04:03.645 0:00:39.467031	chr17:7578167-7578299
+0:00:58.048053	chr17:7578361-7578564
+2020-07-24 05:05:01.709 0:00:58.048053	chr17:7578361-7578564
+0:01:28.722754	chr17:7579302-7579552
+2020-07-24 05:06:30.452 0:01:28.722754	chr17:7579302-7579552
+0:00:10.684459	chr17:7579553-7579600
+2020-07-24 05:06:41.166 0:00:10.684459	chr17:7579553-7579600
+0:00:06.954243	chr17:7579690-7579731
+2020-07-24 05:06:48.131 0:00:06.954243	chr17:7579690-7579731
+0:00:17.930465	chr17:7579829-7579922
+2020-07-24 05:07:06.066 0:00:17.930465	chr17:7579829-7579922
+0:00:08.182248	chr17:37855803-37855850
+2020-07-24 05:07:14.255 0:00:08.182248	chr17:37855803-37855850
+0:00:14.911701	chr17:37856482-37856574
+2020-07-24 05:07:29.172 0:00:14.911701	chr17:37856482-37856574
+0:00:57.842259	chr17:37863233-37863404
+2020-07-24 05:08:27.020 0:00:57.842259	chr17:37863233-37863404
+0:01:20.233279	chr17:37864564-37864797
+2020-07-24 05:09:47.274 0:01:20.233279	chr17:37864564-37864797
+0:00:37.100134	chr17:37865561-37865715
+2020-07-24 05:10:24.397 0:00:37.100134	chr17:37865561-37865715
+0:00:24.740737	chr17:37866056-37866144
+2020-07-24 05:10:49.152 0:00:24.740737	chr17:37866056-37866144
+0:00:45.788025	chr17:37866329-37866464
+2020-07-24 05:11:34.951 0:00:45.788025	chr17:37866329-37866464
+0:00:46.303288	chr17:37866583-37866744
+2020-07-24 05:12:21.271 0:00:46.303288	chr17:37866583-37866744
+0:00:40.839055	chr17:37868171-37868310
+2020-07-24 05:13:02.127 0:00:40.839055	chr17:37868171-37868310
+0:00:32.440541	chr17:37868565-37868711
+2020-07-24 05:13:34.585 0:00:32.440541	chr17:37868565-37868711
+0:00:26.015674	chr17:37871529-37871622
+2020-07-24 05:14:00.612 0:00:26.015674	chr17:37871529-37871622
+0:00:26.234654	chr17:37871689-37871799
+2020-07-24 05:14:26.858 0:00:26.234654	chr17:37871689-37871799
+0:01:19.069282	chr17:37871983-37872202
+2020-07-24 05:15:45.938 0:01:19.069282	chr17:37871983-37872202
+0:00:49.046197	chr17:37872544-37872696
+2020-07-24 05:16:35.009 0:00:49.046197	chr17:37872544-37872696
+0:00:41.724814	chr17:37872758-37872868
+2020-07-24 05:17:16.755 0:00:41.724814	chr17:37872758-37872868
+0:00:54.953090	chr17:37873563-37873743
+2020-07-24 05:18:11.727 0:00:54.953090	chr17:37873563-37873743
+0:00:16.435637	chr17:37876030-37876097
+2020-07-24 05:18:28.180 0:00:16.435637	chr17:37876030-37876097
+0:00:33.154129	chr17:37879562-37879720
+2020-07-24 05:19:01.375 0:00:33.154129	chr17:37879562-37879720
+0:00:39.851714	chr17:37879781-37879923
+2020-07-24 05:19:41.241 0:00:39.851714	chr17:37879781-37879923
+0:00:39.924640	chr17:37880155-37880273
+2020-07-24 05:20:21.183 0:00:39.924640	chr17:37880155-37880273
+0:01:12.906243	chr17:37880969-37881174
+2020-07-24 05:21:34.103 0:01:12.906243	chr17:37880969-37881174
+0:00:43.542960	chr17:37881292-37881467
+2020-07-24 05:22:17.670 0:00:43.542960	chr17:37881292-37881467
+0:00:21.659402	chr17:37881570-37881665
+2020-07-24 05:22:39.350 0:00:21.659402	chr17:37881570-37881665
+0:00:46.220393	chr17:37881950-37882116
+2020-07-24 05:23:25.581 0:00:46.220393	chr17:37881950-37882116
+0:00:42.079442	chr17:37882805-37882922
+2020-07-24 05:24:07.678 0:00:42.079442	chr17:37882805-37882922
+0:01:31.382642	chr17:37883058-37883266
+2020-07-24 05:25:39.912 0:01:31.382642	chr17:37883058-37883266
+0:01:23.245860	chr17:37883538-37883788
+2020-07-24 05:27:03.182 0:01:23.245860	chr17:37883538-37883788
+0:00:05.996768	chr17:37883789-37883810
+2020-07-24 05:27:09.210 0:00:05.996768	chr17:37883789-37883810
+0:01:20.924629	chr17:37883932-37884182
+2020-07-24 05:28:30.147 0:01:20.924629	chr17:37883932-37884182
+0:00:44.166649	chr17:37884183-37884307
+2020-07-24 05:29:14.345 0:00:44.166649	chr17:37884183-37884307
+0:00:12.140785	chr19:3118932-3118953
+2020-07-24 05:29:26.513 0:00:12.140785	chr19:3118932-3118953
+0:00:08.218428	chr2:29416471-29416491
+2020-07-24 05:29:34.740 0:00:08.218428	chr2:29416471-29416491
+0:00:07.764048	chr2:29416605-29416625
+2020-07-24 05:29:42.510 0:00:07.764048	chr2:29416605-29416625
+0:00:25.878981	chr2:29432645-29432693
+2020-07-24 05:30:08.399 0:00:25.878981	chr2:29432645-29432693
+0:00:06.727506	chr2:29436848-29436870
+2020-07-24 05:30:15.139 0:00:06.727506	chr2:29436848-29436870
+0:00:23.196990	chr2:29443597-29443641
+2020-07-24 05:30:38.342 0:00:23.196990	chr2:29443597-29443641
+0:00:08.602733	chr2:29443684-29443707
+2020-07-24 05:30:46.959 0:00:08.602733	chr2:29443684-29443707
+0:00:07.968941	chr2:29445182-29445223
+2020-07-24 05:30:54.940 0:00:07.968941	chr2:29445182-29445223
+0:00:13.327182	chr2:29445246-29445283
+2020-07-24 05:31:08.272 0:00:13.327182	chr2:29445246-29445283
+0:00:05.021949	chr2:29446286-29446306
+2020-07-24 05:31:13.301 0:00:05.021949	chr2:29446286-29446306
+0:00:05.319898	chr2:29448400-29448420
+2020-07-24 05:31:18.626 0:00:05.319898	chr2:29448400-29448420
+0:00:06.473129	chr2:29449809-29449829
+2020-07-24 05:31:25.107 0:00:06.473129	chr2:29449809-29449829
+0:00:04.347513	chr2:29455257-29455277
+2020-07-24 05:31:29.462 0:00:04.347513	chr2:29455257-29455277
+0:00:06.280789	chr2:29541181-29541201
+2020-07-24 05:31:35.747 0:00:06.280789	chr2:29541181-29541201
+0:00:06.150479	chr2:29606669-29606689
+2020-07-24 05:31:41.905 0:00:06.150479	chr2:29606669-29606689
+0:00:08.689703	chr2:209113103-209113124
+2020-07-24 05:31:50.601 0:00:08.689703	chr2:209113103-209113124
+0:00:06.889907	chr3:12626113-12626133
+2020-07-24 05:31:57.498 0:00:06.889907	chr3:12626113-12626133
+0:00:05.544137	chr3:12645689-12645709
+2020-07-24 05:32:03.048 0:00:05.544137	chr3:12645689-12645709
+0:01:24.066316	chr3:41266007-41266254
+2020-07-24 05:33:27.119 0:01:24.066316	chr3:41266007-41266254
+0:00:05.676553	chr3:138665153-138665174
+2020-07-24 05:33:32.821 0:00:05.676553	chr3:138665153-138665174
+0:01:41.074345	chr3:178916604-178916854
+2020-07-24 05:35:13.902 0:01:41.074345	chr3:178916604-178916854
+0:00:41.517949	chr3:178916855-178916975
+2020-07-24 05:35:55.450 0:00:41.517949	chr3:178916855-178916975
+0:01:01.580127	chr3:178917468-178917697
+2020-07-24 05:36:57.051 0:01:01.580127	chr3:178917468-178917697
+0:01:50.933748	chr3:178919068-178919318
+2020-07-24 05:38:48.005 0:01:50.933748	chr3:178919068-178919318
+0:00:03.515829	chr3:178919319-178919338
+2020-07-24 05:38:51.555 0:00:03.515829	chr3:178919319-178919338
+0:01:36.722543	chr3:178921322-178921572
+2020-07-24 05:40:28.285 0:01:36.722543	chr3:178921322-178921572
+0:00:05.097071	chr3:178921573-178921587
+2020-07-24 05:40:33.416 0:00:05.097071	chr3:178921573-178921587
+0:00:21.629553	chr3:178922281-178922386
+2020-07-24 05:40:55.057 0:00:21.629553	chr3:178922281-178922386
+0:00:32.333141	chr3:178927373-178927498
+2020-07-24 05:41:27.399 0:00:32.333141	chr3:178927373-178927498
+0:01:04.773982	chr3:178927964-178928136
+2020-07-24 05:42:32.186 0:01:04.773982	chr3:178927964-178928136
+0:00:59.429277	chr3:178928209-178928363
+2020-07-24 05:43:31.634 0:00:59.429277	chr3:178928209-178928363
+0:00:35.329533	chr3:178935988-178936132
+2020-07-24 05:44:06.982 0:00:35.329533	chr3:178935988-178936132
+0:00:28.166684	chr3:178936974-178937075
+2020-07-24 05:44:35.161 0:00:28.166684	chr3:178936974-178937075
+0:00:45.530731	chr3:178937349-178937533
+2020-07-24 05:45:20.709 0:00:45.530731	chr3:178937349-178937533
+0:00:30.730644	chr3:178937727-178937850
+2020-07-24 05:45:51.454 0:00:30.730644	chr3:178937727-178937850
+0:01:02.683848	chr3:178938764-178938955
+2020-07-24 05:46:54.151 0:01:02.683848	chr3:178938764-178938955
+0:00:30.680962	chr3:178941859-178941985
+2020-07-24 05:47:24.850 0:00:30.680962	chr3:178941859-178941985
+0:00:27.880287	chr3:178942478-178942619
+2020-07-24 05:47:52.746 0:00:27.880287	chr3:178942478-178942619
+0:00:26.181704	chr3:178943740-178943838
+2020-07-24 05:48:18.937 0:00:26.181704	chr3:178943740-178943838
+0:00:59.404148	chr3:178947050-178947240
+2020-07-24 05:49:18.350 0:00:59.404148	chr3:178947050-178947240
+0:00:46.853383	chr3:178947782-178947919
+2020-07-24 05:50:05.222 0:00:46.853383	chr3:178947782-178947919
+0:01:06.963024	chr3:178948003-178948174
+2020-07-24 05:51:12.202 0:01:06.963024	chr3:178948003-178948174
+0:01:08.916052	chr3:178951872-178952122
+2020-07-24 05:52:21.141 0:01:08.916052	chr3:178951872-178952122
+0:00:04.088953	chr3:178952123-178952162
+2020-07-24 05:52:25.256 0:00:04.088953	chr3:178952123-178952162
+0:00:06.317463	chr4:55127438-55127458
+2020-07-24 05:52:31.577 0:00:06.317463	chr4:55127438-55127458
+0:00:02.936810	chr4:55130068-55130088
+2020-07-24 05:52:34.520 0:00:02.936810	chr4:55130068-55130088
+0:00:05.580769	chr4:55131108-55131128
+2020-07-24 05:52:40.104 0:00:05.580769	chr4:55131108-55131128
+0:00:10.228530	chr4:55131132-55131171
+2020-07-24 05:52:50.339 0:00:10.228530	chr4:55131132-55131171
+0:00:03.648540	chr4:55133716-55133736
+2020-07-24 05:52:53.993 0:00:03.648540	chr4:55133716-55133736
+0:00:04.780412	chr4:55139761-55139781
+2020-07-24 05:52:58.778 0:00:04.780412	chr4:55139761-55139781
+0:00:37.442752	chr4:55140998-55141150
+2020-07-24 05:53:36.225 0:00:37.442752	chr4:55140998-55141150
+0:00:06.957687	chr4:55143567-55143587
+2020-07-24 05:53:43.196 0:00:06.957687	chr4:55143567-55143587
+0:00:39.525720	chr4:55144053-55144183
+2020-07-24 05:54:22.730 0:00:39.525720	chr4:55144053-55144183
+0:00:04.614833	chr4:55144537-55144557
+2020-07-24 05:54:27.357 0:00:04.614833	chr4:55144537-55144557
+0:00:36.755949	chr4:55151998-55152140
+2020-07-24 05:55:04.117 0:00:36.755949	chr4:55151998-55152140
+0:00:07.335375	chr4:55153537-55153558
+2020-07-24 05:55:11.470 0:00:07.335375	chr4:55153537-55153558
+0:00:04.013032	chr4:55161370-55161390
+2020-07-24 05:55:15.490 0:00:04.013032	chr4:55161370-55161390
+0:00:08.521548	chr4:55561748-55561775
+2020-07-24 05:55:24.017 0:00:08.521548	chr4:55561748-55561775
+0:00:10.628645	chr4:55589758-55589788
+2020-07-24 05:55:34.652 0:00:10.628645	chr4:55589758-55589788
+0:01:03.046965	chr4:55592013-55592226
+2020-07-24 05:56:37.707 0:01:03.046965	chr4:55592013-55592226
+0:00:12.691652	chr4:55593454-55593491
+2020-07-24 05:56:50.417 0:00:12.691652	chr4:55593454-55593491
+0:00:39.089650	chr4:55593572-55593718
+2020-07-24 05:57:29.517 0:00:39.089650	chr4:55593572-55593718
+0:00:29.849883	chr4:55594167-55594297
+2020-07-24 05:57:59.383 0:00:29.849883	chr4:55594167-55594297
+0:00:47.587190	chr4:55595491-55595661
+2020-07-24 05:58:46.980 0:00:47.587190	chr4:55595491-55595661
+0:00:04.254929	chr4:55597485-55597507
+2020-07-24 05:58:51.254 0:00:04.254929	chr4:55597485-55597507
+0:00:06.476200	chr4:55599149-55599169
+2020-07-24 05:58:57.734 0:00:06.476200	chr4:55599149-55599169
+0:00:31.493720	chr4:55599226-55599368
+2020-07-24 05:59:29.235 0:00:31.493720	chr4:55599226-55599368
+0:00:05.215600	chr4:55599391-55599411
+2020-07-24 05:59:34.467 0:00:05.215600	chr4:55599391-55599411
+0:00:07.181169	chr4:55602654-55602674
+2020-07-24 05:59:41.654 0:00:07.181169	chr4:55602654-55602674
+0:00:07.880171	chr4:55602684-55602704
+2020-07-24 05:59:49.544 0:00:07.880171	chr4:55602684-55602704
+0:00:07.877370	chr4:55602753-55602775
+2020-07-24 05:59:57.432 0:00:07.877370	chr4:55602753-55602775
+0:00:04.169028	chr4:55603362-55603382
+2020-07-24 06:00:01.608 0:00:04.169028	chr4:55603362-55603382
+0:00:08.195437	chr4:55604649-55604669
+2020-07-24 06:00:09.808 0:00:08.195437	chr4:55604649-55604669
+0:00:06.243191	chr6:152129067-152129087
+2020-07-24 06:00:16.060 0:00:06.243191	chr6:152129067-152129087
+0:00:05.643297	chr6:152265445-152265465
+2020-07-24 06:00:21.711 0:00:05.643297	chr6:152265445-152265465
+0:00:04.667216	chr6:152396026-152396046
+2020-07-24 06:00:26.384 0:00:04.667216	chr6:152396026-152396046
+0:00:06.567905	chr6:152419912-152419936
+2020-07-24 06:00:32.958 0:00:06.567905	chr6:152419912-152419936
+0:00:04.724804	chr6:152420085-152420105
+2020-07-24 06:00:37.688 0:00:04.724804	chr6:152420085-152420105
+0:00:03.630863	chr7:55210065-55210087
+2020-07-24 06:00:41.325 0:00:03.630863	chr7:55210065-55210087
+0:00:08.791925	chr7:55211070-55211107
+2020-07-24 06:00:50.121 0:00:08.791925	chr7:55211070-55211107
+0:00:05.935742	chr7:55214338-55214358
+2020-07-24 06:00:56.062 0:00:05.935742	chr7:55214338-55214358
+0:00:03.922114	chr7:55220264-55220284
+2020-07-24 06:00:59.991 0:00:03.922114	chr7:55220264-55220284
+0:00:07.654777	chr7:55221700-55221720
+2020-07-24 06:01:07.650 0:00:07.654777	chr7:55221700-55221720
+0:00:07.395524	chr7:55221733-55221753
+2020-07-24 06:01:15.054 0:00:07.395524	chr7:55221733-55221753
+0:00:07.012208	chr7:55221811-55221832
+2020-07-24 06:01:22.075 0:00:07.012208	chr7:55221811-55221832
+0:00:03.635868	chr7:55223533-55223553
+2020-07-24 06:01:25.718 0:00:03.635868	chr7:55223533-55223553
+0:00:03.179125	chr7:55227997-55228019
+2020-07-24 06:01:28.902 0:00:03.179125	chr7:55227997-55228019
+0:00:06.034632	chr7:55229245-55229265
+2020-07-24 06:01:34.939 0:00:06.034632	chr7:55229245-55229265
+0:00:09.595107	chr7:55233027-55233053
+2020-07-24 06:01:44.541 0:00:09.595107	chr7:55233027-55233053
+0:00:06.282186	chr7:55233099-55233119
+2020-07-24 06:01:50.831 0:00:06.282186	chr7:55233099-55233119
+0:00:08.012387	chr7:55238077-55238097
+2020-07-24 06:01:58.850 0:00:08.012387	chr7:55238077-55238097
+0:00:06.904837	chr7:55238102-55238122
+2020-07-24 06:02:05.763 0:00:06.904837	chr7:55238102-55238122
+0:00:04.975706	chr7:55240697-55240717
+2020-07-24 06:02:10.746 0:00:04.975706	chr7:55240697-55240717
+0:00:07.567080	chr7:55240776-55240816
+2020-07-24 06:02:18.320 0:00:07.567080	chr7:55240776-55240816
+0:00:07.443254	chr7:55241617-55241637
+2020-07-24 06:02:25.769 0:00:07.443254	chr7:55241617-55241637
+0:00:24.800636	chr7:55241646-55241736
+2020-07-24 06:02:50.577 0:00:24.800636	chr7:55241646-55241736
+0:00:03.146381	chr7:55241745-55241765
+2020-07-24 06:02:53.735 0:00:03.146381	chr7:55241745-55241765
+0:00:36.861251	chr7:55242405-55242523
+2020-07-24 06:03:30.600 0:00:36.861251	chr7:55242405-55242523
+0:01:00.649403	chr7:55248976-55249181
+2020-07-24 06:04:31.263 0:01:00.649403	chr7:55248976-55249181
+0:00:59.985318	chr7:55259402-55259577
+2020-07-24 06:05:31.270 0:00:59.985318	chr7:55259402-55259577
+0:00:04.846223	chr7:55260473-55260493
+2020-07-24 06:05:36.135 0:00:04.846223	chr7:55260473-55260493
+0:00:06.456941	chr7:55266459-55266481
+2020-07-24 06:05:42.597 0:00:06.456941	chr7:55266459-55266481
+0:00:03.583812	chr7:55268906-55268926
+2020-07-24 06:05:46.187 0:00:03.583812	chr7:55268906-55268926
+0:00:06.831951	chr7:116423397-116423418
+2020-07-24 06:05:53.022 0:00:06.831951	chr7:116423397-116423418
+0:00:06.037076	chr7:116423464-116423485
+2020-07-24 06:05:59.073 0:00:06.037076	chr7:116423464-116423485
+0:00:09.105499	chr7:140449140-140449180
+2020-07-24 06:06:08.185 0:00:09.105499	chr7:140449140-140449180
+0:00:41.902440	chr7:140453065-140453203
+2020-07-24 06:06:50.091 0:00:41.902440	chr7:140453065-140453203
+0:00:31.588769	chr7:140477781-140477885
+2020-07-24 06:07:21.695 0:00:31.588769	chr7:140477781-140477885
+0:00:41.824849	chr7:140481376-140481503
+2020-07-24 06:08:03.531 0:00:41.824849	chr7:140481376-140481503
+0:00:06.516610	chr7:140500155-140500175
+2020-07-24 06:08:10.067 0:00:06.516610	chr7:140500155-140500175
+0:00:05.578922	chr9:80409478-80409500
+2020-07-24 06:08:15.824 0:00:05.578922	chr9:80409478-80409500
+sys.argv: ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+command: /root/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2
+pid: 442553
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.run_log.2020.07.24_04.11.10.txt
+started_log0 at 2020-07-24 04:11:10.454425
+0:00:05.952440	chr12:25362795-25362815
+2020-07-24 06:08:22.013 0:00:05.952440	chr12:25362795-25362815
+sys.argv: ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+command: /root/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2
+pid: 442553
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.run_log.2020.07.24_04.11.10.txt
+started_log0 at 2020-07-24 04:11:10.454425
+0:00:07.417878	chr14:105246541-105246562
+2020-07-24 06:08:23.482 0:00:07.417878	chr14:105246541-105246562
+0:00:09.346428	chr15:90631828-90631849
+2020-07-24 06:08:32.834 0:00:09.346428	chr15:90631828-90631849
+0:00:07.887779	chr15:90631924-90631945
+2020-07-24 06:08:40.731 0:00:07.887779	chr15:90631924-90631945
+0:00:24.833825	chr17:7572917-7573018
+2020-07-24 06:09:05.574 0:00:24.833825	chr17:7572917-7573018
+sys.argv: ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+command: /root/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2
+pid: 442553
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.run_log.2020.07.24_04.11.10.txt
+started_log0 at 2020-07-24 04:11:10.454425
+0:01:07.343920	chr1:115252180-115252359
+2020-07-24 06:09:23.404 0:01:07.343920	chr1:115252180-115252359
+0:01:01.576380	chr12:25378538-25378717
+2020-07-24 06:09:23.594 0:01:01.576380	chr12:25378538-25378717
+0:00:26.137561	chr17:7573917-7574043
+2020-07-24 06:09:31.724 0:00:26.137561	chr17:7573917-7574043
+sys.argv: ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+command: /root/conda/bin/python run_qiaseq_dna.py run_sm_counter_v2.params.txt v2 single out2_multisamples_{0}_{1} NEB_S2 NEB_S2
+pid: 442553
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.run_log.2020.07.24_04.11.10.txt
+started_log0 at 2020-07-24 04:11:10.454425
+0:01:44.412473	chr17:7579302-7579552
+2020-07-24 06:10:00.483 0:01:44.412473	chr17:7579302-7579552
+0:00:31.462177	chr17:7576527-7576594
+2020-07-24 06:10:03.196 0:00:31.462177	chr17:7576527-7576594
+0:00:12.747354	chr17:7579553-7579600
+2020-07-24 06:10:13.268 0:00:12.747354	chr17:7579553-7579600
+0:00:53.974564	chr12:25380158-25380356
+2020-07-24 06:10:17.590 0:00:53.974564	chr12:25380158-25380356
+0:00:57.385124	chr1:115256411-115256609
+2020-07-24 06:10:20.811 0:00:57.385124	chr1:115256411-115256609
+0:00:08.252878	chr17:7579690-7579731
+2020-07-24 06:10:21.529 0:00:08.252878	chr17:7579690-7579731
+0:00:19.053590	chr17:7576615-7576667
+2020-07-24 06:10:22.263 0:00:19.053590	chr17:7576615-7576667
+0:00:21.700447	chr17:7579829-7579922
+2020-07-24 06:10:43.235 0:00:21.700447	chr17:7579829-7579922
+0:00:10.025446	chr17:37855803-37855850
+2020-07-24 06:10:53.295 0:00:10.025446	chr17:37855803-37855850
+0:00:31.988210	chr17:7576843-7576936
+2020-07-24 06:10:54.365 0:00:31.988210	chr17:7576843-7576936
+0:00:36.448219	chr1:115258661-115258808
+2020-07-24 06:10:57.277 0:00:36.448219	chr1:115258661-115258808
+0:00:45.708062	chr12:25398198-25398339
+2020-07-24 06:11:03.316 0:00:45.708062	chr12:25398198-25398339
+0:00:07.038744	chr10:43609061-43609082
+2020-07-24 06:11:04.330 0:00:07.038744	chr10:43609061-43609082
+0:00:17.111642	chr17:37856482-37856574
+2020-07-24 06:11:10.415 0:00:17.111642	chr17:37856482-37856574
+0:00:07.326291	chr12:56477621-56477641
+2020-07-24 06:11:10.657 0:00:07.326291	chr12:56477621-56477641
+0:00:07.500974	chr10:43609086-43609114
+2020-07-24 06:11:11.838 0:00:07.500974	chr10:43609086-43609114
+0:00:06.171606	chr12:56478844-56478864
+2020-07-24 06:11:16.834 0:00:06.171606	chr12:56478844-56478864
+0:00:11.965439	chr10:43609926-43609961
+2020-07-24 06:11:23.810 0:00:11.965439	chr10:43609926-43609961
+0:00:08.044384	chr12:56481912-56481932
+2020-07-24 06:11:24.883 0:00:08.044384	chr12:56481912-56481932
+0:00:06.731420	chr12:56482331-56482351
+2020-07-24 06:11:31.621 0:00:06.731420	chr12:56482331-56482351
+0:00:08.619437	chr10:43613830-43613851
+2020-07-24 06:11:32.437 0:00:08.619437	chr10:43613830-43613851
+0:00:07.951782	chr12:56482527-56482547
+2020-07-24 06:11:39.579 0:00:07.951782	chr12:56482527-56482547
+0:00:09.339215	chr10:43613895-43613919
+2020-07-24 06:11:41.784 0:00:09.339215	chr10:43613895-43613919
+0:00:05.670127	chr12:56487191-56487211
+2020-07-24 06:11:45.269 0:00:05.670127	chr12:56487191-56487211
+0:00:54.567589	chr17:7577009-7577165
+2020-07-24 06:11:48.945 0:00:54.567589	chr17:7577009-7577165
+0:00:07.675264	chr12:56492623-56492643
+2020-07-24 06:11:52.950 0:00:07.675264	chr12:56492623-56492643
+0:00:11.488303	chr10:43615558-43615579
+2020-07-24 06:11:53.279 0:00:11.488303	chr10:43615558-43615579
+0:00:07.556187	chr12:56494988-56495008
+2020-07-24 06:12:00.514 0:00:07.556187	chr12:56494988-56495008
+0:00:09.239989	chr10:43615583-43615604
+2020-07-24 06:12:02.527 0:00:09.239989	chr10:43615583-43615604
+0:00:06.096427	chr10:43617406-43617427
+2020-07-24 06:12:08.650 0:00:06.096427	chr10:43617406-43617427
+0:00:03.974261	chr12:25360214-25360234
+2020-07-24 06:12:12.634 0:00:03.974261	chr12:25360214-25360234
+0:00:29.204257	chr17:7577489-7577618
+2020-07-24 06:12:18.166 0:00:29.204257	chr17:7577489-7577618
+0:01:08.984132	chr17:37863233-37863404
+2020-07-24 06:12:19.406 0:01:08.984132	chr17:37863233-37863404
+0:00:47.605406	chr17:37868171-37868310
+2020-07-24 06:12:48.135 0:00:47.605406	chr17:37868171-37868310
+0:00:42.447697	chr17:7578167-7578299
+2020-07-24 06:13:00.631 0:00:42.447697	chr17:7578167-7578299
+0:00:39.138153	chr17:37868565-37868711
+2020-07-24 06:13:27.293 0:00:39.138153	chr17:37868565-37868711
+0:01:25.208211	chr17:37880969-37881174
+2020-07-24 06:13:37.847 0:01:25.208211	chr17:37880969-37881174
+0:01:26.916693	chr17:37864564-37864797
+2020-07-24 06:13:46.344 0:01:26.916693	chr17:37864564-37864797
+0:00:26.464099	chr17:37871529-37871622
+2020-07-24 06:13:53.769 0:00:26.464099	chr17:37871529-37871622
+0:01:04.210314	chr17:7578361-7578564
+2020-07-24 06:14:04.857 0:01:04.210314	chr17:7578361-7578564
+0:00:10.429776	chr2:29416605-29416625
+2020-07-24 06:14:15.317 0:00:10.429776	chr2:29416605-29416625
+0:00:46.307954	chr17:37881292-37881467
+2020-07-24 06:14:24.178 0:00:46.307954	chr17:37881292-37881467
+0:00:31.153032	chr17:37871689-37871799
+2020-07-24 06:14:24.931 0:00:31.153032	chr17:37871689-37871799
+0:00:41.205321	chr17:37865561-37865715
+2020-07-24 06:14:27.571 0:00:41.205321	chr17:37865561-37865715
+0:00:23.124642	chr2:29432645-29432693
+2020-07-24 06:14:38.454 0:00:23.124642	chr2:29432645-29432693
+0:00:05.765400	chr2:29436848-29436870
+2020-07-24 06:14:44.229 0:00:05.765400	chr2:29436848-29436870
+0:00:22.408233	chr17:37881570-37881665
+2020-07-24 06:14:46.602 0:00:22.408233	chr17:37881570-37881665
+0:00:25.466991	chr17:37866056-37866144
+2020-07-24 06:14:53.054 0:00:25.466991	chr17:37866056-37866144
+0:00:19.443516	chr2:29443597-29443641
+2020-07-24 06:15:03.678 0:00:19.443516	chr2:29443597-29443641
+0:00:08.776614	chr2:29443684-29443707
+2020-07-24 06:15:12.468 0:00:08.776614	chr2:29443684-29443707
+0:00:07.798330	chr2:29445182-29445223
+2020-07-24 06:15:20.276 0:00:07.798330	chr2:29445182-29445223
+0:00:09.131664	chr2:29445246-29445283
+2020-07-24 06:15:29.413 0:00:09.131664	chr2:29445246-29445283
+0:00:46.689390	chr17:37881950-37882116
+2020-07-24 06:15:33.301 0:00:46.689390	chr17:37881950-37882116
+0:00:05.163997	chr2:29446286-29446306
+2020-07-24 06:15:34.587 0:00:05.163997	chr2:29446286-29446306
+0:00:04.986013	chr2:29448400-29448420
+2020-07-24 06:15:39.578 0:00:04.986013	chr2:29448400-29448420
+0:00:47.246510	chr17:37866329-37866464
+2020-07-24 06:15:40.311 0:00:47.246510	chr17:37866329-37866464
+0:00:05.934068	chr2:29449809-29449829
+2020-07-24 06:15:45.579 0:00:05.934068	chr2:29449809-29449829
+0:01:21.554818	chr17:37871983-37872202
+2020-07-24 06:15:46.495 0:01:21.554818	chr17:37871983-37872202
+0:00:04.262748	chr2:29455257-29455277
+2020-07-24 06:15:49.849 0:00:04.262748	chr2:29455257-29455277
+0:00:06.312351	chr2:29541181-29541201
+2020-07-24 06:15:56.209 0:00:06.312351	chr2:29541181-29541201
+0:00:05.052364	chr2:29606669-29606689
+2020-07-24 06:16:01.271 0:00:05.052364	chr2:29606669-29606689
+0:00:29.533993	chr17:37882805-37882922
+2020-07-24 06:16:02.852 0:00:29.533993	chr17:37882805-37882922
+0:00:06.723603	chr2:209113103-209113124
+2020-07-24 06:16:08.000 0:00:06.723603	chr2:209113103-209113124
+0:00:05.872419	chr3:12626113-12626133
+2020-07-24 06:16:13.881 0:00:05.872419	chr3:12626113-12626133
+0:00:05.456599	chr3:12645689-12645709
+2020-07-24 06:16:19.343 0:00:05.456599	chr3:12645689-12645709
+0:00:46.801550	chr17:37866583-37866744
+2020-07-24 06:16:27.132 0:00:46.801550	chr17:37866583-37866744
+0:00:05.379348	chr3:178921573-178921587
+2020-07-24 06:16:32.539 0:00:05.379348	chr3:178921573-178921587
+0:00:49.201444	chr17:37872544-37872696
+2020-07-24 06:16:35.721 0:00:49.201444	chr17:37872544-37872696
+0:00:17.642562	chr3:178922281-178922386
+2020-07-24 06:16:50.191 0:00:17.642562	chr3:178922281-178922386
+0:00:42.279892	chr17:37872758-37872868
+2020-07-24 06:17:18.020 0:00:42.279892	chr17:37872758-37872868
+0:01:18.642728	chr17:37883058-37883266
+2020-07-24 06:17:21.505 0:01:18.642728	chr17:37883058-37883266
+0:00:32.572940	chr3:178927373-178927498
+2020-07-24 06:17:22.771 0:00:32.572940	chr3:178927373-178927498
+0:01:24.392104	chr3:41266007-41266254
+2020-07-24 06:17:43.740 0:01:24.392104	chr3:41266007-41266254
+0:00:05.087060	chr3:138665153-138665174
+2020-07-24 06:17:48.964 0:00:05.087060	chr3:138665153-138665174
+0:00:56.174411	chr17:37873563-37873743
+2020-07-24 06:18:14.256 0:00:56.174411	chr17:37873563-37873743
+0:01:00.972672	chr3:178927964-178928136
+2020-07-24 06:18:23.758 0:01:00.972672	chr3:178927964-178928136
+0:00:16.429925	chr17:37876030-37876097
+2020-07-24 06:18:30.709 0:00:16.429925	chr17:37876030-37876097
+0:01:25.749785	chr17:37883538-37883788
+2020-07-24 06:18:47.278 0:01:25.749785	chr17:37883538-37883788
+0:00:06.085587	chr17:37883789-37883810
+2020-07-24 06:18:53.391 0:00:06.085587	chr17:37883789-37883810
+0:00:34.014298	chr17:37879562-37879720
+2020-07-24 06:19:04.730 0:00:34.014298	chr17:37879562-37879720
+0:00:55.760365	chr3:178928209-178928363
+2020-07-24 06:19:19.539 0:00:55.760365	chr3:178928209-178928363
+0:01:35.437210	chr3:178916604-178916854
+2020-07-24 06:19:24.459 0:01:35.437210	chr3:178916604-178916854
+0:00:40.876697	chr17:37879781-37879923
+2020-07-24 06:19:45.620 0:00:40.876697	chr17:37879781-37879923
+0:00:33.192421	chr3:178935988-178936132
+2020-07-24 06:19:52.751 0:00:33.192421	chr3:178935988-178936132
+0:00:40.446079	chr3:178916855-178916975
+2020-07-24 06:20:04.941 0:00:40.446079	chr3:178916855-178916975
+0:01:18.214097	chr17:37883932-37884182
+2020-07-24 06:20:11.618 0:01:18.214097	chr17:37883932-37884182
+0:00:27.676438	chr3:178936974-178937075
+2020-07-24 06:20:20.438 0:00:27.676438	chr3:178936974-178937075
+0:00:40.484551	chr17:37880155-37880273
+2020-07-24 06:20:26.120 0:00:40.484551	chr17:37880155-37880273
+0:00:25.851419	chr3:178943740-178943838
+2020-07-24 06:20:51.999 0:00:25.851419	chr3:178943740-178943838
+0:00:42.064016	chr17:37884183-37884307
+2020-07-24 06:20:53.710 0:00:42.064016	chr17:37884183-37884307
+0:00:05.169574	chr19:3118932-3118953
+2020-07-24 06:20:58.899 0:00:05.169574	chr19:3118932-3118953
+0:00:57.757253	chr3:178917468-178917697
+2020-07-24 06:21:02.718 0:00:57.757253	chr3:178917468-178917697
+0:00:06.348392	chr2:29416471-29416491
+2020-07-24 06:21:05.253 0:00:06.348392	chr2:29416471-29416491
+0:00:48.867343	chr3:178937349-178937533
+2020-07-24 06:21:09.318 0:00:48.867343	chr3:178937349-178937533
+0:00:31.579143	chr3:178937727-178937850
+2020-07-24 06:21:40.912 0:00:31.579143	chr3:178937727-178937850
+0:00:41.126730	chr4:55140998-55141150
+2020-07-24 06:21:46.399 0:00:41.126730	chr4:55140998-55141150
+0:00:59.325909	chr3:178947050-178947240
+2020-07-24 06:21:51.337 0:00:59.325909	chr3:178947050-178947240
+0:00:06.188051	chr4:55143567-55143587
+2020-07-24 06:21:52.601 0:00:06.188051	chr4:55143567-55143587
+0:00:40.153898	chr4:55144053-55144183
+2020-07-24 06:22:32.761 0:00:40.153898	chr4:55144053-55144183
+0:00:04.024357	chr4:55144537-55144557
+2020-07-24 06:22:36.799 0:00:04.024357	chr4:55144537-55144557
+0:00:47.614837	chr3:178947782-178947919
+2020-07-24 06:22:38.980 0:00:47.614837	chr3:178947782-178947919
+0:00:58.399417	chr3:178938764-178938955
+2020-07-24 06:22:39.325 0:00:58.399417	chr3:178938764-178938955
+0:01:37.150736	chr3:178919068-178919318
+2020-07-24 06:22:39.889 0:01:37.150736	chr3:178919068-178919318
+0:00:04.126811	chr3:178919319-178919338
+2020-07-24 06:22:44.049 0:00:04.126811	chr3:178919319-178919338
+0:00:31.745569	chr3:178941859-178941985
+2020-07-24 06:23:11.091 0:00:31.745569	chr3:178941859-178941985
+0:00:36.989172	chr4:55151998-55152140
+2020-07-24 06:23:13.792 0:00:36.989172	chr4:55151998-55152140
+0:00:06.276359	chr4:55153537-55153558
+2020-07-24 06:23:20.082 0:00:06.276359	chr4:55153537-55153558
+0:00:03.962798	chr4:55161370-55161390
+2020-07-24 06:23:24.052 0:00:03.962798	chr4:55161370-55161390
+0:00:08.736757	chr4:55561748-55561775
+2020-07-24 06:23:32.793 0:00:08.736757	chr4:55561748-55561775
+0:00:26.033172	chr3:178942478-178942619
+2020-07-24 06:23:37.141 0:00:26.033172	chr3:178942478-178942619
+0:01:01.571861	chr3:178948003-178948174
+2020-07-24 06:23:40.569 0:01:01.571861	chr3:178948003-178948174
+0:00:10.666682	chr4:55589758-55589788
+2020-07-24 06:23:43.467 0:00:10.666682	chr4:55589758-55589788
+0:00:31.601051	chr4:55594167-55594297
+2020-07-24 06:24:08.768 0:00:31.601051	chr4:55594167-55594297
+0:01:31.895366	chr3:178921322-178921572
+2020-07-24 06:24:15.949 0:01:31.895366	chr3:178921322-178921572
+0:00:06.488679	chr6:152265445-152265465
+2020-07-24 06:24:22.497 0:00:06.488679	chr6:152265445-152265465
+0:00:04.800703	chr6:152396026-152396046
+2020-07-24 06:24:27.306 0:00:04.800703	chr6:152396026-152396046
+0:00:06.825442	chr6:152419912-152419936
+2020-07-24 06:24:34.138 0:00:06.825442	chr6:152419912-152419936
+0:00:04.264205	chr6:152420085-152420105
+2020-07-24 06:24:38.409 0:00:04.264205	chr6:152420085-152420105
+0:00:04.053571	chr7:55210065-55210087
+2020-07-24 06:24:42.467 0:00:04.053571	chr7:55210065-55210087
+0:01:03.866382	chr4:55592013-55592226
+2020-07-24 06:24:47.347 0:01:03.866382	chr4:55592013-55592226
+0:00:09.358377	chr7:55211070-55211107
+2020-07-24 06:24:51.829 0:00:09.358377	chr7:55211070-55211107
+0:01:13.675037	chr3:178951872-178952122
+2020-07-24 06:24:54.269 0:01:13.675037	chr3:178951872-178952122
+0:00:04.435464	chr3:178952123-178952162
+2020-07-24 06:24:58.732 0:00:04.435464	chr3:178952123-178952162
+0:00:06.918833	chr7:55214338-55214358
+2020-07-24 06:24:58.754 0:00:06.918833	chr7:55214338-55214358
+0:00:50.091736	chr4:55595491-55595661
+2020-07-24 06:24:58.870 0:00:50.091736	chr4:55595491-55595661
+0:00:12.860983	chr4:55593454-55593491
+2020-07-24 06:25:00.232 0:00:12.860983	chr4:55593454-55593491
+0:00:05.041443	chr7:55220264-55220284
+2020-07-24 06:25:03.802 0:00:05.041443	chr7:55220264-55220284
+0:00:05.737127	chr4:55597485-55597507
+2020-07-24 06:25:04.624 0:00:05.737127	chr4:55597485-55597507
+0:00:07.850503	chr4:55127438-55127458
+2020-07-24 06:25:06.586 0:00:07.850503	chr4:55127438-55127458
+0:00:04.962402	chr4:55130068-55130088
+2020-07-24 06:25:11.555 0:00:04.962402	chr4:55130068-55130088
+0:00:10.147157	chr4:55599149-55599169
+2020-07-24 06:25:14.776 0:00:10.147157	chr4:55599149-55599169
+0:00:11.903518	chr7:55221700-55221720
+2020-07-24 06:25:16.011 0:00:11.903518	chr7:55221700-55221720
+0:00:08.770849	chr4:55131108-55131128
+2020-07-24 06:25:20.329 0:00:08.770849	chr4:55131108-55131128
+0:00:08.664036	chr7:55221733-55221753
+2020-07-24 06:25:24.686 0:00:08.664036	chr7:55221733-55221753
+0:00:11.254386	chr4:55131132-55131171
+2020-07-24 06:25:32.017 0:00:11.254386	chr4:55131132-55131171
+0:00:08.470081	chr7:55221811-55221832
+2020-07-24 06:25:33.167 0:00:08.470081	chr7:55221811-55221832
+0:00:04.104524	chr4:55133716-55133736
+2020-07-24 06:25:36.128 0:00:04.104524	chr4:55133716-55133736
+0:00:05.374996	chr7:55223533-55223553
+2020-07-24 06:25:38.549 0:00:05.374996	chr7:55223533-55223553
+0:00:05.156661	chr4:55139761-55139781
+2020-07-24 06:25:41.290 0:00:05.156661	chr4:55139761-55139781
+0:00:41.651412	chr4:55593572-55593718
+2020-07-24 06:25:41.894 0:00:41.651412	chr4:55593572-55593718
+0:00:04.497900	chr7:55227997-55228019
+2020-07-24 06:25:43.054 0:00:04.497900	chr7:55227997-55228019
+0:00:34.398079	chr4:55599226-55599368
+2020-07-24 06:25:49.181 0:00:34.398079	chr4:55599226-55599368
+0:00:08.500043	chr9:80409478-80409500
+2020-07-24 06:25:50.419 0:00:08.500043	chr9:80409478-80409500
+0:00:08.358271	chr7:55229245-55229265
+2020-07-24 06:25:51.617 0:00:08.358271	chr7:55229245-55229265
+0:00:05.281985	chr4:55599391-55599411
+2020-07-24 06:25:54.479 0:00:05.281985	chr4:55599391-55599411
+0:00:13.035089	chr7:55233027-55233053
+2020-07-24 06:26:04.659 0:00:13.035089	chr7:55233027-55233053
+0:00:10.305922	chr4:55602654-55602674
+2020-07-24 06:26:04.790 0:00:10.305922	chr4:55602654-55602674
+0:00:07.911989	chr7:55233099-55233119
+2020-07-24 06:26:12.580 0:00:07.911989	chr7:55233099-55233119
+0:00:08.630467	chr4:55602684-55602704
+2020-07-24 06:26:13.432 0:00:08.630467	chr4:55602684-55602704
+0:00:08.517644	chr4:55602753-55602775
+2020-07-24 06:26:21.960 0:00:08.517644	chr4:55602753-55602775
+0:00:10.566532	chr7:55238077-55238097
+2020-07-24 06:26:23.156 0:00:10.566532	chr7:55238077-55238097
+0:00:05.093057	chr4:55603362-55603382
+2020-07-24 06:26:27.060 0:00:05.093057	chr4:55603362-55603382
+0:00:06.752712	chr7:55238102-55238122
+2020-07-24 06:26:30.047 0:00:06.752712	chr7:55238102-55238122
+0:00:07.963922	chr4:55604649-55604669
+2020-07-24 06:26:35.029 0:00:07.963922	chr4:55604649-55604669
+0:00:06.208580	chr7:55240697-55240717
+2020-07-24 06:26:36.263 0:00:06.208580	chr7:55240697-55240717
+0:00:06.897690	chr6:152129067-152129087
+2020-07-24 06:26:41.935 0:00:06.897690	chr6:152129067-152129087
+0:00:08.069996	chr7:55240776-55240816
+2020-07-24 06:26:44.339 0:00:08.069996	chr7:55240776-55240816
+0:01:07.235000	chr7:55248976-55249181
+2020-07-24 06:26:48.539 0:01:07.235000	chr7:55248976-55249181
+0:00:07.730632	chr7:55241617-55241637
+2020-07-24 06:26:52.075 0:00:07.730632	chr7:55241617-55241637
+0:00:24.530839	chr7:55241646-55241736
+2020-07-24 06:27:16.613 0:00:24.530839	chr7:55241646-55241736
+0:00:03.357452	chr7:55241745-55241765
+2020-07-24 06:27:19.983 0:00:03.357452	chr7:55241745-55241765
+0:01:00.859254	chr7:55259402-55259577
+2020-07-24 06:27:49.418 0:01:00.859254	chr7:55259402-55259577
+0:00:04.392399	chr7:55260473-55260493
+2020-07-24 06:27:53.830 0:00:04.392399	chr7:55260473-55260493
+0:00:37.823676	chr7:55242405-55242523
+2020-07-24 06:27:57.811 0:00:37.823676	chr7:55242405-55242523
+0:00:05.491232	chr7:55266459-55266481
+2020-07-24 06:27:59.326 0:00:05.491232	chr7:55266459-55266481
+0:00:04.008756	chr7:55268906-55268926
+2020-07-24 06:28:03.339 0:00:04.008756	chr7:55268906-55268926
+0:00:06.158111	chr7:116423397-116423418
+2020-07-24 06:28:09.501 0:00:06.158111	chr7:116423397-116423418
+0:00:06.066228	chr7:116423464-116423485
+2020-07-24 06:28:15.573 0:00:06.066228	chr7:116423464-116423485
+0:00:09.186125	chr7:140449140-140449180
+2020-07-24 06:28:24.766 0:00:09.186125	chr7:140449140-140449180
+0:00:40.192626	chr7:140453065-140453203
+2020-07-24 06:29:04.963 0:00:40.192626	chr7:140453065-140453203
+0:00:30.801685	chr7:140477781-140477885
+2020-07-24 06:29:35.780 0:00:30.801685	chr7:140477781-140477885
+0:00:41.225435	chr7:140481376-140481503
+2020-07-24 06:30:17.018 0:00:41.225435	chr7:140481376-140481503
+0:00:07.685329	chr7:140500155-140500175
+2020-07-24 06:30:24.718 0:00:07.685329	chr7:140500155-140500175
+2020-07-24 06:30:25.767 Calculating p-values 2020-07-24 06:30:25.767162
+2020-07-24 06:33:25.979 completed p-values 2020-07-24 06:33:25.979117
+2020-07-24 06:33:26.185 completed running 2020-07-24 06:33:26.185314
+2020-07-24 06:33:26.185 total runtime: 1:40:46.567382
+2020-07-24 06:33:26.580 vcf_complex: start conversion from primitive to complex representation...
+2020-07-24 06:33:26.581 vcf_complex: processed 0 variant clusters
+2020-07-24 06:33:26.581 vcf_annotate: starting snpEff eff...
+2020-07-24 06:33:26.582 /root/conda/bin/java -Xmx6G -jar /root/conda/share/snpeff-4.3.1t-0/snpEff.jar  -c /root/conda/share/snpeff-4.3.1t-0/snpEff.config -configOption data.dir=/root/conda/share/snpeff-4.3.1t-0/data/ -noLog -v -noStats -noMotif -noNextProt GRCh37.75 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.smCounter.cplx.vcf > /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.temp0.vcf 2> /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_1/NEB_S2.vcf_annotate.snpEffSift.log
+2020-07-24 06:36:12.110 vcf_annotate: starting snpSift annoate dbSNP...
+2020-07-24 06:36:25.314 vcf_annotate: starting snpSift annoate Cosmic...
+2020-07-24 06:36:29.165 vcf_annotate: starting snpSift annoate ClinVar...
+---------------------------------------------------------------------------
+Nirvana                                             (c) 2020 Illumina, Inc.
+Stromberg, Roy, Lajugie, Jiang, Li, and Kang                          3.9.0
+---------------------------------------------------------------------------
+
+Initialization                                         Time     Positions/s
+---------------------------------------------------------------------------
+Cache                                               00:00:06.9
+SA Position Scan                                    00:00:26.7            1
+
+Reference                                Preload    Annotation   Variants/s
+---------------------------------------------------------------------------
+chr10                                   00:00:01.5  00:00:12.4            0
+chr12                                   00:00:01.1  00:00:09.8            0
+chr17                                   00:00:01.6  00:00:08.8            0
+chr2                                    00:00:01.1  00:00:22.4            0
+chr4                                    00:00:01.1  00:00:18.1            0
+chr6                                    00:00:02.0  00:00:21.0            0
+chr7                                    00:00:01.7  00:00:13.6            0
+
+Summary                                                Time         Percent
+---------------------------------------------------------------------------
+Initialization                                      00:00:33.6       16.7 %
+Preload                                             00:00:10.4        5.2 %
+Annotation                                          00:01:46.5       52.7 %
+
+Time: 00:02:44.9
+2020-07-24 06:39:53.977 total run time: 2:28:43.522545
+2020-07-24 06:39:53.977 Execution ended at
+2020-07-24 06:39:53.978 2020-07-24 06:39:53.976970
+2020-07-24 06:39:54.083 sys.argv:
+2020-07-24 06:39:54.083 ['run_qiaseq_dna.py', 'run_sm_counter_v2.params.txt', 'v2', 'single', 'out2_multisamples_{0}_{1}', 'NEB_S2', 'NEB_S2']
+2020-07-24 06:39:54.083 pid:
+2020-07-24 06:39:54.083 442553
+2020-07-24 06:39:54.083 started_log at 2020-07-24 06:39:54.082185
+2020-07-24 06:39:54.083 Parameter outputPath==/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2
+2020-07-24 06:39:54.083 Parameter cutadaptDir==/root/conda/bin/
+2020-07-24 06:39:54.083 Parameter bwaDir==/root/conda/bin/
+2020-07-24 06:39:54.083 Parameter samtoolsDir==/root/conda/bin/
+2020-07-24 06:39:54.083 Parameter javaExe==/root/conda/bin/java
+2020-07-24 06:39:54.083 Parameter sswPyFile==/srv/qgen/bin/ssw/src/ssw_wrap.py
+2020-07-24 06:39:54.083 Parameter torrentBinDir==/srv/qgen/bin/TorrentSuite/
+2020-07-24 06:39:54.083 Parameter vcflibDir==/srv/qgen/bin/vcflib/bin/
+2020-07-24 06:39:54.084 Parameter quandicoDir==copy_number/
+2020-07-24 06:39:54.084 Parameter numCores==4
+2020-07-24 06:39:54.084 Parameter deleteLocalFiles==False
+2020-07-24 06:39:54.084 Parameter samtoolsMem==2500M
+2020-07-24 06:39:54.084 Parameter outputDetail==True
+2020-07-24 06:39:54.084 Parameter trimScript==core/prep_trim.py
+2020-07-24 06:39:54.084 Parameter primer3Bases==8
+2020-07-24 06:39:54.084 Parameter genomeFile==/srv/qgen/data/genome/hg19/ucsc.hg19.fa
+2020-07-24 06:39:54.084 Parameter endogenousLenMin==15
+2020-07-24 06:39:54.084 Parameter tagNameUmiSeq==mi
+2020-07-24 06:39:54.084 Parameter tagNameUmi==Mi
+2020-07-24 06:39:54.084 Parameter tagNameDuplex==Du
+2020-07-24 06:39:54.084 Parameter tagNamePrimer==pr
+2020-07-24 06:39:54.084 Parameter tagNamePrimerErr==pe
+2020-07-24 06:39:54.084 Parameter tagNameResample==re
+2020-07-24 06:39:54.084 Parameter vcfComplexGapMax==3
+2020-07-24 06:39:54.084 Parameter snpEffPath==/root/conda/share/snpeff-4.3.1t-0/
+2020-07-24 06:39:54.085 Parameter snpEffConfig==/root/conda/share/snpeff-4.3.1t-0/snpEff.config
+2020-07-24 06:39:54.085 Parameter snpSiftPath==/root/conda/share/snpsift-4.3.1t-2/
+2020-07-24 06:39:54.085 Parameter snpSiftConfig==/root/conda/share/snpsift-4.3.1t-2/snpEff.config
+2020-07-24 06:39:54.085 Parameter snpEffData==/root/conda/share/snpeff-4.3.1t-0/data/
+2020-07-24 06:39:54.085 Parameter dbSnpFile==/srv/qgen/data/annotation/common_all_20160601.vcf.gz
+2020-07-24 06:39:54.085 Parameter cosmicFile==/srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+2020-07-24 06:39:54.085 Parameter clinVarFile==/srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+2020-07-24 06:39:54.085 Parameter umiCutoff==10
+2020-07-24 06:39:54.085 Parameter pValCutoff==0.1
+2020-07-24 06:39:54.085 Parameter tumorPurity==0.90
+2020-07-24 06:39:54.085 Parameter minBQ==25
+2020-07-24 06:39:54.085 Parameter minMQ==50
+2020-07-24 06:39:54.085 Parameter hpLen==8
+2020-07-24 06:39:54.085 Parameter mismatchThr==6.0
+2020-07-24 06:39:54.085 Parameter consThr==0.8
+2020-07-24 06:39:54.085 Parameter minAltUMI==3
+2020-07-24 06:39:54.086 Parameter maxAltAllele==2
+2020-07-24 06:39:54.086 Parameter primerDist==2
+2020-07-24 06:39:54.086 Parameter repBed==/srv/qgen/data/annotation/simpleRepeat.full.bed
+2020-07-24 06:39:54.086 Parameter srBed==/srv/qgen/data/annotation/SR_LC_SL.full.bed
+2020-07-24 06:39:54.086 Parameter readFile1==/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+2020-07-24 06:39:54.086 Parameter readFile2==/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+2020-07-24 06:39:54.086 Parameter instrument==MiSeq
+2020-07-24 06:39:54.086 Parameter primerFile==/srv/qgen/example/DHS-101Z.primers.txt
+2020-07-24 06:39:54.086 Parameter roiBedFile==/srv/qgen/example/DHS-101Z.roi.bed
+2020-07-24 06:39:54.086 Parameter platform==Illumina
+2020-07-24 06:39:54.086 Parameter runCNV==True
+2020-07-24 06:39:54.086 Parameter sampleType==Single
+2020-07-24 06:39:54.086 Parameter duplex==False
+2020-07-24 06:39:54.086 Parameter readSet==/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2
+2020-07-24 06:39:54.086 Parameter multimodal==False
+2020-07-24 06:39:54.086 lastfiletobegenerated
+2020-07-24 06:39:54.086 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.vcf_complex.summary.txt
+2020-07-24 06:39:54.087 prep: starting read prep - trimming ends and UMI extraction
+2020-07-24 06:44:53.035 cmd:
+2020-07-24 06:44:53.036 python /srv/qgen/qiaseq-dna/read-trimmer/trimmer/run.py --r1 /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz --r2 /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz --primer-file /srv/qgen/example/DHS-101Z.primers.txt --out-metrics /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.detail.summary.txt --out-r1 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R1.fastq --out-r2 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R2.fastq --check-primer-side --primer3-bases-R1 8 --primer3-bases-R2 8 --ncpu 4 --primer-col 3 --seqtype dna --umi-len 12 --common-seq-len 11 --min-primer-side-len 25 --min-umi-side-len 1 --tagname-primer pr --tagname-primer-error pe --tagname-umi mi
+2020-07-24 06:44:53.036 so:
+2020-07-24 06:44:53.036 b"\n--------------------\n\nCreated Primer Datastruct\n\nChecked first 47266 reads for custom sequencing adapter.\n\nRunning program with args : Namespace(check_primer_side=True, common_seq_len=11, custom_seq_adapter=b'AATGTACAGTATTGCGTTTTG, CCAGTACAGTATTGCGTTTTG', drop_alt_seqtype=False, drop_no_primer_reads=False, field_separator=b'\\n', include_common_seq_tag=False, is_duplex=False, is_multimodal=False, is_nextseq=False, is_phased_adapters=False, is_r2_primer_side=False, is_umi_side_adapter_readable=False, max_mismatch_rate_overlap=0.12, max_mismatch_rate_primer=0.12, min_primer_side_len=25, min_umi_side_len=1, ncpu=4, no_tagnames=False, out_metrics='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.detail.summary.txt', out_r1='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R1.fastq', out_r2='/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R2.fastq', overlap_check_len=25, poly_tail_primer_side='none', poly_tail_umi_side='none', primer3_bases_R1=8, primer3_bases_R2=8, primer_col=3, primer_file='/srv/qgen/example/DHS-101Z.primers.txt', r1='/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz', r2='/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz', seqtype='dna', tag_separator=b'\\t', tagname_duplex=b'Du', tagname_multimodal=b'MM', tagname_primer=b'pr', tagname_primer_error=b'pe', tagname_umi=b'mi', thousand_comma=False, trim_custom_seq_adapter=False, trim_polyT_5prime_umi_side=False, umi_filter_max_Ns=1, umi_filter_max_lowQ_bases=1, umi_filter_min_bq=20, umi_len=12, umi_len_alt=None)\n\nProcessed : 23633 reads\nProcessed : 47265 reads\nProcessed : 70856 reads\nProcessed : 94444 reads\nProcessed : 118024 reads\nProcessed : 141611 reads\nProcessed : 165251 reads\nProcessed : 188870 reads\nProcessed : 212460 reads\nProcessed : 236042 reads\nProcessed : 259627 reads\nProcessed : 283207 reads\nProcessed : 306804 reads\nProcessed : 330391 reads\nProcessed : 354037 reads\nProcessed : 377664 reads\nProcessed : 401245 reads\nProcessed : 424858 reads\nProcessed : 448501 reads\nProcessed : 472091 reads\nProcessed : 495696 reads\nProcessed : 519286 reads\nProcessed : 542864 reads\nProcessed : 566451 reads\nProcessed : 590054 reads\nProcessed : 613694 reads\nProcessed : 637300 reads\nProcessed : 660924 reads\nProcessed : 684553 reads\nProcessed : 708132 reads\nProcessed : 731709 reads\nProcessed : 755298 reads\nProcessed : 778893 reads\nProcessed : 802475 reads\nProcessed : 826124 reads\nProcessed : 849710 reads\nProcessed : 873368 reads\nProcessed : 896974 reads\nProcessed : 920544 reads\nProcessed : 944127 reads\nProcessed : 967695 reads\nProcessed : 991278 reads\nProcessed : 1014845 reads\nProcessed : 1038465 reads\nProcessed : 1062052 reads\nProcessed : 1085632 reads\nProcessed : 1109272 reads\nProcessed : 1132851 reads\nProcessed : 1156452 reads\nProcessed : 1180105 reads\nProcessed : 1203678 reads\nProcessed : 1227263 reads\nProcessed : 1250861 reads\nProcessed : 1274448 reads\nProcessed : 1298072 reads\nProcessed : 1321658 reads\nProcessed : 1345245 reads\nProcessed : 1368837 reads\nProcessed : 1392487 reads\nProcessed : 1416085 reads\nProcessed : 1439722 reads\nProcessed : 1463298 reads\nProcessed : 1486905 reads\nProcessed : 1510483 reads\nProcessed : 1534066 reads\nProcessed : 1557641 reads\nProcessed : 1581280 reads\nProcessed : 1604876 reads\nProcessed : 1628457 reads\nProcessed : 1652043 reads\nProcessed : 1675685 reads\nProcessed : 1699261 reads\nProcessed : 1722825 reads\nProcessed : 1746456 reads\nProcessed : 1770046 reads\nProcessed : 1793687 reads\nProcessed : 1817263 reads\nProcessed : 1840853 reads\nProcessed : 1864431 reads\nProcessed : 1888031 reads\nProcessed : 1911601 reads\nProcessed : 1935208 reads\nProcessed : 1958855 reads\nProcessed : 1982437 reads\nProcessed : 2006032 reads\nProcessed : 2029656 reads\nProcessed : 2053245 reads\nProcessed : 2076829 reads\nProcessed : 2100413 reads\nProcessed : 2123988 reads\nProcessed : 2147557 reads\nProcessed : 2171124 reads\nProcessed : 2194698 reads\nProcessed : 2218295 reads\nProcessed : 2241857 reads\nProcessed : 2265496 reads\nProcessed : 2289065 reads\nProcessed : 2312703 reads\nProcessed : 2336303 reads\nProcessed : 2359872 reads\nProcessed : 2383454 reads\nProcessed : 2407020 reads\nProcessed : 2430583 reads\nProcessed : 2454165 reads\nProcessed : 2477792 reads\nProcessed : 2501378 reads\nProcessed : 2524946 reads\nProcessed : 2548513 reads\nProcessed : 2572156 reads\nProcessed : 2595735 reads\nProcessed : 2619314 reads\nProcessed : 2642897 reads\nProcessed : 2666478 reads\nProcessed : 2690041 reads\nProcessed : 2713614 reads\nProcessed : 2737235 reads\nProcessed : 2760807 reads\nProcessed : 2784382 reads\nProcessed : 2807962 reads\nProcessed : 2831510 reads\nProcessed : 2855082 reads\nProcessed : 2878649 reads\nProcessed : 2902268 reads\nProcessed : 2925863 reads\nProcessed : 2949499 reads\nProcessed : 2973067 reads\nProcessed : 2996674 reads\nProcessed : 3020255 reads\nProcessed : 3043824 reads\nProcessed : 3067406 reads\nProcessed : 3090971 reads\nProcessed : 3114535 reads\nProcessed : 3138120 reads\nProcessed : 3161695 reads\nProcessed : 3185329 reads\nProcessed : 3208898 reads\nProcessed : 3232458 reads\nProcessed : 3256075 reads\nProcessed : 3279704 reads\nProcessed : 3303274 reads\nProcessed : 3326842 reads\nProcessed : 3350435 reads\nProcessed : 3374061 reads\nProcessed : 3397629 reads\nProcessed : 3421219 reads\nProcessed : 3444789 reads\nProcessed : 3468361 reads\nProcessed : 3491911 reads\nProcessed : 3515485 reads\nProcessed : 3539111 reads\nProcessed : 3562713 reads\nProcessed : 3586285 reads\nProcessed : 3609857 reads\nProcessed : 3633454 reads\nProcessed : 3657083 reads\nProcessed : 3680653 reads\nProcessed : 3704223 reads\nProcessed : 3727787 reads\nProcessed : 3751352 reads\nProcessed : 3774933 reads\nProcessed : 3798502 reads\nProcessed : 3822091 reads\nProcessed : 3845666 reads\nProcessed : 3869297 reads\nProcessed : 3888167 reads\nProcessed : 3911726 reads\nProcessed : 3935302 reads\n"
+2020-07-24 06:44:53.037 se:
+2020-07-24 06:44:53.037 b''
+2020-07-24 06:44:53.038 prep: done
+2020-07-24 06:44:53.038 align: starting read alignment
+2020-07-24 06:44:53.038 Executing bwa and samtools commands:
+2020-07-24 06:44:53.038 /root/conda/bin/bwa mem -C -t 4 /srv/qgen/data/genome/hg19/ucsc.hg19.fa /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R1.fastq /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.prep.R2.fastq 2>/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.align.bwa.log | /root/conda/bin/samtools view -S -1 -@ 4 -  1> /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.align.bam 2> /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.align.samtools.log
+2020-07-24 06:44:53.038 in
+2020-07-24 06:44:53.038 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2
+2020-07-24 06:44:53.038 with configuration
+2020-07-24 06:44:53.039 <ConfigObj {'outputPath': '/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2', 'cutadaptDir': '/root/conda/bin/', 'bwaDir': '/root/conda/bin/', 'samtoolsDir': '/root/conda/bin/', 'javaExe': '/root/conda/bin/java', 'sswPyFile': '/srv/qgen/bin/ssw/src/ssw_wrap.py', 'torrentBinDir': '/srv/qgen/bin/TorrentSuite/', 'vcflibDir': '/srv/qgen/bin/vcflib/bin/', 'quandicoDir': 'copy_number/', 'numCores': '4', 'deleteLocalFiles': False, 'samtoolsMem': '2500M', 'outputDetail': True, 'trimScript': 'core/prep_trim.py', 'primer3Bases': '8', 'genomeFile': '/srv/qgen/data/genome/hg19/ucsc.hg19.fa', 'endogenousLenMin': '15', 'tagNameUmiSeq': 'mi', 'tagNameUmi': 'Mi', 'tagNameDuplex': 'Du', 'tagNamePrimer': 'pr', 'tagNamePrimerErr': 'pe', 'tagNameResample': 're', 'vcfComplexGapMax': '3', 'snpEffPath': '/root/conda/share/snpeff-4.3.1t-0/', 'snpEffConfig': '/root/conda/share/snpeff-4.3.1t-0/snpEff.config', 'snpSiftPath': '/root/conda/share/snpsift-4.3.1t-2/', 'snpSiftConfig': '/root/conda/share/snpsift-4.3.1t-2/snpEff.config', 'snpEffData': '/root/conda/share/snpeff-4.3.1t-0/data/', 'dbSnpFile': '/srv/qgen/data/annotation/common_all_20160601.vcf.gz', 'cosmicFile': '/srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz', 'clinVarFile': '/srv/qgen/data/annotation/clinvar_20160531.vcf.gz', 'umiCutoff': '10', 'pValCutoff': '0.1', 'tumorPurity': '0.90', 'minBQ': '25', 'minMQ': '50', 'hpLen': '8', 'mismatchThr': '6.0', 'consThr': '0.8', 'minAltUMI': '3', 'maxAltAllele': '2', 'primerDist': '2', 'repBed': '/srv/qgen/data/annotation/simpleRepeat.full.bed', 'srBed': '/srv/qgen/data/annotation/SR_LC_SL.full.bed', 'readFile1': '/srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz', 'readFile2': '/srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz', 'instrument': 'MiSeq', 'primerFile': '/srv/qgen/example/DHS-101Z.primers.txt', 'roiBedFile': '/srv/qgen/example/DHS-101Z.roi.bed', 'platform': 'Illumina', 'runCNV': 'True', 'sampleType': 'Single', 'duplex': False, 'readSet': '/srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2', 'multimodal': False}>
+2020-07-24 07:01:22.976 align: done aligning reads to genome, bam file: /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.align.bam
+2020-07-24 07:01:22.979 umi_filter: starting...
+2020-07-24 07:01:22.982 ('# of primers:', 651)
+2020-07-24 07:04:40.901 umi_filter: done
+2020-07-24 07:04:40.911 umi_mark starting...
+2020-07-24 07:05:29.292 umi_mark: done sorting read alignments by random fragmentation position
+2020-07-24 07:06:31.235 umi_mark: done
+2020-07-24 07:06:31.235 umi_frags starting...
+2020-07-24 07:06:40.330 umi_depths starting...
+2020-07-24 07:07:03.007 umi_depths: done sorting UMI read alignment file by random fragmentation position
+2020-07-24 07:07:51.670 umi_depths: done making depth bedgraphs
+2020-07-24 07:07:52.006 umi_depths: done making UMI depth bedgraph over ROI only, and computing depth uniformity
+2020-07-24 07:07:52.267 umi_depths: done making UMI depth bedgraph over ROI only, and computing depth uniformity
+2020-07-24 07:07:52.270 umi_depths: done writing regions below 20% of mean UMI depth
+2020-07-24 07:07:52.271 umi_merge starting...
+2020-07-24 07:08:39.521 umi_merge: done sorting molecule-marked alignments text file by read id
+2020-07-24 07:10:02.600 umi_merge: done converting input BAM to SAM
+2020-07-24 07:11:43.940 umi_merge: done sorting SAM by read id
+2020-07-24 07:13:48.479 umi_merge: done merging unique molecule tag to sam file
+2020-07-24 07:14:38.150 umi_merge: done converting SAM to BAM
+2020-07-24 07:14:38.650 primer_clip starting...
+2020-07-24 07:15:12.958 # read pairs processed: 1,000,000
+2020-07-24 07:15:46.722 # read pairs processed: 2,000,000
+2020-07-24 07:16:21.727 # read pairs processed: 3,000,000
+2020-07-24 07:16:36.287 ('# read pairs total', 3389374)
+2020-07-24 07:16:36.288 ('# read pairs dropped because 100% soft clipped:', 0)
+2020-07-24 07:16:36.288 # read pairs with R1 trimmed: 0
+2020-07-24 07:16:36.288 sum_primer_umis starting...
+2020-07-24 07:16:41.425 sum_specificity starting...
+2020-07-24 07:17:29.672 sum_uniformity_primer starting...
+2020-07-24 07:18:31.624 started smCounterv2 2020-07-24 07:18:31.624137
+2020-07-24 07:18:31.626 smc2_arg
+2020-07-24 07:18:31.627 runPath
+2020-07-24 07:18:31.627 /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2
+2020-07-24 07:18:31.627 smc2_arg
+2020-07-24 07:18:31.627 bedTarget
+2020-07-24 07:18:31.627 /srv/qgen/example/DHS-101Z.roi.bed
+2020-07-24 07:18:31.627 smc2_arg
+2020-07-24 07:18:31.627 bamFile
+2020-07-24 07:18:31.627 NEB_S2.bam
+2020-07-24 07:18:31.627 smc2_arg
+2020-07-24 07:18:31.627 outPrefix
+2020-07-24 07:18:31.628 NEB_S2
+2020-07-24 07:18:31.628 smc2_arg
+2020-07-24 07:18:31.628 nCPU
+2020-07-24 07:18:31.628 4
+2020-07-24 07:18:31.628 smc2_arg
+2020-07-24 07:18:31.628 minBQ
+2020-07-24 07:18:31.628 25
+2020-07-24 07:18:31.628 smc2_arg
+2020-07-24 07:18:31.628 minMQ
+2020-07-24 07:18:31.628 50
+2020-07-24 07:18:31.629 smc2_arg
+2020-07-24 07:18:31.629 hpLen
+2020-07-24 07:18:31.629 8
+2020-07-24 07:18:31.629 smc2_arg
+2020-07-24 07:18:31.629 mismatchThr
+2020-07-24 07:18:31.629 6.0
+2020-07-24 07:18:31.629 smc2_arg
+2020-07-24 07:18:31.629 primerDist
+2020-07-24 07:18:31.629 2
+2020-07-24 07:18:31.629 smc2_arg
+2020-07-24 07:18:31.630 consThr
+2020-07-24 07:18:31.630 0.8
+2020-07-24 07:18:31.630 smc2_arg
+2020-07-24 07:18:31.630 rpu
+2020-07-24 07:18:31.630 0.0
+2020-07-24 07:18:31.630 smc2_arg
+2020-07-24 07:18:31.630 isRna
+2020-07-24 07:18:31.630 False
+2020-07-24 07:18:31.630 smc2_arg
+2020-07-24 07:18:31.630 primerSide
+2020-07-24 07:18:31.630 1
+2020-07-24 07:18:31.630 smc2_arg
+2020-07-24 07:18:31.631 umiTag
+2020-07-24 07:18:31.631 Mi
+2020-07-24 07:18:31.631 smc2_arg
+2020-07-24 07:18:31.631 primerTag
+2020-07-24 07:18:31.631 pr
+2020-07-24 07:18:31.631 smc2_arg
+2020-07-24 07:18:31.631 mqTag
+2020-07-24 07:18:31.631 MQ
+2020-07-24 07:18:31.631 smc2_arg
+2020-07-24 07:18:31.631 tagSeparator
+2020-07-24 07:18:31.631 -
+2020-07-24 07:18:31.631 smc2_arg
+2020-07-24 07:18:31.631 minAltUMI
+2020-07-24 07:18:31.631 3
+2020-07-24 07:18:31.631 smc2_arg
+2020-07-24 07:18:31.632 maxAltAllele
+2020-07-24 07:18:31.632 2
+2020-07-24 07:18:31.632 smc2_arg
+2020-07-24 07:18:31.632 refGenome
+2020-07-24 07:18:31.632 /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+2020-07-24 07:18:31.632 smc2_arg
+2020-07-24 07:18:31.632 repBed
+2020-07-24 07:18:31.632 /srv/qgen/data/annotation/simpleRepeat.full.bed
+2020-07-24 07:18:31.632 smc2_arg
+2020-07-24 07:18:31.633 srBed
+2020-07-24 07:18:31.633 /srv/qgen/data/annotation/SR_LC_SL.full.bed
+2020-07-24 07:18:31.633 smc2_arg
+2020-07-24 07:18:31.633 ds
+2020-07-24 07:18:31.633 10000
+2020-07-24 07:18:31.633 smc2_arg
+2020-07-24 07:18:31.633 bamType
+2020-07-24 07:18:31.633 raw
+2020-07-24 07:18:31.633 smc2_arg
+2020-07-24 07:18:31.633 inputVCF
+2020-07-24 07:18:31.633 None
+2020-07-24 07:18:31.634 smc2_arg
+2020-07-24 07:18:31.634 sinBkgErrorDist
+2020-07-24 07:18:31.634 /srv/qgen/data/annotation/bkg.error.v2.RData
+2020-07-24 07:18:31.634 smc2_arg
+2020-07-24 07:18:31.634 isDuplex
+2020-07-24 07:18:31.634 False
+2020-07-24 07:18:31.634 smc2_arg
+2020-07-24 07:18:31.634 duplexTag
+2020-07-24 07:18:31.634 None
+2020-07-24 07:18:31.634 smc2_arg
+2020-07-24 07:18:31.634 minRpu
+2020-07-24 07:18:31.634 2
+2020-07-24 07:18:31.634 smc2_arg
+2020-07-24 07:18:31.634 dupBkgErrorDist
+2020-07-24 07:18:31.634 /srv/qgen/data/annotation/duplex.bkg.error.ga.RData
+2020-07-24 07:19:01.676 rpu = 7.8, computed by smCounter2
+2020-07-24 07:19:01.676 runtime	interval
+Logger closed at 2020-07-24 06:39:53.976970
+Parameter cutadaptDir == /root/conda/bin/
+Parameter bwaDir == /root/conda/bin/
+Parameter samtoolsDir == /root/conda/bin/
+Parameter javaExe == /root/conda/bin/java
+Parameter sswPyFile == /srv/qgen/bin/ssw/src/ssw_wrap.py
+Parameter torrentBinDir == /srv/qgen/bin/TorrentSuite/
+Parameter vcflibDir == /srv/qgen/bin/vcflib/bin/
+Parameter quandicoDir == copy_number/
+Parameter numCores == 0
+Parameter deleteLocalFiles == False
+Parameter samtoolsMem == 2500M
+Parameter outputDetail == True
+Parameter trimScript == core/prep_trim.py
+Parameter primer3Bases == 8
+Parameter genomeFile == /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+Parameter endogenousLenMin == 15
+Parameter tagNameUmiSeq == mi
+Parameter tagNameUmi == Mi
+Parameter tagNameDuplex == Du
+Parameter tagNamePrimer == pr
+Parameter tagNamePrimerErr == pe
+Parameter tagNameResample == re
+Parameter vcfComplexGapMax == 3
+Parameter snpEffPath == /root/conda/share/snpeff-4.3.1t-0/
+Parameter snpEffConfig == /root/conda/share/snpeff-4.3.1t-0/snpEff.config
+Parameter snpSiftPath == /root/conda/share/snpsift-4.3.1t-2/
+Parameter snpSiftConfig == /root/conda/share/snpsift-4.3.1t-2/snpEff.config
+Parameter snpEffData == /root/conda/share/snpeff-4.3.1t-0/data/
+Parameter dbSnpFile == /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+Parameter cosmicFile == /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+Parameter clinVarFile == /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+Parameter umiCutoff == 10
+Parameter pValCutoff == 0.1
+Parameter tumorPurity == 0.90
+Parameter minBQ == 25
+Parameter minMQ == 50
+Parameter hpLen == 8
+Parameter mismatchThr == 6.0
+Parameter consThr == 0.8
+Parameter minAltUMI == 3
+Parameter maxAltAllele == 2
+Parameter primerDist == 2
+Parameter repBed == /srv/qgen/data/annotation/simpleRepeat.full.bed
+Parameter srBed == /srv/qgen/data/annotation/SR_LC_SL.full.bed
+Parameter readFile1 == /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+Parameter readFile2 == /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+Parameter instrument == MiSeq
+Parameter primerFile == /srv/qgen/example/DHS-101Z.primers.txt
+Parameter roiBedFile == /srv/qgen/example/DHS-101Z.roi.bed
+Parameter platform == Illumina
+Parameter runCNV == True
+Parameter sampleType == Single
+Parameter duplex == False
+We will write the log file in the path /srv/qgen/qiaseq-dna/out2_multisamples_NEB_S2_2/NEB_S2.run_log.2020.07.24_06.39.54.txt
+started_log0 at 2020-07-24 06:39:54.082185
+0:00:58.078919	chr1:115252180-115252359
+2020-07-24 07:19:59.856 0:00:58.078919	chr1:115252180-115252359
+0:00:45.835470	chr1:115256411-115256609
+2020-07-24 07:20:45.711 0:00:45.835470	chr1:115256411-115256609
+0:00:30.479725	chr1:115258661-115258808
+2020-07-24 07:21:16.204 0:00:30.479725	chr1:115258661-115258808
+0:00:10.229141	chr10:43609061-43609082
+2020-07-24 07:21:26.711 0:00:10.229141	chr10:43609061-43609082
+0:00:07.054738	chr10:43609086-43609114
+2020-07-24 07:21:33.771 0:00:07.054738	chr10:43609086-43609114
+0:00:10.292359	chr10:43609926-43609961
+2020-07-24 07:21:44.068 0:00:10.292359	chr10:43609926-43609961
+0:00:07.066263	chr10:43613830-43613851
+2020-07-24 07:21:51.141 0:00:07.066263	chr10:43613830-43613851
+0:00:07.250421	chr10:43613895-43613919
+2020-07-24 07:21:58.399 0:00:07.250421	chr10:43613895-43613919
+0:00:06.931498	chr10:43615558-43615579
+2020-07-24 07:22:05.337 0:00:06.931498	chr10:43615558-43615579
+0:00:07.230622	chr10:43615583-43615604
+2020-07-24 07:22:12.576 0:00:07.230622	chr10:43615583-43615604
+0:00:03.831634	chr10:43617406-43617427
+2020-07-24 07:22:16.415 0:00:03.831634	chr10:43617406-43617427
+0:00:02.260236	chr12:25360214-25360234
+2020-07-24 07:22:18.679 0:00:02.260236	chr12:25360214-25360234
+0:00:03.541570	chr12:25362795-25362815
+2020-07-24 07:22:22.222 0:00:03.541570	chr12:25362795-25362815
+0:00:50.906727	chr12:25378538-25378717
+2020-07-24 07:23:13.133 0:00:50.906727	chr12:25378538-25378717
+0:00:44.392582	chr12:25380158-25380356
+2020-07-24 07:23:57.547 0:00:44.392582	chr12:25380158-25380356
+0:00:39.907203	chr12:25398198-25398339
+2020-07-24 07:24:37.474 0:00:39.907203	chr12:25398198-25398339
+0:00:04.595889	chr12:56477621-56477641
+2020-07-24 07:24:42.084 0:00:04.595889	chr12:56477621-56477641
+0:00:04.858950	chr12:56478844-56478864
+2020-07-24 07:24:46.949 0:00:04.858950	chr12:56478844-56478864
+0:00:05.431869	chr12:56481912-56481932
+2020-07-24 07:24:52.438 0:00:05.431869	chr12:56481912-56481932
+0:00:05.357588	chr12:56482331-56482351
+2020-07-24 07:24:57.801 0:00:05.357588	chr12:56482331-56482351
+0:00:06.100951	chr12:56482527-56482547
+2020-07-24 07:25:03.907 0:00:06.100951	chr12:56482527-56482547
+0:00:04.837498	chr12:56487191-56487211
+2020-07-24 07:25:08.751 0:00:04.837498	chr12:56487191-56487211
+0:00:06.459288	chr12:56492623-56492643
+2020-07-24 07:25:15.216 0:00:06.459288	chr12:56492623-56492643
+0:00:05.665324	chr12:56494988-56495008
+2020-07-24 07:25:20.888 0:00:05.665324	chr12:56494988-56495008
+0:00:04.800566	chr14:105246541-105246562
+2020-07-24 07:25:25.695 0:00:04.800566	chr14:105246541-105246562
+0:00:06.350148	chr15:90631828-90631849
+2020-07-24 07:25:32.052 0:00:06.350148	chr15:90631828-90631849
+0:00:06.271202	chr15:90631924-90631945
+2020-07-24 07:25:38.331 0:00:06.271202	chr15:90631924-90631945
+0:00:21.283912	chr17:7572917-7573018
+2020-07-24 07:25:59.623 0:00:21.283912	chr17:7572917-7573018
+0:00:23.484063	chr17:7573917-7574043
+2020-07-24 07:26:23.119 0:00:23.484063	chr17:7573917-7574043
+0:00:27.143434	chr17:7576527-7576594
+2020-07-24 07:26:50.274 0:00:27.143434	chr17:7576527-7576594
+0:00:16.708446	chr17:7576615-7576667
+2020-07-24 07:27:06.997 0:00:16.708446	chr17:7576615-7576667
+0:00:29.379356	chr17:7576843-7576936
+2020-07-24 07:27:36.388 0:00:29.379356	chr17:7576843-7576936
+0:00:48.460375	chr17:7577009-7577165
+2020-07-24 07:28:24.862 0:00:48.460375	chr17:7577009-7577165
+0:00:26.027667	chr17:7577489-7577618
+2020-07-24 07:28:50.918 0:00:26.027667	chr17:7577489-7577618
+0:00:37.992312	chr17:7578167-7578299
+2020-07-24 07:29:28.927 0:00:37.992312	chr17:7578167-7578299
+0:00:55.763051	chr17:7578361-7578564
+2020-07-24 07:30:24.703 0:00:55.763051	chr17:7578361-7578564
+0:01:26.620773	chr17:7579302-7579552
+2020-07-24 07:31:51.343 0:01:26.620773	chr17:7579302-7579552
+0:00:10.400949	chr17:7579553-7579600
+2020-07-24 07:32:01.774 0:00:10.400949	chr17:7579553-7579600
+0:00:07.138525	chr17:7579690-7579731
+2020-07-24 07:32:08.922 0:00:07.138525	chr17:7579690-7579731
+0:00:17.701773	chr17:7579829-7579922
+2020-07-24 07:32:26.628 0:00:17.701773	chr17:7579829-7579922
+0:00:07.372620	chr17:37855803-37855850
+2020-07-24 07:32:34.007 0:00:07.372620	chr17:37855803-37855850

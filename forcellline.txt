@@ -1,0 +1,107 @@
+[general]
+# tools
+cutadaptDir = /root/conda/bin/
+bwaDir      = /root/conda/bin/
+samtoolsDir = /root/conda/bin/
+javaExe     = /root/conda/jre/bin/java
+
+# ssw for fast Smith-Waterman
+sswPyFile = /srv/qgen/bin/ssw/src/ssw_wrap.py
+
+# Ion torrent tools
+torrentBinDir = /srv/qgen/bin/TorrentSuite/
+vcflibDir = /srv/qgen/bin/vcflib/bin/
+
+# quandico
+#quandicoDir = /srv/qgen/code/qiaseq-dna/quandico/
+#quandicoDir = quandico/
+quandicoDir = copy_number/
+
+# general params
+numCores = 0
+deleteLocalFiles = False
+samtoolsMem = 2500M
+outputDetail = True
+
+# prep module - read preparation (common region trimming) params
+#Should this go off?-absent in the latest code
+trimScript = core/prep_trim.py
+primer3Bases  = 8
+
+# geneome file
+genomeFile = /srv/qgen/data/genome/hg19/ucsc.hg19.fa
+
+# umi module
+endogenousLenMin = 15
+
+# SAM tag names
+tagNameUmiSeq    = mi
+tagNameUmi       = Mi
+tagNameDuplex    = Du
+tagNamePrimer    = pr
+tagNamePrimerErr = pe
+tagNameResample  = re
+
+# variant primitive to complex conversion
+vcfComplexGapMax = 3
+
+# variant annotation
+#snpeff-4.3.1t-3 now instead of snpeff-4.2-0
+snpEffPath   = /root/conda/share/snpeff-4.3.1t-3/
+snpEffConfig = /root/conda/share/snpeff-4.3.1t-3/snpEff.config
+snpSiftPath   = /root/conda/share/snpsift-4.3.1t-1/
+snpSiftConfig = /root/conda/share/snpsift-4.3.1t-1/snpEff.config
+snpEffData   = /root/conda/share/snpeff-4.3.1t-3/data/
+dbSnpFile    = /srv/qgen/data/annotation/common_all_20160601.vcf.gz
+cosmicFile   = /srv/qgen/data/annotation/CosmicAllMuts_v69_20140602.vcf.gz
+clinVarFile  = /srv/qgen/data/annotation/clinvar_20160531.vcf.gz
+
+# tumor-normal params
+# umiCutoff not being used currently
+umiCutoff = 10
+pValCutoff = 0.1
+tumorPurity  = 0.90
+
+# variant caller parameters (these need a separate section)
+[smCounter]
+minBQ = 25 
+minMQ = 50 
+hpLen = 8 
+mismatchThr = 6.0 
+
+consThr = 0.8
+minAltUMI = 3
+maxAltAllele = 2
+primerDist = 2 
+repBed = /srv/qgen/data/annotation/simpleRepeat.full.bed
+srBed = /srv/qgen/data/annotation/SR_LC_SL.full.bed
+#repBed = /srv/qgen/data/annotation/simpleRepeat.hg38.bed
+#srBed = /srv/qgen/data/annotation/SR_LC_SL.hg38.bed
+
+# readSet
+[NEB_S2]
+readFile1 = /srv/qgen/example/NEB_S2_L001_R1_001.fastq.gz
+readFile2 = /srv/qgen/example/NEB_S2_L001_R2_001.fastq.gz
+instrument = MiSeq
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+#roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
+platform = Illumina
+runCNV = True
+sampleType =  Single
+duplex = False
+
+# readSet
+[Cellline_S10]
+readFile1 = /srv/qgen/example/Cellline_S10_L001_R1_001.fastq.gz
+readFile2 = /srv/qgen/example/Cellline_S10_L001_R2_001.fastq.gz
+instrument = MiSeq
+primerFile = /srv/qgen/example/DHS-101Z.primers.txt
+#primerFile = /srv/qgen/example/CDHS-13593Z-900.primer3.txt
+roiBedFile = /srv/qgen/example/DHS-101Z.roi.bed
+#roiBedFile = /srv/qgen/example/CDHS-13593Z-900.roi.bed
+platform = Illumina
+runCNV = True
+sampleType =  Single
+duplex = False
